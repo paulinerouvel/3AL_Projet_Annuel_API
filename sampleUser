@@ -1,0 +1,19 @@
+{
+        "libelle" : "",
+        "nom" : "",
+        "prenom" : "",
+        "mail" : "",
+        "tel": "",
+        "adresse" : "",
+        "ville" : "",
+        "codePostal" : "",
+        "pseudo" : "",
+        "mdp" : "",
+        "photo" : "",
+        "desc" : "",
+        "tailleOrganisme" : "",
+        "statut" : "",
+        "siret" : "",
+        "dateDeNaissance" : "",
+        "nbPointsSourire" : 3
+}
