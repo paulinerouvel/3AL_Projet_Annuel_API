@@ -22,6 +22,9 @@ class UtilisateurController {
         }
     }
 
+
+
+    //*******************************************         GET FUNCTIONS        ***************************************************************************************
     async getUserByID(id) {
         // on select un utilisateur avec son prenom
         const results =  await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.id = ?', [id]);
@@ -61,6 +64,43 @@ class UtilisateurController {
             return undefined;
         }
         
+    }
+
+
+
+
+    //*******************************************         UPDATE FUNCTIONS        ***************************************************************************************
+
+    async updateUser(user) {
+        try {
+            const res = await Database.connection.execute('UPDATE `utilisateur` SET libelle = ?, nom = ?, prenom = ?, mail = ?, tel = ?, adresse = ?, ville = ?,'+
+            'codePostal = ?, pseudo = ?, mdp = ?, photo = ?, utilisateur.desc = ?, tailleOrganisme = ?, statut = ?, siret = ?, dateDeNaissance = ?, nbPointsSourire = ? '+
+            'WHERE id = ?',
+            [user.libelle, user.nom, user.prenom, user.mail, user.tel, user.adresse, user.ville, user.codePostal, user.pseudo, user.mdp, user.photo, 
+                user.desc, user.tailleOrganisme, user.statut, user.siret, user.dateDeNaissance, user.nbPointsSourire, user.id]);
+            return res;
+        }
+        catch {
+            return undefined;
+        }
+    }
+
+
+
+
+    //*******************************************         DELETE FUNCTIONS        ***************************************************************************************
+    async deleteUser(id){
+        try{
+            
+            const res = await Database.connection.execute('DELETE FROM utilisateur WHERE utilisateur.id = ?', [id]);
+           
+
+            return res;
+        }
+        catch (err){
+            console.log("error delete tavu : "+ err);
+            return undefined;
+        }
     }
 }
 
