@@ -2,27 +2,40 @@ const Database = require('../models/database');
 const Utilisateur = require('../models/utilisateur_model');
 class UtilisateurController {
     
-    async addUtilisateur(libelle, nom, prenom, mail, tel, adresse, ville, codePostal, pseudo, mdp, photo, desc, tailleOrganisme, statut, siret, dateDeNaissance, nbPointsSourire) {
+    async partnerApply(newUser) {
         
-        // crée un new user avec les valeurs, puis ajouter ses valeurs dans l'INSERT pour éviter des erreurs et géré les NULLABLE
-        return await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `nom`, `prenom`, `mail`, `tel`, `adresse`, `ville`, `codePostal`, `pseudo`, `mdp`, `photo`, `desc`, `tailleOrganisme`, `statut`, `siret`, `dateDeNaissance`, `nbPointsSourire`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', [libelle, nom, prenom, mail, tel, adresse, ville, codePostal, pseudo, mdp, photo, desc, tailleOrganisme, statut, siret, dateDeNaissance, nbPointsSourire]);
-    }
+        // crée une demande d'inscription 
+        // A RETESTER
+        try {
+            const res = await Database.connection.execute('INSERT INTO `demande d\'inscription` (`libelle`, `adresse`, `ville`,'+
+            '`codePostal`, `pseudo`, `mdp`, presentation, mail, tel, `siret`, type, `utilisateur_id`) '+
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+            [newUser.libelle, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo, newUser.mdp, 
+                newUser.presentation, newUser.mail, newUser.tel, newUser.siret, newUser.type, newUser.utilisateur_id]);
+            return res;
+
+
+        }
+        catch {
+            return undefined;
+        }
+    }    
 
     async addUser(newUser) {
         try {
             const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `nom`, `prenom`, `mail`, `tel`, `adresse`, `ville`,'+
             '`codePostal`, `pseudo`, `mdp`, `photo`, `desc`, `tailleOrganisme`, `statut`, `siret`, `dateDeNaissance`, `nbPointsSourire`) '+
             'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-            [newUser.libelle, newUser.nom, newUser.prenom, newUser.mail, newUser.tel, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo, newUser.mdp, newUser.photo, newUser.desc, newUser.tailleOrganisme, newUser.statut, newUser.siret, newUser.dateDeNaissance, newUser.nbPointsSourire]);
+            [newUser.libelle, newUser.nom, newUser.prenom, newUser.mail, newUser.tel, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo, 
+                newUser.mdp, newUser.photo, newUser.desc, newUser.tailleOrganisme, newUser.statut, newUser.siret, newUser.dateDeNaissance, newUser.nbPointsSourire]);
             return res;
+
 
         }
         catch {
             return undefined;
         }
     }
-
-
 
     //*******************************************         GET FUNCTIONS        ***************************************************************************************
     async getUserByID(id) {

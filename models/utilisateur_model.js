@@ -18,7 +18,7 @@ class Utilisateur {
         this.desc=desc || null;
         this.tailleOrganisme = tailleOrganisme || 0;
         this.statut = statut;
-        this.siret = siret || null;
+        this.siret = siret;
         this.dateDeNaissance = dateDeNaissance || null;
         this.nbPointsSourire = nbPointsSourire || 0;
     }

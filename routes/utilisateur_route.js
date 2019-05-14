@@ -101,7 +101,7 @@ router.get('/', async (req, res) => {
     }
  
     //get user by mail
-    else if(req.body.mail !== undefined){
+    else if(req.query.mail !== undefined){
          const user = await UtilisateurController.getUserByEmail(req.body.mail);
          if(user) {
              return res.json(user);

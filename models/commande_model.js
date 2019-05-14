@@ -2,7 +2,8 @@
 
 class Commande {
 
-  constructor(date, utilisateurID) {
+  constructor(id, date, utilisateurID) {
+    this.id = id;
     this.date = date;
     this.utilisateurID = utilisateurID;
   }
