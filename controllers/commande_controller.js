@@ -52,6 +52,18 @@ async getAllOrders(){
 //*******************************************         GET FUNCTIONS  (commande_has_produit)      ***************************************************************************************
 
 
+async getAllProductsInOrder(order_id){
+    try
+    {
+        const res = await Database.connection.query('');
+        return res[0].map((rows) => new Commande(rows[0].id, rows[0].date, rows[0].Utilisateur_id));
+    }
+    catch(err) {
+        console.log(err);
+        return undefined;
+    }
+    
+}
 
 //*******************************************         UPDATE FUNCTIONS        ***************************************************************************************
 

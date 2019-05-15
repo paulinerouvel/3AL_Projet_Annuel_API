@@ -175,7 +175,7 @@ async deleteProduct(id){
 async deleteProductCategory(id){
     try{
         
-        const res = await Database.connection.execute('DELETE FROM categorieproduit WHERE product.id = ?', [id]);
+        const res = await Database.connection.execute('DELETE FROM categorieproduit WHERE categorieproduct.id = ?', [id]);
        
 
         return res;
