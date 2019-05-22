@@ -21,6 +21,8 @@ class AlerteController {
             return undefined;
         }
     }
+    
+
 
     async getAlertOfTheDay(date) {
         // on select toutes les alertes enregistrées à cette date

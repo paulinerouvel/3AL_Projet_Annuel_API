@@ -73,6 +73,7 @@ if(mail != undefined && mot_de_passe != undefined){
             if(resBycrypt){
                 return res.status(200).json({
                     'userId' : userFound.id,
+                    'typeUtil': userFound.status,
                     'token' : jwtUtils.generateToken(userFound)
                 });
             }

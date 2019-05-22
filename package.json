@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Ceci est l'API de WasteMart",
   "main": "index.js",
+  
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bluebird": "^3.5.3",
