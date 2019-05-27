@@ -37,6 +37,17 @@ class UtilisateurController {
         }
     }
 
+    async addUser_has_category(user_has_category_id, user_id) {
+        try {
+            const res = await Database.connection.execute('INSERT INTO utilisateur_has_categorie (Categorie_utilisateur_id, Utilisateur_id) VALUES (?, ?)', [user_has_category_id, utilisateur_id]);
+        }
+        catch {
+            return undefined;
+        }
+    }
+
+
+
     //*******************************************         GET FUNCTIONS        ***************************************************************************************
     async getUserByID(id) {
         // on select un utilisateur avec son prenom
@@ -77,6 +88,11 @@ class UtilisateurController {
             return undefined;
         }
         
+    }
+
+    'Get le type d\'un user'
+    async getUserCategory(userID) {
+        const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
     }
 
 

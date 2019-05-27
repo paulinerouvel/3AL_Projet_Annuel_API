@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const UtilisateurController = require('../controllers/utilisateur_controller');
 const Utilisateur = require('../models/utilisateur_model');
 
-
 const router = express.Router();
 router.use(bodyParser.json());
 
@@ -69,11 +68,13 @@ if(mail != undefined && mot_de_passe != undefined){
 
     if(userFound != undefined){
         
+        let userCategory = UtilisateurController.getUserCategory(userFound.id)
         bcrypt.compare(mot_de_passe, userFound.mdp, function(errBycrypt, resBycrypt){
             if(resBycrypt){
                 return res.status(200).json({
                     'userId' : userFound.id,
-                    'typeUtil': userFound.status,
+                    'userCategory': userCategory,
+                   // 'typeUtil': userFound.status, normalement c'est pas ça le type
                     'token' : jwtUtils.generateToken(userFound)
                 });
             }
@@ -87,6 +88,16 @@ if(mail != undefined && mot_de_passe != undefined){
 }
 res.status(404);
 });
+
+// ajouter 1 catégorie à un utilisateur
+router.post('/category', async (req, res) => {
+
+    user_has_category_id = req.body.categoryUserId;
+    userId = req.body.userId;
+    UtilisateurController.addUser_has_category(utilisateur_has_category_id, userId)
+});
+
+
 
 //Get Functions
 router.get('/', async (req, res) => {
@@ -120,6 +131,18 @@ router.get('/', async (req, res) => {
      }
  
  });
+
+
+ router.get('/category', async (req, res) => {
+    const userId = req.query.userId;
+
+    categoryId = await UtilisateurController.getUserCategory(userId);
+    if (categoryId){
+        return json(categoryId);
+    }
+    return res.status(408).end();
+    
+});
 
 
 // PUT FUNCTION
