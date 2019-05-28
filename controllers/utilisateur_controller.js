@@ -90,7 +90,7 @@ class UtilisateurController {
         
     }
 
-    'Get le type d\'un user'
+    //Get le type d\'un user
     async getUserCategory(userID) {
         const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
     }
