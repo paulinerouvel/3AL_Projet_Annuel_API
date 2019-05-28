@@ -1,5 +1,6 @@
 const Database = require('../models/database');
 const Utilisateur = require('../models/utilisateur_model');
+const Utilisateur_has_categorie = require('../models/utilisateur_has_categorie_model');
 class UtilisateurController {
     
     async partnerApply(newUser) {
@@ -93,6 +94,10 @@ class UtilisateurController {
     //Get le type d\'un user
     async getUserCategory(userID) {
         const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
+        const rows = res[0];
+        if (rows.length>0) {
+            return new Utilisateur_has_categorie(rows[0].user_has_category_id);
+        }
     }
 
 
