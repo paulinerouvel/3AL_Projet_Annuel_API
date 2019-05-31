@@ -41,6 +41,7 @@ class UtilisateurController {
     async addUser_has_category(user_has_category_id, user_id) {
         try {
             const res = await Database.connection.execute('INSERT INTO utilisateur_has_categorie (Categorie_utilisateur_id, Utilisateur_id) VALUES (?, ?)', [user_has_category_id, utilisateur_id]);
+            return res;
         }
         catch {
             return undefined;
