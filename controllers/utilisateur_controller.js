@@ -96,7 +96,8 @@ class UtilisateurController {
         const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
         const rows = res[0];
         if (rows.length>0) {
-            return new Utilisateur_has_categorie(rows[0].user_has_category_id);
+            console.log("test :", rows[0].Categorie_utilisateur_id);
+            return rows[0].Categorie_utilisateur_id;
         }
     }
 

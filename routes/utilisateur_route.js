@@ -44,7 +44,6 @@ router.post('/register', async (req, res) => {
 
     const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville, 
         codePostal, pseudo, mdp , photo, desc, tailleOrganisme, statut, siret, dateDeNaissance, nbPointsSourire);
-    
     UtilisateurController.addUser(user).then(() => {
         res.status(201).end(); // status created
     }).catch((err)=> {
@@ -68,7 +67,8 @@ if(mail != undefined && mot_de_passe != undefined){
 
     if(userFound != undefined){
         
-        let userCategory = UtilisateurController.getUserCategory(userFound.id)
+        let userCategory = await UtilisateurController.getUserCategory(userFound.id);
+        console.log("user category :", userCategory)
         bcrypt.compare(mot_de_passe, userFound.mdp, function(errBycrypt, resBycrypt){
             if(resBycrypt){
                 return res.status(200).json({
@@ -94,7 +94,12 @@ router.post('/category', async (req, res) => {
 
     user_has_category_id = req.body.categoryUserId;
     userId = req.body.userId;
-    UtilisateurController.addUser_has_category(utilisateur_has_category_id, userId)
+    UtilisateurController.addUser_has_category(utilisateur_has_category_id, userId).then(() => {
+        res.status(200).end(); // status OK
+    }).catch((err)=> {
+        console.log(err);
+        res.status(409).end(); // Status conflict
+    });
 });
 
 
@@ -110,6 +115,7 @@ router.get('/', async (req, res) => {
             return res.json(user);
         }
         return res.status(408).end();
+
     }
  
     //get user by mail
@@ -135,7 +141,7 @@ router.get('/', async (req, res) => {
 
  router.get('/category', async (req, res) => {
     const userId = req.query.userId;
-
+    console.log("je rentre dans /category");
     categoryId = await UtilisateurController.getUserCategory(userId);
     if (categoryId){
         return json(categoryId);
