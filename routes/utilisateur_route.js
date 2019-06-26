@@ -28,7 +28,7 @@ router.post('/register', async (req, res) => {
     const photo = req.body.photo;
     const desc= req.body.desc;
     const tailleOrganisme = req.body.tailleOrganisme;
-    const statut = req.body.statut;
+    const estValide = req.body.estValide;
     const siret = req.body.siret;
     const dateDeNaissance = req.body.dateDeNaissance;
     const nbPointsSourire = req.body.nbPointsSourire;
@@ -43,14 +43,14 @@ router.post('/register', async (req, res) => {
     }
 
     const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville, 
-        codePostal, pseudo, mdp , photo, desc, tailleOrganisme, statut, siret, dateDeNaissance, nbPointsSourire);
-    UtilisateurController.addUser(user).then(() => {
-        res.status(201).end(); // status created
-    }).catch((err)=> {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
-
+        codePostal, pseudo, mdp , photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
+    
+        UtilisateurController.addUser(user).then(() => {
+            res.status(201).end(); // status created
+        }).catch((err)=> {
+            console.log(err);
+            res.status(409).end(); // status conflict
+        })
 });
 
 
@@ -169,13 +169,13 @@ router.put('/', async (req, res) => {
     let photo = req.body.photo;
     let desc= req.body.desc;
     let tailleOrganisme = req.body.tailleOrganisme;
-    let statut = req.body.statut;
+    let estValide = req.body.estValide;
     let siret = req.body.siret;
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
     const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville, 
-        codePostal, pseudo, mdp , photo, desc, tailleOrganisme, statut, siret, dateDeNaissance, nbPointsSourire);
+        codePostal, pseudo, mdp , photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
     
     UtilisateurController.updateUser(user).then(() => {
         res.status(200).end(); // status OK
