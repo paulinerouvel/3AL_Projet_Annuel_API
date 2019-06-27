@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
-//Création d'un utilisateur
+//Création d'un particulier
 router.post('/register', async (req, res) => {
 
     const libelle = req.body.libelle;
@@ -42,15 +42,26 @@ router.post('/register', async (req, res) => {
         res.status(409).end(); // status conflict
     }
 
+
+    if(libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
+        && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined 
+        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined)
+        {
+
     const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville, 
         codePostal, pseudo, mdp , photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
-    
-        UtilisateurController.addUser(user).then(() => {
-            res.status(201).end(); // status created
-        }).catch((err)=> {
-            console.log(err);
-            res.status(409).end(); // status conflict
-        })
+
+        
+            UtilisateurController.addUser(user).then(() => {
+                res.status(201).end(); // status created
+            }).catch((err)=> {
+                console.log(err);
+                res.status(409).end(); // status conflict
+            });
+        }
+        else{
+            res.status(400).end();
+        }
 });
 
 
