@@ -45,8 +45,7 @@ router.post('/register', async (req, res) => {
 
     if(libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
         && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined 
-        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined
-        && statut != undefined)
+        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined)
         {
 
     const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville, 
