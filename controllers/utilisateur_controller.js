@@ -104,6 +104,24 @@ class UtilisateurController {
     }
 
 
+    //Get tout les users par type
+    async getUsersByCategory(category) {
+
+        /*;*/
+        const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id', [category]);
+        const rows = res[0];
+
+        console.log(rows)
+        if (rows.length>0) {
+            return res[0];
+            // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
+            //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
+            //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+            //     ;
+        }
+    }
+
+
 
 
     //*******************************************         UPDATE FUNCTIONS        ***************************************************************************************

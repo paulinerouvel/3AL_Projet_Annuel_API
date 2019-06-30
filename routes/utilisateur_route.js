@@ -32,6 +32,7 @@ router.post('/register', async (req, res) => {
     const siret = req.body.siret;
     const dateDeNaissance = req.body.dateDeNaissance;
     const nbPointsSourire = req.body.nbPointsSourire;
+    const statut = req.body.statut;
 
     let cryptedPass = await bcrypt.hashSync(mdp, 5);
     try {
@@ -45,13 +46,14 @@ router.post('/register', async (req, res) => {
 
     if(libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
         && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined 
-        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined)
+        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined
+        && statut != undefined)
         {
 
     const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville, 
         codePostal, pseudo, mdp , photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
 
-        
+
             UtilisateurController.addUser(user).then(() => {
                 res.status(201).end(); // status created
             }).catch((err)=> {
@@ -150,16 +152,32 @@ router.get('/', async (req, res) => {
  });
 
 
+ //get category of a user
  router.get('/category', async (req, res) => {
     const userId = req.query.userId;
     console.log("je rentre dans /category");
     categoryId = await UtilisateurController.getUserCategory(userId);
     if (categoryId){
-        return json(categoryId);
+        return res.json(categoryId);
     }
     return res.status(408).end();
     
 });
+
+//get all user by categories
+router.get('/allByCategory', async (req, res) => {
+
+    const type = req.query.type;
+
+    const result = await UtilisateurController.getUsersByCategory(type);
+
+    if (result){
+        return res.json(result);
+    }
+    return res.status(408).end();
+    
+});
+
 
 
 // PUT FUNCTION
