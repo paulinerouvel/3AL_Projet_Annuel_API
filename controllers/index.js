@@ -8,6 +8,7 @@ module.exports = {
     alerteController: require('./alerte_controller'),
     motCleController: require('./motCle_controller'),
     donController: require('./don_controller'),
-    entrepotController: require('./entrepot_controller')
+    entrepotController: require('./entrepot_controller'),
+    listController: require('./list_controller')
     
   };
