@@ -32,7 +32,6 @@ router.post('/register', async (req, res) => {
     const siret = req.body.siret;
     const dateDeNaissance = req.body.dateDeNaissance;
     const nbPointsSourire = req.body.nbPointsSourire;
-    const statut = req.body.statut;
 
     let cryptedPass = await bcrypt.hashSync(mdp, 5);
     try {
