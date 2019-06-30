@@ -12,6 +12,9 @@ const Entrepot = require('../models/entrepot_model');
 const router = express.Router();
 router.use(bodyParser.json());
 
+    /***********************************************************************************/
+    /**                                   POST REQUESTS                               **/
+    /***********************************************************************************/
 
 //Création d'un entrepot
 router.post('/', async (req, res) => {
@@ -26,10 +29,10 @@ router.post('/', async (req, res) => {
     const placeLibre = req.body.placeLibre;
 
     const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
-    
+
     EntrepotController.addWarehouse(warehouse).then(() => {
         res.status(201).end(); // status created
-    }).catch((err)=> {
+    }).catch((err) => {
         console.log(err);
         res.status(409).end(); // status conflict
     })
@@ -38,41 +41,46 @@ router.post('/', async (req, res) => {
 
 
 
+    /***********************************************************************************/
+    /**                                   GET  REQUESTS                               **/
+    /***********************************************************************************/
+
 //Get Functions
 router.get('/', async (req, res) => {
 
     //get entrepot by id
-    if(req.query.id)
-    {
+    if (req.query.id) {
         const warehouse = await EntrepotController.getWarehouseByID(req.query.id);
-        if(warehouse) {
+        if (warehouse) {
             return res.json(warehouse);
         }
         return res.status(408).end();
     }
- 
+
     //get entrepot by ville
-    else if(req.body.ville !== undefined){
-         const warehouse = await EntrepotController.getWarehouseByCity(req.body.ville);
-         if(warehouse) {
-             return res.json(warehouse);
-         }
-         return res.status(408).end();
-     }
+    else if (req.body.ville !== undefined) {
+        const warehouse = await EntrepotController.getWarehouseByCity(req.body.ville);
+        if (warehouse) {
+            return res.json(warehouse);
+        }
+        return res.status(408).end();
+    }
 
-     //get all entrepots
-     else {
-         const warehouses = await EntrepotController.getAllWarehouse();
-         if(warehouses){
-             return res.json(warehouses);
-         }
-         return res.status(408).end();
-     }
- 
- });
+    //get all entrepots
+    else {
+        const warehouses = await EntrepotController.getAllWarehouse();
+        if (warehouses) {
+            return res.json(warehouses);
+        }
+        return res.status(408).end();
+    }
+
+});
 
 
-// PUT FUNCTION
+    /***********************************************************************************/
+    /**                                   PUT  REQUESTS                               **/
+    /***********************************************************************************/
 
 //Update d'un entrepot
 router.put('/', async (req, res) => {
@@ -86,25 +94,26 @@ router.put('/', async (req, res) => {
     const photo = req.body.photo;
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
-    
+
 
     const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
-    
+
     EntrepotController.updateWarehouse(warehouse).then(() => {
         res.status(200).end(); // status OK
-    }).catch((err)=> {
+    }).catch((err) => {
         console.log(err);
         res.status(409).end(); // status conflict
     })
 
 });
 
-
-// DELETE FUNCTION
+    /***********************************************************************************/
+    /**                                 DELETE REQUESTS                               **/
+    /***********************************************************************************/
 router.delete('/:id', async (req, res) => {
-    if(req.params.id !== undefined){
+    if (req.params.id !== undefined) {
         let a = await EntrepotController.deleteWarehouse(req.params.id);
-        if(a){
+        if (a) {
             return res.status(200).end();
         }
         return res.status(408).end();

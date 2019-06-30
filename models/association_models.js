@@ -10,11 +10,11 @@ class Association {
         this.ville = ville;
         this.codePostal = codePostal;
         this.mail = mail;
-        this.tel=tel;
+        this.tel = tel;
         this.nomPresident = nomPresident;
         this.prenomPresident = prenomPresident;
         this.photo = photo;
-        this.desc=desc;
+        this.desc = desc;
     }
 }
 

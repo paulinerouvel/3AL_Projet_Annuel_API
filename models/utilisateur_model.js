@@ -8,14 +8,14 @@ class Utilisateur {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        this.tel=tel;
+        this.tel = tel;
         this.adresse = adresse;
         this.ville = ville;
         this.codePostal = codePostal;
         this.pseudo = pseudo;
         this.mdp = mdp;
         this.photo = photo || null;
-        this.desc=desc || null;
+        this.desc = desc || null;
         this.tailleOrganisme = tailleOrganisme || 0;
         this.estValide = estValide;
         this.siret = siret;

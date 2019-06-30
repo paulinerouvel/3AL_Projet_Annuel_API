@@ -12,7 +12,7 @@ class Entrepot {
     this.photo = photo || null;
     this.placeTotal = placeTotal;
     this.placeLibre = placeLibre;
-    
+
   }
 }
 

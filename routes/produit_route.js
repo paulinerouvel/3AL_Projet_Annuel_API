@@ -8,10 +8,9 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
-// router.get('/', async (req, res) => {
-
-// )};
-
+    /***********************************************************************************/
+    /**                                   POST REQUESTS                               **/
+    /***********************************************************************************/
 
 //Création d'un produit
 router.post('/', (req, res, next) => {
@@ -28,9 +27,9 @@ router.post('/', (req, res, next) => {
     const listProduct_id = req.body.listProduct_id
     const entrepotwm_id = req.body.entrepotwm_id
 
-    ProduitController.addProduct(libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() =>{
+    ProduitController.addProduct(libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() => {
         res.status(201).end(); // status created
-    }).catch((err)=> {
+    }).catch((err) => {
         console.log(err);
         res.status(409).end(); // status conflict
     })
@@ -50,38 +49,40 @@ router.post('/Category', (req, res, next) => {
 
 });
 
-// FUNCTIONS GET DES PRODUITS
+
+
+    /***********************************************************************************/
+    /**                                   GET  REQUESTS                               **/
+    /***********************************************************************************/
 router.get('/', async (req, res) => {
     //get product by id
-    if(req.query.id)
-    {
+    if (req.query.id) {
         const produit = await ProduitController.getProductByID(req.query.id);
-        if(produit) {
+        if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
- });
+});
 
- router.get('/warehouse', async (req, res) => {
+router.get('/warehouse', async (req, res) => {
     //get product by warehouse_id
-    if(req.query.id)
-    {
+    if (req.query.id) {
         const produit = await ProduitController.getAllProductsByWarehouse(req.query.id);
-        if(produit) {
+        if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
- });
+});
 
- router.get('/enRayon', async (req, res) => {
-//get all products en rayon
+router.get('/enRayon', async (req, res) => {
+    //get all products en rayon
     const produit = await ProduitController.getAllProductsEnRayon()
-     if(produit) {
-         return res.json(produit);
-     }
-     return res.status(408).end();
- })
+    if (produit) {
+        return res.json(produit);
+    }
+    return res.status(408).end();
+})
 
 module.exports = router;

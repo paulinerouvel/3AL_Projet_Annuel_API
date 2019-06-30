@@ -7,9 +7,15 @@ const AssociationController = require('../controllers/association_controllers');
 const router = express.Router();
 router.use(bodyParser.json());
 
+
+
+    /***********************************************************************************/
+    /**                                   POST REQUESTS                               **/
+    /***********************************************************************************/
+
 //Création d'une association
 router.post('/', (req, res, next) => {
-    
+
     const libelle = req.body.libelle;
     console.log(libelle);
     const taille = req.body.taille;
@@ -25,7 +31,7 @@ router.post('/', (req, res, next) => {
 
     AssociationController.addAssociation(libelle, taille, adresse, ville, codePostal, mail, tel, nomPresident, prenomPresident, photo, desc).then(() => {
         res.status(201).end(); // status created
-    }).catch((err)=> {
+    }).catch((err) => {
         console.log(err);
         res.status(409).end(); // status conflict
     })

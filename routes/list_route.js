@@ -11,27 +11,29 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
+    /***********************************************************************************/
+    /**                                   GET  REQUESTS                               **/
+    /***********************************************************************************/
+
 router.get('/', async (req, res) => {
     //get all list by User
-    if(req.query.idUser)
-    {
+    if (req.query.idUser) {
         const produit = await ListController.getAllListsByUser(req.query.idUser);
-        if(produit) {
+        if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
-    else{
+    else {
 
     }
 });
 
 router.get('/products', async (req, res) => {
     //get all product by list
-    if(req.query.id)
-    {
+    if (req.query.id) {
         const produit = await ListController.getAllProductsByList(req.query.id);
-        if(produit) {
+        if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();

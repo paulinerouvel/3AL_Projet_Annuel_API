@@ -8,12 +8,15 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
+    /***********************************************************************************/
+    /**                                   POST REQUESTS                               **/
+    /***********************************************************************************/
 router.post('/', (req, res, next) => {
     const date = req.body.date;
     const utilisateurID = req.body.utilisateurID;
-    CommandeController.addOrder(date, utilisateurID).then(()=> {
+    CommandeController.addOrder(date, utilisateurID).then(() => {
         res.status(201).end(); // status created
-    }).catch((err)=>{
+    }).catch((err) => {
         res.status(409).end()
     })
 });

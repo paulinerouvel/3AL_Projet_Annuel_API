@@ -53,7 +53,7 @@ class MotCleController {
     /***********************************************************************************/
 
 
-    
+
 
     // A PREMIERE VUE PAS BESOIN D'UPDATE POUR LES MOT CLES
 

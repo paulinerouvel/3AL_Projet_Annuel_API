@@ -13,35 +13,44 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
+    /***********************************************************************************/
+    /**                                   POST REQUESTS                               **/
+    /***********************************************************************************/
+
+
 //Création d'une alerte
 router.post('/', async (req, res) => {
 
     const libelle = req.body.libelle;
     const date = req.body.date;
     const utilisateur_id = req.body.utilisateur_id;
-    
 
-    const alert = new Alert (-1, libelle, date, utilisateur_id);
 
-    AlerteController.addAlerte(alert).then(() =>{
+    const alert = new Alert(-1, libelle, date, utilisateur_id);
+
+    AlerteController.addAlerte(alert).then(() => {
         res.status(201).end(); // status created
-    }).catch((err)=> {
+    }).catch((err) => {
         console.log(err);
         res.status(409).end(); // status conflict
     })
-    
+
 });
+
+
+    /***********************************************************************************/
+    /**                                   GET REQUESTS                                **/
+    /***********************************************************************************/
 
 //Get Functions
 router.get('/', async (req, res) => {
 
     //get all alerts by user_id
-    if(req.query.id)
-    {
+    if (req.query.id) {
         console.log("j'essaye de get les alert par user id");
         console.log(req.query.id);
         const alert = await AlerteController.getAllAlertByUserID(req.query.id);
-        if(alert) {
+        if (alert) {
             return res.json(alert);
         }
         return res.status(408).end();
@@ -51,7 +60,7 @@ router.get('/', async (req, res) => {
     {
         console.log(req.body.date);
         const alert = await AlerteController.getAlertOfTheDay(req.query.date);
-        if(alert) {
+        if (alert) {
             return res.json(alert);
         }
         return res.status(408).end();
@@ -59,27 +68,25 @@ router.get('/', async (req, res) => {
     else {
         {
             const alert = await AlerteController.getAllAlerts();
-            if(alert) {
+            if (alert) {
                 return res.json(alert);
             }
             return res.status(408).end();
         }
     }
 
- });
+});
 
 
-// PUT FUNCTION
-
-// No PUT FUNCTION
-
-// DELETE FUNCTION
+    /***********************************************************************************/
+    /**                                 DELETE REQUESTS                               **/
+    /***********************************************************************************/
 router.delete('/:id/:idUser', async (req, res) => {
-    if(req.params.id !== undefined){
+    if (req.params.id !== undefined) {
         console.log("route delete");
         console.log(req.params.id, + "\n" + req.params.idUser);
         const result = await AlerteController.deleteAlert(req.params.id, req.params.idUser);
-        if(result){
+        if (result) {
             return res.status(200).end();
         }
         return res.status(408).end();
