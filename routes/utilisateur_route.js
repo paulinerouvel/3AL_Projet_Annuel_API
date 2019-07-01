@@ -157,7 +157,7 @@ router.get('/', async (req, res) => {
 router.get('/category', async (req, res) => {
     const userId = req.query.userId;
     console.log("je rentre dans /category");
-    categoryId = await UtilisateurController.getUserCategory(userId);
+    let categoryId = await UtilisateurController.getUserCategory(userId);
     if (categoryId) {
         return res.json(categoryId);
     }
