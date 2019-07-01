@@ -11,9 +11,9 @@ const Utilisateur = require('../models/utilisateur_model');
 const router = express.Router();
 router.use(bodyParser.json());
 
-    /***********************************************************************************/
-    /**                                   POST REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 //Création d'un particulier
 router.post('/register', async (req, res) => {
 
@@ -104,9 +104,9 @@ router.post('/login', async (req, res) => {
 // ajouter 1 catégorie à un utilisateur
 router.post('/category', async (req, res) => {
 
-    user_has_category_id = req.body.categoryUserId;
-    userId = req.body.userId;
-    UtilisateurController.addUser_has_category(utilisateur_has_category_id, userId).then(() => {
+    let user_has_category_id = req.body.categoryUserId;
+    let userId = req.body.userId;
+    UtilisateurController.addUser_has_category(user_has_category_id, userId).then(() => {
         res.status(200).end(); // status OK
     }).catch((err) => {
         console.log(err);
@@ -116,9 +116,9 @@ router.post('/category', async (req, res) => {
 
 
 
-    /***********************************************************************************/
-    /**                                   GET  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET  REQUESTS                               **/
+/***********************************************************************************/
 
 router.get('/', async (req, res) => {
 
@@ -181,9 +181,9 @@ router.get('/allByCategory', async (req, res) => {
 
 
 
-    /***********************************************************************************/
-    /**                                   PUT  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   PUT  REQUESTS                               **/
+/***********************************************************************************/
 router.put('/', async (req, res) => {
     const id = req.body.id;
     let libelle = req.body.libelle;
@@ -217,9 +217,9 @@ router.put('/', async (req, res) => {
 });
 
 
-    /***********************************************************************************/
-    /**                                   DELETE REQUESTS                             **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   DELETE REQUESTS                             **/
+/***********************************************************************************/
 router.delete('/:id', async (req, res) => {
     console.log("route delete, params = " + req.params.id);
     if (req.params.id !== undefined) {
