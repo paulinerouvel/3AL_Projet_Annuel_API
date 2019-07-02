@@ -18,7 +18,8 @@ router.post('/', (req, res, next) => {
     const desc = req.body.desc;
     const photo = req.body.photo;
     const prix = req.body.prix;
-    const reduction = req.body.reduction;
+    const prixInitial = req.body.prixInitial;
+    const quantite = req.body.quantite;
     const dlc = req.body.dlc;
     const codeBarre = req.body.codeBarre;
     const enRayon = req.body.enRayon;
@@ -27,7 +28,7 @@ router.post('/', (req, res, next) => {
     const listProduct_id = req.body.listProduct_id
     const entrepotwm_id = req.body.entrepotwm_id
 
-    ProduitController.addProduct(libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() => {
+    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() => {
         res.status(201).end(); // status created
     }).catch((err) => {
         console.log(err);

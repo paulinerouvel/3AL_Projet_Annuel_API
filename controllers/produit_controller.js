@@ -11,11 +11,11 @@ class ProduitController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    addProduct(libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
+    addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
 
-        return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `reduction`, `DLC`,' +
+        return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, quantite, `DLC`,' +
             '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste de Produit_id`, `EntrepotWM_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);',
-            [libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id]);
+            [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id]);
 
     }
 
@@ -34,7 +34,7 @@ class ProduitController {
         const results = await Database.connection.query('SELECT * FROM produit WHERE produit.id = ?', [id]);
         const rows = results[0];
         if (rows.length > 0) {
-            return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].reduction, rows[0].dlc, rows[0].codeBarre,
+            return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].dlc, rows[0].codeBarre,
                 rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].ListeDeProduit_id, rows[0].EntrepotWM_id);
         }
         return undefined;
@@ -44,7 +44,7 @@ class ProduitController {
         // on select les produits en rayon chez wastemart
         try {
             const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = true');
-            return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.reduction, rows.dlc, rows.codeBarre,
+            return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
         }
         catch (err) {
@@ -61,7 +61,7 @@ class ProduitController {
     async getAllProductsByWarehouse(warehouse_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE EntrepotWM_id = ?', [warehouse_ID]);
-            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.reduction, rows.dlc, rows.codeBarre,
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
         }
         catch (err) {
@@ -75,7 +75,7 @@ class ProduitController {
     async getAllProductsOfAListByWarehouse(warehouse_ID, listProduct_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE EntrepotWM_id = ? AND Liste de Produit_id = ?', [warehouse_ID, listProduct_ID]);
-            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.reduction, rows.dlc, rows.codeBarre,
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
         }
         catch (err) {
@@ -116,10 +116,10 @@ class ProduitController {
     /***********************************************************************************/
     async updateProduct(product) {
         try {
-            const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?, prix = ?, reduction = ?, dlc = ?, codeBarre = ?,' +
+            const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, dlc = ?, codeBarre = ?,' +
                 'enRayon = ?, dateMiseEnRayon = ?, CategorieProduit_id = ?, Liste de Produit_id = ?, EntrepotWM_id = ?' +
                 'WHERE id = ?',
-                [product.libelle, product.desc, product.photo, product.prix, product.reduction, product.dlc, product.codeBarre, product.enRayon,
+                [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite, product.dlc, product.codeBarre, product.enRayon,
                 product.dateMiseEnRayon, product.CategorieProduit_id, product.listProduct_ID, product.EntrepotWM_id, product.id]);
             return res;
         }

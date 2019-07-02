@@ -2,13 +2,14 @@
 
 class Produit {
 
-  constructor(id, libelle, desc, photo, prix, reduction, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
+  constructor(id, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
     this.id = id;
     this.libelle = libelle;
     this.desc = desc;
     this.photo = photo;
     this.prix = prix;
-    this.reduction = reduction || null;
+    this.prixInitial = prixInitial || null;
+    this.quantite = quantite || null;
     this.dlc = dlc;
     this.codeBarre = codeBarre || null;
     this.enRayon = enRayon || false;
