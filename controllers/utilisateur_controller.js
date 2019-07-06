@@ -13,7 +13,7 @@ class UtilisateurController {
     //     // crée une demande d'inscription 
     //     // A RETESTER
     //     try {
-    //         const res = await Database.connection.execute('INSERT INTO `demande d\'inscription` (`libelle`, `adresse`, `ville`,' +
+    //         const res = await Database.connection.execute('INSERT INTO `demande_inscription` (`libelle`, `adresse`, `ville`,' +
     //             '`codePostal`, `pseudo`, `mdp`, presentation, mail, tel, `siret`, type, `utilisateur_id`) ' +
     //             'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
     //             [newUser.libelle, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo, newUser.mdp,

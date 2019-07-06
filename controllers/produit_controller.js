@@ -14,14 +14,14 @@ class ProduitController {
     addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
 
         return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, quantite, `DLC`,' +
-            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste de Produit_id`, `EntrepotWM_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);',
+            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);',
             [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id]);
 
     }
 
 
     addProductCategory(libelle) {
-        return Database.connection.execute('INSERT INTO categorieproduit (libelle) VALUES (?)', [libelle]);
+        return Database.connection.execute('INSERT INTO categorie_produit (libelle) VALUES (?)', [libelle]);
     }
 
 
@@ -60,7 +60,7 @@ class ProduitController {
     // On récupère tous les produits qui sont dans un entrepot
     async getAllProductsByWarehouse(warehouse_ID) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE EntrepotWM_id = ?', [warehouse_ID]);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ?', [warehouse_ID]);
             return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
         }
@@ -74,7 +74,7 @@ class ProduitController {
     // On récupère tous les produits d'une liste qui sont dans un entrepot ...... Pas sûr que ce soit nécessaire...
     async getAllProductsOfAListByWarehouse(warehouse_ID, listProduct_ID) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE EntrepotWM_id = ? AND Liste de Produit_id = ?', [warehouse_ID, listProduct_ID]);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ? AND Liste_Produit_id = ?', [warehouse_ID, listProduct_ID]);
             return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
         }
@@ -91,7 +91,7 @@ class ProduitController {
 
     async getProductCategoryByID(id) {
         // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM categorieproduit WHERE categorieproduit.id = ?', [id]);
+        const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorieproduit.id = ?', [id]);
         const rows = results[0];
         if (rows.length > 0) {
             return new CategorieProduit(rows[0].id, rows[0].libelle);
@@ -101,7 +101,7 @@ class ProduitController {
 
     async getAllProductCategories() {
         try {
-            const res = await Database.connection.query('SELECT * FROM `categorieproduit`');
+            const res = await Database.connection.query('SELECT * FROM `categorie_produit`');
             return res[0].map((rows) => new CategorieProduit(rows[0].id, rows[0].libelle));
         }
         catch (err) {
@@ -117,7 +117,7 @@ class ProduitController {
     async updateProduct(product) {
         try {
             const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, dlc = ?, codeBarre = ?,' +
-                'enRayon = ?, dateMiseEnRayon = ?, CategorieProduit_id = ?, Liste de Produit_id = ?, EntrepotWM_id = ?' +
+                'enRayon = ?, dateMiseEnRayon = ?, CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?' +
                 'WHERE id = ?',
                 [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite, product.dlc, product.codeBarre, product.enRayon,
                 product.dateMiseEnRayon, product.CategorieProduit_id, product.listProduct_ID, product.EntrepotWM_id, product.id]);
@@ -130,7 +130,7 @@ class ProduitController {
 
     async updateProductCategory(categoryProduct) {
         try {
-            const res = await Database.connection.execute('UPDATE `categorieproduit` SET libelle = ?' +
+            const res = await Database.connection.execute('UPDATE `categorie_produit` SET libelle = ?' +
                 'WHERE id = ?',
                 [categoryProduct.libelle, categoryProduct.id]);
             return res;
@@ -164,7 +164,7 @@ class ProduitController {
     async deleteProductCategory(id) {
         try {
 
-            const res = await Database.connection.execute('DELETE FROM categorieproduit WHERE categorieproduct.id = ?', [id]);
+            const res = await Database.connection.execute('DELETE FROM categorie_produit WHERE categorieproduct.id = ?', [id]);
 
 
             return res;

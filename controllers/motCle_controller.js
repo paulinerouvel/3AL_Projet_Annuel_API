@@ -13,7 +13,7 @@ class MotCleController {
     async addMotCle(motCle) {
 
         // crée un new mot clé (insert)
-        return await Database.connection.execute('INSERT INTO `motcle` (`libelle`, Alerte_id) VALUES (?, ?);', [motCle.libelle, motCle.alerte_id]);
+        return await Database.connection.execute('INSERT INTO `mot_cle` (`libelle`, Alerte_id) VALUES (?, ?);', [motCle.libelle, motCle.alerte_id]);
     }
 
 
@@ -24,7 +24,7 @@ class MotCleController {
 
     async getMotCleByAlert_ID(alerte_id) {
         // on select les alertes avec l'id d'un utilisateur
-        const results = await Database.connection.query('SELECT * FROM motcle WHERE motcle.alerte_id = ?', [alerte_id]);
+        const results = await Database.connection.query('SELECT * FROM mot_cle WHERE mot_cle.alerte_id = ?', [alerte_id]);
         try {
             return results[0].map((rows) => new MotCle(rows.id, rows.libelle, rows.Alerte_id));
         }
@@ -37,7 +37,7 @@ class MotCleController {
 
     async getAllMotCle() {
         try {
-            const res = await Database.connection.query('SELECT * FROM `motcle`');
+            const res = await Database.connection.query('SELECT * FROM `mot_cle`');
             return res[0].map((rows) => new MotCle(rows.id, rows.libelle, rows.alerte_id)
             );
         }
@@ -63,7 +63,7 @@ class MotCleController {
     async deleteMotCle(motCleId, alerte_id) {
         try {
 
-            const res = await Database.connection.execute('DELETE FROM motcle WHERE motcle.id = ? AND motCle.Alerte_id = ?', [motCleId, alerte_id]);
+            const res = await Database.connection.execute('DELETE FROM mot_cle WHERE mot_cle.id = ? AND mot_cle.Alerte_id = ?', [motCleId, alerte_id]);
 
 
             return res;

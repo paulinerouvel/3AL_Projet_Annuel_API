@@ -11,7 +11,7 @@ class EntrepotController {
 
     async addWarehouse(newWarehouse) {
 
-        const res = await Database.connection.execute('INSERT INTO `entrepotwm` (`libelle`, `adresse`, `ville`, `codePostal`, `desc`, `photo`, `placeTotal`, `placeLibre`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
+        const res = await Database.connection.execute('INSERT INTO `entrepot` (`libelle`, `adresse`, `ville`, `codePostal`, `desc`, `photo`, `placeTotal`, `placeLibre`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
             [newWarehouse.libelle, newWarehouse.adresse, newWarehouse.ville, newWarehouse.codePostal,
             newWarehouse.desc, newWarehouse.photo, newWarehouse.placeTotal, newWarehouse.placeLibre]);
         return res;
@@ -27,7 +27,7 @@ class EntrepotController {
 
     async getWarehouseByID(id) {
         // on select un entrepot avec son id
-        const results = await Database.connection.query('SELECT * FROM entrepotwm WHERE entrepotwm.id = ?', [id]);
+        const results = await Database.connection.query('SELECT * FROM entrepot WHERE entrepot.id = ?', [id]);
         const rows = results[0];
         if (rows.length > 0) {
             return new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
@@ -38,7 +38,7 @@ class EntrepotController {
 
     async getWarehouseByCity(city) {
         // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM entrepotwm WHERE entrepotwm.ville = ?', [city]);
+        const results = await Database.connection.query('SELECT * FROM entrepot WHERE entrepot.ville = ?', [city]);
         const rows = results[0];
         if (rows.length > 0) {
             return new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
@@ -51,7 +51,7 @@ class EntrepotController {
 
     async getAllWarehouse() {
         try {
-            const res = await Database.connection.query('SELECT * FROM `entrepotwm`');
+            const res = await Database.connection.query('SELECT * FROM `entrepot`');
             return res[0].map((rows) => new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
                 rows[0].desc, rows[0].photo, rows[0].placeTotal, rows[0].placeLibre))
         }
@@ -70,7 +70,7 @@ class EntrepotController {
     /***********************************************************************************/
     async updateWarehouse(warehouse) {
         try {
-            const res = await Database.connection.execute('UPDATE `entrepotwm` SET libelle = ?, adresse = ?, ville = ?,' +
+            const res = await Database.connection.execute('UPDATE `entrepot` SET libelle = ?, adresse = ?, ville = ?,' +
                 'codePostal = ?, desc = ?, photo = ?, placeTotal = ?, placeLibre = ?' +
                 'WHERE id = ?',
                 [warehouse.libelle, warehouse.adresse, warehouse.ville, warehouse.codePostal,
@@ -92,7 +92,7 @@ class EntrepotController {
     async deleteWarehouse(id) {
         try {
 
-            const res = await Database.connection.execute('DELETE FROM entrepotwm WHERE entrepotwm.id = ?', [id]);
+            const res = await Database.connection.execute('DELETE FROM entrepot WHERE entrepot.id = ?', [id]);
             return res;
         }
         catch (err) {
