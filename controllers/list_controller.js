@@ -27,8 +27,9 @@ class ListController {
     async getAllProductsByList(listProduct_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE `Liste_Produit_id` = ?', [listProduct_ID]);
-            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.quantite, rows.dlc, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
+            console.log(res[0])
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre, 
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.Entrepot_id));
         }
         catch (err) {
             console.log(err);
