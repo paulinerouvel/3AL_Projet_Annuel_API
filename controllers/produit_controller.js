@@ -34,8 +34,8 @@ class ProduitController {
         const results = await Database.connection.query('SELECT * FROM produit WHERE produit.id = ?', [id]);
         const rows = results[0];
         if (rows.length > 0) {
-            return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].dlc, rows[0].codeBarre,
-                rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].ListeDeProduit_id, rows[0].EntrepotWM_id);
+            return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].DLC, rows[0].codeBarre,
+                rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id);
         }
         return undefined;
     }
@@ -44,8 +44,8 @@ class ProduitController {
         // on select les produits en rayon chez wastemart
         try {
             const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = true');
-            return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
+            return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id));
         }
         catch (err) {
             console.log(err);
@@ -61,8 +61,8 @@ class ProduitController {
     async getAllProductsByWarehouse(warehouse_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ?', [warehouse_ID]);
-            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.EntrepotWM_id));
         }
         catch (err) {
             console.log(err);
@@ -75,8 +75,8 @@ class ProduitController {
     async getAllProductsOfAListByWarehouse(warehouse_ID, listProduct_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ? AND Liste_Produit_id = ?', [warehouse_ID, listProduct_ID]);
-            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.dlc, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.ListeDeProduit_id, rows.EntrepotWM_id));
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id));
         }
         catch (err) {
             console.log(err);
@@ -116,11 +116,11 @@ class ProduitController {
     /***********************************************************************************/
     async updateProduct(product) {
         try {
-            const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, dlc = ?, codeBarre = ?,' +
+            const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, DLC = ?, codeBarre = ?,' +
                 'enRayon = ?, dateMiseEnRayon = ?, CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?' +
                 'WHERE id = ?',
-                [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite, product.dlc, product.codeBarre, product.enRayon,
-                product.dateMiseEnRayon, product.CategorieProduit_id, product.listProduct_ID, product.EntrepotWM_id, product.id]);
+                [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite, product.DLC, product.codeBarre, product.enRayon,
+                product.dateMiseEnRayon, product.CategorieProduit_id, product.listProduct_ID, product.Entrepot_id, product.id]);
             return res;
         }
         catch {
@@ -170,7 +170,7 @@ class ProduitController {
             return res;
         }
         catch (err) {
-            console.log("error delete tavu : " + err);
+            console.log("error delete: " + err);
             return undefined;
         }
     }
