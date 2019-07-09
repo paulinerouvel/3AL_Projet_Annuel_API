@@ -2,10 +2,11 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SIGN_SECRET = ' SFGQDFB54QSDF5G4W5XV43QGREgdfg54214542sdf24242sf424bjksgdfsqfgZR';
 module.exports = {
-    generateToken(userData) {
+    generateToken(userData, userCategory) {
         return jwt.sign({
             id: userData.id,
-            type: userData.type
+            
+            type: userCategory
             //pas plus d'info que ca car facilement decodable
         },
             JWT_SIGN_SECRET,

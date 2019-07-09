@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
                         'userId': userFound.id,
                         'userCategory': userCategory,
                         // 'typeUtil': userFound.status, normalement c'est pas ça le type
-                        'token': jwtUtils.generateToken(userFound)
+                        'token': jwtUtils.generateToken(userFound, userCategory)
                     });
                 }
                 else {
