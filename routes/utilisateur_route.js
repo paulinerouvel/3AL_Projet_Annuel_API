@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
 
         let userFound = await UtilisateurController.getUserByEmail(mail);
 
-        if (userFound != undefined) {
+        if (userFound != undefined && userFound.estValide == 1) {
 
             let userCategory = await UtilisateurController.getUserCategory(userFound.id);
             console.log("user category :", userCategory)
@@ -98,7 +98,10 @@ router.post('/login', async (req, res) => {
             });
         }
     }
-    res.status(404);
+    else{
+        return res.status(404).end();
+    }
+    
 });
 
 // ajouter 1 catégorie à un utilisateur
