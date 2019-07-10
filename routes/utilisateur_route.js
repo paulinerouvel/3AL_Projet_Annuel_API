@@ -40,6 +40,7 @@ router.post('/register', async (req, res) => {
         mdp = cryptedPass;
     }
     catch (err) {
+        console.log("POUI")
         console.log(err);
         res.status(409).end(); // status conflict
     }
