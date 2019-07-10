@@ -11,11 +11,11 @@ class ProduitController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
+    addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire) {
 
         return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, quantite, `DLC`,' +
-            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);',
-            [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id]);
+            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`, `destinataire`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
+            [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire]);
 
     }
 
@@ -35,7 +35,7 @@ class ProduitController {
         const rows = results[0];
         if (rows.length > 0) {
             return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].DLC, rows[0].codeBarre,
-                rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id);
+                rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id, rows[0].destinataire);
         }
         return undefined;
     }
@@ -45,7 +45,7 @@ class ProduitController {
         try {
             const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = true');
             return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id));
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
         }
         catch (err) {
             console.log(err);
@@ -62,7 +62,7 @@ class ProduitController {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ?', [warehouse_ID]);
             return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.EntrepotWM_id));
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
         }
         catch (err) {
             console.log(err);
@@ -76,7 +76,7 @@ class ProduitController {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ? AND Liste_Produit_id = ?', [warehouse_ID, listProduct_ID]);
             return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
-                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id));
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
         }
         catch (err) {
             console.log(err);
@@ -117,12 +117,12 @@ class ProduitController {
         try {
             const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?,' +
                 'prix = ?, prixInitial = ?, quantite = ?, DLC = ?, codeBarre = ?, enRayon = ?, dateMiseEnRayon = ?,' +
-                'CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?' +
+                'CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?, destinataire = ?' +
                 'WHERE id = ?',
                 [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite,
                     product.DLC, product.codeBarre, product.enRayon, product.dateMiseEnRayon,
                     product.categorieProduit_id, product.listProduct_id, entrepotwm_id,
-                    product.CategorieProduit_id, product.listProduct_ID, product.Entrepot_id, product.id]);
+                    product.CategorieProduit_id, product.listProduct_ID, product.Entrepot_id, product.destinataire, product.id]);
             return res;
         }
         catch {

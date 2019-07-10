@@ -27,8 +27,9 @@ router.post('/', (req, res, next) => {
     const categorieProduit_id = req.body.categorieProduit_id;
     const listProduct_id = req.body.listProduct_id;
     const entrepotwm_id = req.body.entrepotwm_id;
+    const destinataire = req.body.destinataire;
 
-    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() => {
+    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire).then(() => {
         res.status(201).end(); // status created
     }).catch((err) => {
         console.log(err);
@@ -68,9 +69,10 @@ router.put('/', async (req, res) => {
     let categorieProduit_id = req.body.categorieProduit_id;
     let listProduct_id = req.body.listProduct_id;
     let entrepotwm_id = req.body.entrepotwm_id;
+    let destinataire = req.body.destinataire;
 
     const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
-        codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id);
+        codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 
     ProduitController.updateProduct(product).then(() => {
         res.status(200).end(); // status OK

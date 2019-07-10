@@ -17,6 +17,7 @@ class Produit {
     this.categorieProduit_id = categorieProduit_id;
     this.listProduct_id = listProduct_id;
     this.entrepotwm_id = entrepotwm_id;
+    this.destinataire = this.destinataire;
   }
 }
 
