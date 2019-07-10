@@ -21,4 +21,19 @@ router.post('/', (req, res, next) => {
     })
 });
 
+router.get('/', async (req, res) => {
+
+    //get commande by id user
+    if (req.query.idUser) {
+        const commandes = await CommandeController.getOrderByIdUser(req.query.id);
+        if (commandes) {
+            return res.json(commandes);
+        }
+        return res.status(408).end();
+    }
+});
+
+
+
+
 module.exports = router;
