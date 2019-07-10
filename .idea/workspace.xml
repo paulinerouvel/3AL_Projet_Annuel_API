@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94bad562-a736-4d1d-9280-6eb16e592e4d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/produit_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/produit_controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/produit_route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/produit_route.js" afterDir="false" />
-    </list>
+    <list default="true" id="94bad562-a736-4d1d-9280-6eb16e592e4d" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -27,15 +23,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/list_route.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/produit_controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="424">
@@ -45,10 +32,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/list_controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/list_route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/produit_route.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="619">
-              <caret line="92" column="73" lean-forward="true" selection-start-line="92" selection-start-column="73" selection-end-line="92" selection-end-column="73" />
+            <state relative-caret-position="-401">
+              <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -75,8 +80,8 @@
       <list>
         <option value="$PROJECT_DIR$/models/utilisateur_model.js" />
         <option value="$PROJECT_DIR$/routes/utilisateur_route.js" />
-        <option value="$PROJECT_DIR$/routes/produit_route.js" />
         <option value="$PROJECT_DIR$/controllers/produit_controller.js" />
+        <option value="$PROJECT_DIR$/routes/produit_route.js" />
       </list>
     </option>
   </component>
@@ -162,12 +167,12 @@
       <workItem from="1561886378947" duration="14981000" />
       <workItem from="1561971155032" duration="4072000" />
       <workItem from="1562013536756" duration="2726000" />
-      <workItem from="1562748142301" duration="2988000" />
+      <workItem from="1562748142301" duration="4355000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44628000" />
+    <option name="totallyTimeSpent" value="45995000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="85" width="1920" height="1080" extended-state="6" />
@@ -226,9 +231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/list_controller.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -242,6 +244,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/produit_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="134" column="23" lean-forward="true" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/list_controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/list_route.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -251,15 +267,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/produit_route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="92" column="73" lean-forward="true" selection-start-line="92" selection-start-column="73" selection-end-line="92" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/produit_controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="134" column="23" lean-forward="true" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
+        <state relative-caret-position="-401">
+          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
         </state>
       </provider>
     </entry>
