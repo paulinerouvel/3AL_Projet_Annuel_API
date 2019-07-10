@@ -47,20 +47,20 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 
     //get all don by donneur_id
-    // faut changer les ifs...
-    if (req.query.id) {
-        const don = await DonController.getAllDonByDonneurID(req.query.id);
+    if (req.query.idD) {
+        const don = await DonController.getAllDonByDonneurID(req.query.idD);
         if (don) {
             return res.json(don);
         }
         return res.status(408).end();
     }
-
-    // const don = await DonController.getAllDonByReceveurID(req.query.id);
-    //     if(don) {
-    //         return res.json(don);
-    //     }
-    //     return res.status(408).end();
+    else if (req.query.idR) {
+        const don = await DonController.getAllDonByReceveurID(req.query.idR);
+        if (don) {
+            return res.json(don);
+        }
+        return res.status(408).end();
+    }
     else {
         {
             const don = await DonController.getAllDons();
