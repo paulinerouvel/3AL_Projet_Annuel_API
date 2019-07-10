@@ -177,7 +177,7 @@ class UtilisateurController {
             return res;
         }
         catch (err) {
-            console.log("error delete tavu : " + err);
+            console.log("error delete : " + err);
             return undefined;
         }
     }

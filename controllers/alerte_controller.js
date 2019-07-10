@@ -74,17 +74,16 @@ class AlerteController {
     /**                                DELETE FUNCTIONS                               **/
     /***********************************************************************************/
 
-    async deleteAlert(alertId, userId) {
+    async deleteAlert(alertId) {
         try {
 
-            console.log("user id = " + userId + "\nalertID = " + alertId);
-            const res = await Database.connection.execute('DELETE FROM alerte WHERE alerte.utilisateur_id = ? AND alerte.id = ?', [userId, alertId]);
+            const res = await Database.connection.execute('DELETE FROM alerte WHERE alerte.id = ?', [alertId]);
 
 
             return res;
         }
         catch (err) {
-            console.log("error delete tavu : " + err);
+            console.log("error : " + err);
             return undefined;
         }
     }

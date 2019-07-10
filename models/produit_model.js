@@ -12,7 +12,7 @@ class Produit {
     this.quantite = quantite || null;
     this.dlc = dlc;
     this.codeBarre = codeBarre || null;
-    this.enRayon = enRayon || false;
+    this.enRayon = enRayon ;
     this.dateMiseEnRayon = dateMiseEnRayon || null;
     this.categorieProduit_id = categorieProduit_id;
     this.listProduct_id = listProduct_id;
