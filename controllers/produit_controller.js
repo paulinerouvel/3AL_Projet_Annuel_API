@@ -71,7 +71,7 @@ class ProduitController {
 
     }
 
-    // On récupère tous les produits d'une liste qui sont dans un entrepot ...... Pas sûr que ce soit nécessaire...
+    // On récupère tous les produits d'une liste qui sont dans un entrepot
     async getAllProductsOfAListByWarehouse(warehouse_ID, listProduct_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE Entrepot_id = ? AND Liste_Produit_id = ?', [warehouse_ID, listProduct_ID]);
@@ -90,8 +90,7 @@ class ProduitController {
 
 
     async getProductCategoryByID(id) {
-        // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorieproduit.id = ?', [id]);
+        const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
         const rows = results[0];
         if (rows.length > 0) {
             return new CategorieProduit(rows[0].id, rows[0].libelle);
@@ -149,30 +148,13 @@ class ProduitController {
     /***********************************************************************************/
     async deleteProduct(id) {
         try {
-
-            const res = await Database.connection.execute('DELETE FROM produit WHERE product.id = ?', [id]);
-
-
+            const res = await Database.connection.execute('DELETE FROM produit WHERE produit.id = ?', [id]);
             return res;
         }
         catch (err) {
-            console.log("error delete tavu : " + err);
             return undefined;
         }
     }
 
-    async deleteProductCategory(id) {
-        try {
-
-            const res = await Database.connection.execute('DELETE FROM categorie_produit WHERE categorieproduct.id = ?', [id]);
-
-
-            return res;
-        }
-        catch (err) {
-            console.log("error delete: " + err);
-            return undefined;
-        }
-    }
 }
 module.exports = new ProduitController();

@@ -25,8 +25,8 @@ router.post('/', (req, res, next) => {
     const enRayon = req.body.enRayon;
     const dateMiseEnRayon = req.body.dateMiseEnRayon || null;
     const categorieProduit_id = req.body.categorieProduit_id;
-    const listProduct_id = req.body.listProduct_id
-    const entrepotwm_id = req.body.entrepotwm_id
+    const listProduct_id = req.body.listProduct_id;
+    const entrepotwm_id = req.body.entrepotwm_id;
 
     ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id).then(() => {
         res.status(201).end(); // status created
@@ -79,11 +79,27 @@ router.get('/warehouse', async (req, res) => {
 
 router.get('/enRayon', async (req, res) => {
     //get all products en rayon
-    const produit = await ProduitController.getAllProductsEnRayon()
+    const produit = await ProduitController.getAllProductsEnRayon();
     if (produit) {
         return res.json(produit);
     }
     return res.status(408).end();
-})
+});
+
+
+
+/***********************************************************************************/
+/**                                DELETE  REQUESTS                               **/
+/***********************************************************************************/
+router.delete('/', async (req, res) => {
+    //delete product by id
+    if (req.query.id) {
+        const produit = await ProduitController.deleteProduct(req.query.id);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+});
 
 module.exports = router;
