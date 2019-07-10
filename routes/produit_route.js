@@ -50,7 +50,36 @@ router.post('/Category', (req, res, next) => {
 
 });
 
+    /***********************************************************************************/
+    /**                                   PUT  REQUESTS                               **/
+    /***********************************************************************************/
+router.put('/', async (req, res) => {
+    const id = req.body.id;
+    let libelle = req.body.libelle;
+    let desc = req.body.desc;
+    let photo = req.body.photo;
+    let prix = req.body.prix;
+    let prixInitial = req.body.prixInitial;
+    let quantite = req.body.quantite;
+    let dlc = req.body.dlc;
+    let codeBarre = req.body.codeBarre;
+    let enRayon = req.body.enRayon;
+    let dateMiseEnRayon = req.body.dateMiseEnRayon || null;
+    let categorieProduit_id = req.body.categorieProduit_id;
+    let listProduct_id = req.body.listProduct_id;
+    let entrepotwm_id = req.body.entrepotwm_id;
 
+    const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
+        codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id);
+
+    ProduitController.updateProduct(product).then(() => {
+        res.status(200).end(); // status OK
+    }).catch((err) => {
+        console.log(err);
+        res.status(409).end(); // status conflict
+    })
+
+});
 
     /***********************************************************************************/
     /**                                   GET  REQUESTS                               **/
