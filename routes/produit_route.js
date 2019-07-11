@@ -134,7 +134,8 @@ router.get('/enRayon', async (req, res) => {
         return res.status(408).end();
     }
     else if(req.query.dest){
-        const produit = await ProduitController.getProductByCategorieAndDest(dest);
+        const produit = await ProduitController.getAllProductsEnRayonByDest(req.query.dest);
+
         if (produit) {
             return res.json(produit);
         }
