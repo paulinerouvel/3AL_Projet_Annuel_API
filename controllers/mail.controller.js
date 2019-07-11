@@ -7,8 +7,8 @@ class MailController {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'josette.marianne12@gmail.com',
-                pass: 'mariannejames12'
+                user: 'wastemart.company@gmail.com',
+                pass: 'WasteMartCompany2019'
             }
         });
         var mailOptions = {

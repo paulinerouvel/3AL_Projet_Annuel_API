@@ -32,24 +32,31 @@ router.post('/', async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire).then(async () => {
-        
+    let produitsRes = await ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
+    
+
+    if(produitsRes){
         let allAlerts = await AlertController.getAllAlerts();
 
-        for (const alert in allAlerts) {
+        for (const alert of allAlerts) {
+
+   
             let resAlerts = await ProduitController.getProductByName(alert.libelle); 
-            for (const resAlert in resAlerts) {
-                let user = await  UserController.getUserByID(resAlert.utilisateur_id);
+
+            for (const resAlert of resAlerts) {
+                let user = await  UserController.getUserByID(alert.utilisateur_id);
+
                 await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + resAlert.libelle, 
                 "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + resAlert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart" );
-            }
+             }
         }
         
         res.status(201).end(); // status created
-    }).catch((err) => {
+    }
+    else{
         console.log(err);
         res.status(409).end(); // status conflict
-    })
+    }
 });
 
 // Création d'une catégorie de produit
