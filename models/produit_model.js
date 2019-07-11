@@ -2,7 +2,8 @@
 
 class Produit {
 
-  constructor(id, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id) {
+  constructor(id, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre,
+     enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire) {
     this.id = id;
     this.libelle = libelle;
     this.desc = desc;
@@ -17,7 +18,7 @@ class Produit {
     this.categorieProduit_id = categorieProduit_id;
     this.listProduct_id = listProduct_id;
     this.entrepotwm_id = entrepotwm_id;
-    this.destinataire = this.destinataire;
+    this.destinataire = destinataire;
   }
 }
 
