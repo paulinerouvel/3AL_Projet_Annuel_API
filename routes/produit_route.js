@@ -132,10 +132,11 @@ router.put('/', async (req, res) => {
         if(result) {
             return res.status(200).end(); // status OK
         }else{
-            return res.status(409).end(); // status conflict
+            return res.status(500).end(); // status conflict
         }
 
     }
+    return res.status(409).end();
 });
 
 /***********************************************************************************/
