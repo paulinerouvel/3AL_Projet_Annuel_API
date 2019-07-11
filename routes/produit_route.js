@@ -10,15 +10,35 @@ const UserController = require('../controllers').utilisateurController;
 const router = express.Router();
 router.use(bodyParser.json());
 
+function no_accent (my_string) {
+    var rules = {
+        'a': /[àáâãäå]+/g,
+        'ae': /[æ]+/g,
+        'c': /[ç]+/g,
+        'e': /[èéêë]+/g,
+        'i': /[ìíîï]+/g,
+        'n': /[ñ]+/g,
+        'o': /[òóôõö]+/g,
+        'oe': /[œ]+/g,
+        'u': /[ùúûü]+/g,
+        'y': /[ýÿ]+/g,
+        '_': /[\s\\]+/g
+    }
+     
 
-    /***********************************************************************************/
-    /**                                   POST REQUESTS                               **/
-    /***********************************************************************************/
+    my_string = my_string.toLowerCase();
+    for (var r in rules) my_string = my_string.replace(rules[r], r);
+    return my_string;
+}
+
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 
 //Création d'un produit
 router.post('/', async (req, res) => {
-    const libelle = req.body.libelle;
-    const desc = req.body.desc;
+    let libelle = req.body.libelle;
+    let desc = req.body.desc;
     const photo = req.body.photo;
     const prix = req.body.prix;
     const prixInitial = req.body.prixInitial;
@@ -33,27 +53,34 @@ router.post('/', async (req, res) => {
     const destinataire = req.body.destinataire;
 
     let produitsRes = await ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
-    
 
-    if(produitsRes){
+
+    if (produitsRes) {
         let allAlerts = await AlertController.getAllAlerts();
+
 
         for (const alert of allAlerts) {
 
-   
-            let resAlerts = await ProduitController.getProductByName(alert.libelle); 
+            libelle = no_accent(libelle);
+            desc = no_accent(desc);
+            alert.libelle = no_accent(alert.libelle);
 
-            for (const resAlert of resAlerts) {
-                let user = await  UserController.getUserByID(alert.utilisateur_id);
+            let indexLibelle = libelle.search(alert.libelle);
+            let indexDesc = desc.search(alert.libelle);
 
-                await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + resAlert.libelle, 
-                "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + resAlert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart" );
-             }
+            if(indexLibelle != -1 || indexDesc != -1){
+                let user = await UserController.getUserByID(alert.utilisateur_id);
+
+                await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
+                    "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
+    
+            } 
+
         }
-        
+
         res.status(201).end(); // status created
     }
-    else{
+    else {
         console.log(err);
         res.status(409).end(); // status conflict
     }
@@ -73,9 +100,9 @@ router.post('/Category', (req, res, next) => {
 
 });
 
-    /***********************************************************************************/
-    /**                                   PUT  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   PUT  REQUESTS                               **/
+/***********************************************************************************/
 router.put('/', async (req, res) => {
     const id = req.body.id;
     let libelle = req.body.libelle;
@@ -105,9 +132,9 @@ router.put('/', async (req, res) => {
 
 });
 
-    /***********************************************************************************/
-    /**                                   GET  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET  REQUESTS                               **/
+/***********************************************************************************/
 router.get('/', async (req, res) => {
     //get product by id
     if (req.query.id) {
@@ -134,28 +161,28 @@ router.get('/warehouse', async (req, res) => {
 
 router.get('/enRayon', async (req, res) => {
 
-    if(req.query.name && req.query.dest){
+    if (req.query.name && req.query.dest) {
         const produit = await ProduitController.getProductByNameAndDest(req.query.name, req.query.dest);
         if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
-    else if(req.query.idCategorie && req.query.dest){
+    else if (req.query.idCategorie && req.query.dest) {
         const produit = await ProduitController.getProductByCategorieAndDest(req.query.idCategorie, req.query.dest);
         if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
-    else if(req.query.prixMin && req.query.prixMax && req.query.dest){
+    else if (req.query.prixMin && req.query.prixMax && req.query.dest) {
         const produit = await ProduitController.getProductByPrixAndDest(req.query.prixMin, req.query.prixMax, req.query.dest);
         if (produit) {
             return res.json(produit);
         }
         return res.status(408).end();
     }
-    else if(req.query.dest){
+    else if (req.query.dest) {
         const produit = await ProduitController.getAllProductsEnRayonByDest(req.query.dest);
 
         if (produit) {
