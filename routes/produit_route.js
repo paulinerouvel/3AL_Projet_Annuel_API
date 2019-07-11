@@ -95,20 +95,7 @@ router.get('/', async (req, res) => {
         }
         return res.status(408).end();
     }
-    else if(req.query.name){
-        const produit = await ProduitController.getProductByName(req.query.name);
-        if (produit) {
-            return res.json(produit);
-        }
-        return res.status(408).end();
-    }
-    else if(req.query.prixMin && req.query.prixMax){
-        const produit = await ProduitController.getProductByPrix(req.query.prixMin, req.query.prixMax);
-        if (produit) {
-            return res.json(produit);
-        }
-        return res.status(408).end();
-    }
+
     return res.status(400).end();
 });
 
@@ -124,12 +111,39 @@ router.get('/warehouse', async (req, res) => {
 });
 
 router.get('/enRayon', async (req, res) => {
-    //get all products en rayon
-    const produit = await ProduitController.getAllProductsEnRayon();
-    if (produit) {
-        return res.json(produit);
+
+    if(req.query.name && req.query.dest){
+        const produit = await ProduitController.getProductByNameAndDest(req.query.name, req.query.dest);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
     }
-    return res.status(408).end();
+    else if(req.query.idCategorie && req.query.dest){
+        const produit = await ProduitController.getProductByCategorieAndDest(req.query.idCategorie, req.query.dest);
+        if (produit) {
+            console.log("la")
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+    else if(req.query.prixMin && req.query.prixMax && req.query.dest){
+        const produit = await ProduitController.getProductByPrixAndDest(req.query.prixMin, req.query.prixMax, req.query.dest);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+    else if(req.query.dest){
+        const produit = await ProduitController.getProductByCategorieAndDest(dest);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+
+    return res.status(400).end();
+
 });
 
 
