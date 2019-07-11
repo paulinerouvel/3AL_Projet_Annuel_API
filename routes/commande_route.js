@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 
     //get commande by id user
     if (req.query.idUser) {
-        const commandes = await CommandeController.getOrderByIdUser(req.query.id);
+        const commandes = await CommandeController.getOrderByIdUser(req.query.idUser);
         if (commandes) {
             return res.json(commandes);
         }
