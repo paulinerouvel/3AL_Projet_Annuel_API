@@ -95,6 +95,21 @@ router.get('/', async (req, res) => {
         }
         return res.status(408).end();
     }
+    else if(req.query.name){
+        const produit = await ProduitController.getProductByName(req.query.name);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+    else if(req.query.prixMin && req.query.prixMax){
+        const produit = await ProduitController.getProductByPrix(req.query.prixMin, req.query.prixMax);
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
+    }
+    return res.status(400).end();
 });
 
 router.get('/warehouse', async (req, res) => {
