@@ -12,6 +12,7 @@ class CommandeController {
 
 
     async addOrder(date, utilisateurID) {
+        
         try {
             const res = await Database.connection.execute('INSERT INTO commande (date, utilisateur_id) VALUES (?, ?)', [date, utilisateurID]);
             return res;
@@ -78,15 +79,7 @@ class CommandeController {
 
     }
 
-    /*async getOrderUserByDate(date) {
-        // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM commande WHERE commande.date = ?', [date]);
-        const rows = results[0];
-        if (rows.length > 0) {
-            return new Commande(rows[0].id, rows[0].date, rows[0].Utilisateur_id);
-        }
-        return undefined;
-    }*/
+
 
 
     async getAllOrders() {
@@ -122,6 +115,26 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            throw err;
+        }
+
+    }
+
+
+
+    async getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser) {
+        try{
+
+            //SELECT * FROM `commande` WHERE DATEDIFF(date,'2019-07-01') >=0 => superieur à 2019...
+            const res = await Database.connection.query('SELECT  SUM(chp.quantite) as total FROM `commande_has_produit` as chp, `commande` WHERE commande.id = chp.Commande_id AND commande.Utilisateur_id = ? AND DATEDIFF(date, ? ) >= 0 AND DATEDIFF(date, ? ) <= 0 ', 
+            [idUser, dateDebut, dateFin ]);
+
+            if(res.length>0){
+                return res[0];
+            }
+            return [];
+        }
+        catch(err){
             throw err;
         }
 

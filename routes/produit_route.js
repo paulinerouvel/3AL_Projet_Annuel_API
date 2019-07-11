@@ -122,7 +122,6 @@ router.get('/enRayon', async (req, res) => {
     else if(req.query.idCategorie && req.query.dest){
         const produit = await ProduitController.getProductByCategorieAndDest(req.query.idCategorie, req.query.dest);
         if (produit) {
-            console.log("la")
             return res.json(produit);
         }
         return res.status(408).end();

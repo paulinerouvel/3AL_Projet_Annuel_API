@@ -85,6 +85,10 @@ router.get('/', async (req, res) => {
 
 router.get('/products', async (req, res)=>{
     const idOrder = req.query.idOrder;
+
+    const dateDebut = req.query.dateDebut;
+    const dateFin = req.query.dateFin;
+    const idUser = req.query.idUser;
     if(idOrder){
         const products = await CommandeController.getAllProductsInOrder(idOrder);
 
@@ -93,9 +97,19 @@ router.get('/products', async (req, res)=>{
         }
         return res.status(408).end();
     }
+    else if(dateDebut, dateFin, idUser){
+        const total = await CommandeController.getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser);
+
+        if (total) {
+            return res.json(total);
+        }
+        return res.status(408).end();
+    }
     return res.status(400).end();
     
 });
+
+
 
 
 
