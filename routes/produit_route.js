@@ -3,6 +3,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ProduitController = require('../controllers').produitController;
+const AlertController = require('../controllers').alerteController;
+const MailController = require('../controllers').mailController;
+const UserController = require('../controllers').utilisateurController;
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -13,7 +16,7 @@ router.use(bodyParser.json());
     /***********************************************************************************/
 
 //Création d'un produit
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res) => {
     const libelle = req.body.libelle;
     const desc = req.body.desc;
     const photo = req.body.photo;
@@ -29,7 +32,19 @@ router.post('/', (req, res, next) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire).then(() => {
+    ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire).then(async () => {
+        
+        let allAlerts = await AlertController.getAllAlerts();
+
+        for (const alert in allAlerts) {
+            let resAlerts = await ProduitController.getProductByName(alert.libelle); 
+            for (const resAlert in resAlerts) {
+                let user = await  UserController.getUserByID(resAlert.utilisateur_id);
+                await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + resAlert.libelle, 
+                "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + resAlert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart" );
+            }
+        }
+        
         res.status(201).end(); // status created
     }).catch((err) => {
         console.log(err);
