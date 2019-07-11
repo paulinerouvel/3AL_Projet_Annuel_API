@@ -42,13 +42,12 @@ router.get('/products', async (req, res) => {
 
 router.get('/', async (req, res) => {
     //get all product by list
-    if (req.query.id) {
-        const produit = await ListController.getAllLists();
-        if (produit) {
-            return res.json(produit);
-        }
-        return res.status(408).end();
+    const produit = await ListController.getAllLists();
+    if (produit) {
+        return res.json(produit);
     }
+    return res.status(408).end();
+
 });
 
 
