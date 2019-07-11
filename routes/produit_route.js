@@ -120,23 +120,26 @@ router.put('/', async (req, res) => {
     let entrepotwm_id = req.body.entrepotwm_id;
     let destinataire = req.body.destinataire;
 
-    if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && dlc != undefined && codeBarre != undefined &&
-        enRayon != undefined && dateMiseEnRayon != undefined && categorieProduit_id != undefined &&
-        listProduct_id != undefined && entrepotwm_id != undefined && destinataire != undefined){
+    if(id !== undefined && libelle !== undefined && desc !== undefined && photo !== undefined && prix !== undefined &&
+        prixInitial !== undefined && quantite !== undefined && dlc !== undefined && codeBarre !== undefined &&
+        enRayon !== undefined && dateMiseEnRayon !== undefined && categorieProduit_id !== undefined &&
+        listProduct_id !== undefined && entrepotwm_id !== undefined && destinataire !== undefined){
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 
-        let result = await ProduitController.updateProduct(product);
-        if(result) {
-            return res.status(200).end(); // status OK
-        }else{
-            return res.status(500).end(); // status conflict
-        }
+        ProduitController.updateProduct(product).then(() => {
+            res.status(200).end(); // status OK
+        }).catch((err) => {
+            console.log(err);
+            res.status(409).end(); // status conflict
+        })
+
 
     }
-    return res.status(409).end();
+    res.status(400).end();
+
+
 });
 
 /***********************************************************************************/
