@@ -33,8 +33,9 @@ class RouterBuilder {
       app.use('/alert', require('./alerte_route')),
       app.use('/key', require('./motCle_route')),
       app.use('/donation', require('./don_route')),
-      app.use('/warehouse', require('./entrepot_route'))//,
-    app.use('/list', require('./list_route'))
+      app.use('/warehouse', require('./entrepot_route')),
+    app.use('/list', require('./list_route')),
+    app.use('/mail', require('./mail_route'))
   }
 }
 
