@@ -102,11 +102,13 @@ class CommandeController {
 
     async getAllProductsInOrder(order_id) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit`, `commande_has_produit` WHERE Commande_id = ? AND Produit_id = produit.id', [order_id]);
+            //SELECT produit.id, produit.libelle, produit.desc, produit.photo, produit.prix, produit.prixInitial, produit.quantite, produit.DLC, produit.codeBarre, produit.enRayon, produit.dateMiseEnRayon, produit.CategorieProduit_id, produit.Liste_Produit_id, produit.Entrepot_id, produit.destinataire, 
+            const res = await Database.connection.query('SELECT produit.id, produit.libelle, produit.desc, produit.photo, produit.prix, produit.prixInitial,  produit.DLC, produit.codeBarre, produit.enRayon, produit.dateMiseEnRayon, produit.CategorieProduit_id, produit.Liste_Produit_id, produit.Entrepot_id, produit.destinataire,  commande_has_produit.quantite FROM `produit`, `commande_has_produit` WHERE Commande_id = ? AND Produit_id = produit.id', [order_id]);
 
+            console.log(res[0])
             if (res.length > 0) {
-                return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
-                    rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
+                return res[0]/*.map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                    rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));*/
 
             }
             else {
