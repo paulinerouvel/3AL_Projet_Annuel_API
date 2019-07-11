@@ -19,6 +19,7 @@ class ListController {
             console.log(err);
             return undefined;
         }
+        }
     }
 
     // On récupère toutes les listes de produits d'un User
