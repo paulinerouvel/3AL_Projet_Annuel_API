@@ -11,8 +11,8 @@ class AlerteController {
     async addAlerte(alerte) {
 
         // crée une new alerte avec les valeurs, puis ajouter ses valeurs dans l'INSERT pour éviter des erreurs et géré les NULLABLE
-        return await Database.connection.execute('INSERT INTO `alerte` (`libelle`, date, Utilisateur_id ) VALUES (?, ?, ?);', 
-        [alerte.libelle, alerte.date, alerte.utilisateur_id]);
+        return await Database.connection.execute('INSERT INTO `alerte` (`libelle`, date, Utilisateur_id ) VALUES (?, ?, ?);',
+            [alerte.libelle, alerte.date, alerte.utilisateur_id]);
     }
 
 
@@ -66,7 +66,7 @@ class AlerteController {
     /**                                 UPDATE FUNCTIONS                              **/
     /***********************************************************************************/
 
-    
+
     // A PREMIERE VUE PAS BESOIN D'UPDATE LES ALERTES
 
 

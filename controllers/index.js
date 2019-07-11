@@ -9,6 +9,7 @@ module.exports = {
   motCleController: require('./motCle_controller'),
   donController: require('./don_controller'),
   entrepotController: require('./entrepot_controller'),
-  listController: require('./list_controller')
+  listController: require('./list_controller'),
+  mailController : require('./mail.controller')
 
 };

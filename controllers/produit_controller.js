@@ -58,7 +58,7 @@ class ProduitController {
         // on select les produits en rayon chez wastemart
         try {
             const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = 1 AND destinataire = ?', [dest]);
-            
+
             if (results[0].length > 0) {
                 return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                     rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));

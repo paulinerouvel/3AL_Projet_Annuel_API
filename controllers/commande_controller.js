@@ -12,7 +12,7 @@ class CommandeController {
 
 
     async addOrder(date, utilisateurID) {
-        
+
         try {
             const res = await Database.connection.execute('INSERT INTO commande (date, utilisateur_id) VALUES (?, ?)', [date, utilisateurID]);
             return res;
@@ -85,13 +85,13 @@ class CommandeController {
     async getAllOrders() {
         try {
             const res = await Database.connection.query('SELECT * FROM `commande`');
-            if(res.length>0){
+            if (res.length > 0) {
                 return res[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id));
             }
-            else{
+            else {
                 return [];
             }
-            
+
         }
         catch (err) {
             console.log(err);
@@ -125,18 +125,18 @@ class CommandeController {
 
 
     async getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser) {
-        try{
+        try {
 
             //SELECT * FROM `commande` WHERE DATEDIFF(date,'2019-07-01') >=0 => superieur à 2019...
-            const res = await Database.connection.query('SELECT  SUM(chp.quantite) as total FROM `commande_has_produit` as chp, `commande` WHERE commande.id = chp.Commande_id AND commande.Utilisateur_id = ? AND DATEDIFF(date, ? ) >= 0 AND DATEDIFF(date, ? ) <= 0 ', 
-            [idUser, dateDebut, dateFin ]);
+            const res = await Database.connection.query('SELECT  SUM(chp.quantite) as total FROM `commande_has_produit` as chp, `commande` WHERE commande.id = chp.Commande_id AND commande.Utilisateur_id = ? AND DATEDIFF(date, ? ) >= 0 AND DATEDIFF(date, ? ) <= 0 ',
+                [idUser, dateDebut, dateFin]);
 
-            if(res.length>0){
+            if (res.length > 0) {
                 return res[0];
             }
             return [];
         }
-        catch(err){
+        catch (err) {
             throw err;
         }
 
@@ -177,7 +177,7 @@ class CommandeController {
         }
     }
 
-    async deleteProductInOrder(id){
+    async deleteProductInOrder(id) {
         try {
 
             const res = await Database.connection.execute('DELETE FROM commande_has_produit WHERE Commande_id = ?', [id]);

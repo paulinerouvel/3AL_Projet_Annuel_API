@@ -3,8 +3,7 @@
 const express = require('express');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
-const ListController = require('../controllers').listController;
-const nodemailer = require('nodemailer');
+const MailController = require('../controllers').mailController;
 
 
 
@@ -12,33 +11,25 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.post('/', async (req, res) => {
+    const sender = req.body.sender;
+    const destination = req.body.destination;
+    const subject = req.body.subject;
+    const message = req.body.message;
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'josette.marianne12@gmail.com',
-            pass: 'mariannejames12'
+    if(sender != undefined && destination != undefined && subject != undefined && message != undefined ){
+        let result = await MailController.sendMail(sender, destination, subject, message);
+
+        if(result){
+            return res.status(200).end();
         }
-    });
-    var mailOptions = {
-        from: req.body.sender,
-        to: req.body.destination,
-        subject: req.body.subject,
-        text: req.body.message,
-        html: '<b>' + req.body.message + '</b>'
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            return console.log(error);
-            
+        else{
+            return res.status(500).end();
         }
-        console.log('Message sent: ' + info.response);
-    });
+        
+    }
+    return res.status(400).end();
 
-    transporter.close();
 
-    res.status(200).end();
 });
 
 

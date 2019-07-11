@@ -1,7 +1,7 @@
 const Database = require('../models/database');
 const Utilisateur = require('../models/utilisateur_model');
 class UtilisateurController {
-    
+
 
 
     /***********************************************************************************/
@@ -59,7 +59,7 @@ class UtilisateurController {
     /***********************************************************************************/
     /**                                   GET FUNCTIONS                               **/
     /***********************************************************************************/
-    
+
     async getUserByID(id) {
         // on select un utilisateur avec son prenom
         const results = await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.id = ?', [id]);
@@ -129,7 +129,7 @@ class UtilisateurController {
         }
     }
 
-    async getValidUsersByCategory(category){
+    async getValidUsersByCategory(category) {
         const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
         const rows = res[0];
 
