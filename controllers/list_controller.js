@@ -42,6 +42,8 @@ class ListController {
     async getAllLists() {
         try {
             const res = await Database.connection.query('SELECT * FROM `liste_produit`');
+            return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
             return res[0];
         }
         catch (err) {

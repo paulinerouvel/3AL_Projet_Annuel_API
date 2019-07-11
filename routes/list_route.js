@@ -15,6 +15,7 @@ router.use(bodyParser.json());
     /**                                   GET  REQUESTS                               **/
     /***********************************************************************************/
 
+
 router.get('/', async (req, res) => {
     //get all list by User
     if (req.query.idUser) {
@@ -24,8 +25,13 @@ router.get('/', async (req, res) => {
         }
         return res.status(408).end();
     }
+    //get all lists
     else {
-
+        const produit = await ListController.getAllLists();
+        if (produit) {
+            return res.json(produit);
+        }
+        return res.status(408).end();
     }
 });
 
@@ -40,15 +46,6 @@ router.get('/products', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    //get all product by list
-    const produit = await ListController.getAllLists();
-    if (produit) {
-        return res.json(produit);
-    }
-    return res.status(408).end();
-
-});
 
 
 module.exports = router;
