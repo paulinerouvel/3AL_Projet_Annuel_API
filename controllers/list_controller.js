@@ -12,8 +12,8 @@ class ListController {
     // On récupère la liste des produits par catégorie d'utilisateur
     async getAllProductsByUserCategory(userCategoryID) {
         try {
-            const res = await Database.connection.query('SELECT * FROM liste_produit JOIN `utilisateur_has_categorie` ON liste_produit.Utilisateur_id = utilisateur_has_categorie.Utilisateur_id WHERE utilisateur_has_categorie.Categorie_utilisateur_id = ?', [userCategoryID]);
-            return res[0].map((rows) => new CategorieProduit(rows[0].id, rows[0].libelle));
+            const res = await Database.connection.query('SELECT id, libelle, date, liste_produit.Utilisateur_id, estArchive FROM liste_produit JOIN `utilisateur_has_categorie` ON liste_produit.Utilisateur_id = utilisateur_has_categorie.Utilisateur_id WHERE utilisateur_has_categorie.Categorie_utilisateur_id = ?', [userCategoryID]);
+            return res[0]
         }
         catch (err) {
             console.log(err);

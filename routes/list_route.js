@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
     else {
         if (req.query.idUserCategory) {
             const produit = await ListController.getAllProductsByUserCategory(req.query.idUserCategory);
+            console.log("ouioui");
             if(produit) {
                 return res.json(produit);
             }
@@ -36,6 +37,7 @@ router.get('/', async (req, res) => {
         //get all lists
         else {
             const produit = await ListController.getAllLists();
+            console.log("nonnon");
             if (produit) {
                 return res.json(produit);
             }
