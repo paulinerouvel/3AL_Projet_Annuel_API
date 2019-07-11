@@ -25,14 +25,24 @@ router.get('/', async (req, res) => {
         }
         return res.status(408).end();
     }
-    //get all lists
     else {
-        const produit = await ListController.getAllLists();
-        if (produit) {
-            return res.json(produit);
+        if (req.query.idUserCategory) {
+            const produit = await ListController.getAllProductsByUserCategory(req.query.idUserCategory);
+            if(produit) {
+                return res.json(produit);
+            }
+            return res.status(408).end();
         }
-        return res.status(408).end();
+        //get all lists
+        else {
+            const produit = await ListController.getAllLists();
+            if (produit) {
+                return res.json(produit);
+            }
+            return res.status(408).end();
     }
+    }
+    
 });
 
 router.get('/products', async (req, res) => {
