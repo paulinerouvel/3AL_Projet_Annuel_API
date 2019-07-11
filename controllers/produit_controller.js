@@ -224,8 +224,8 @@ class ProduitController {
                 'WHERE id = ?',
                 [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite,
                 product.DLC, product.codeBarre, product.enRayon, product.dateMiseEnRayon,
-                product.categorieProduit_id, product.listProduct_id, entrepotwm_id,
-                product.CategorieProduit_id, product.listProduct_ID, product.Entrepot_id, product.destinataire, product.id]);
+                product.CategorieProduit_id, product.Liste_Produit_id, product.Entrepot_id, product.destinataire,
+                    product.id]);
             return res;
         }
         catch {
