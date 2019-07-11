@@ -14,7 +14,7 @@ class ListController {
     // On récupère toutes les listes de produits d'un User
     async getAllListsByUser(user_ID) {
         try {
-            const res = await Database.connection.query('SELECT id, libelle FROM `liste_produit` WHERE Utilisateur_id = ?', [user_ID]);
+            const res = await Database.connection.query('SELECT * FROM `liste_produit` WHERE Utilisateur_id = ?', [user_ID]);
             return res[0];
         }
         catch (err) {
@@ -36,6 +36,18 @@ class ListController {
             return undefined;
         }
 
+    }
+
+    // On récupère toutes les listes de produits
+    async getAllLists() {
+        try {
+            const res = await Database.connection.query('SELECT * FROM `liste_produit`');
+            return res[0];
+        }
+        catch (err) {
+            console.log(err);
+            return undefined;
+        }
     }
 }
 
