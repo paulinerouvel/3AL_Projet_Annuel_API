@@ -82,6 +82,23 @@ router.get('/', async (req, res) => {
 
 });
 
+router.get('/last', async (req, res) => {
+
+    //get commande by id user
+    if (req.query.idUser) {
+        const commandes = await CommandeController.getLastOrderByIdUser(req.query.idUser);
+
+        if (commandes) {
+            return res.json(commandes);
+        }
+        return res.status(408).end();
+    }
+
+    return res.status(400).end();
+
+});
+
+
 
 router.get('/products', async (req, res)=>{
     const idOrder = req.query.idOrder;
