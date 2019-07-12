@@ -86,6 +86,8 @@ router.get('/', async (req, res) => {
 router.get('/products', async (req, res)=>{
     const idOrder = req.query.idOrder;
 
+    console.log("test", req.query.dateDebut)
+
     const dateDebut = req.query.dateDebut;
     const dateFin = req.query.dateFin;
     const idUser = req.query.idUser;
@@ -97,7 +99,7 @@ router.get('/products', async (req, res)=>{
         }
         return res.status(408).end();
     }
-    else if(dateDebut, dateFin, idUser){
+    else if(dateDebut && dateFin && idUser){
         const total = await CommandeController.getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser);
 
         if (total) {

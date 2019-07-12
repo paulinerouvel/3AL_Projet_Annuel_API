@@ -133,8 +133,9 @@ class CommandeController {
 
             if (res.length > 0) {
                 return res[0];
+
             }
-            return [];
+            return 0;
         }
         catch (err) {
             throw err;
