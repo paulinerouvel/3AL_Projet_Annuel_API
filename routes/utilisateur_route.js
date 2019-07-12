@@ -65,6 +65,22 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.post('/categorieAssociation', async(req, res)=>{
+    const CategorieAssociation_id = req.query.CategorieAssociation_id;
+    const Utilisateur_id = req.query.Utilisateur_id;
+
+    if(CategorieAssociation_id != undefined && Utilisateur_id != undefined){
+        let resUser = await UtilisateurController.addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id);
+
+        if (resUser) {
+            return res.status(201).end();
+        }
+        return res.status(408).end();
+    }
+    return res.status(400).end();
+
+});
+
 
 //login
 router.post('/login', async (req, res) => {

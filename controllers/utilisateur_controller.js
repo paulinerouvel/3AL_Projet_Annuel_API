@@ -56,6 +56,20 @@ class UtilisateurController {
 
 
 
+
+
+    async addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id){
+        try{
+            const res = await Database.connection.execute('INSERT INTO `utilisateur_has_categorieassociation`(`CategorieAssociation_id`, `Utilisateur_id`) VALUES (?, ?)', [CategorieAssociation_id, Utilisateur_id]);
+            return res;
+        }
+        catch(err){
+            throw err;
+        }
+    }
+
+
+
     /***********************************************************************************/
     /**                                   GET FUNCTIONS                               **/
     /***********************************************************************************/
