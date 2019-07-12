@@ -52,11 +52,11 @@ class EntrepotController {
     async getAllWarehouse() {
         try {
             const res = await Database.connection.query('SELECT * FROM `entrepot`');
-            return res[0].map((rows) => new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
-                rows[0].desc, rows[0].photo, rows[0].placeTotal, rows[0].placeLibre))
+            return res[0].map((rows) => new Entrepot(rows.id, rows.libelle, rows.adresse, rows.ville, rows.codePostal,
+                rows.desc, rows.photo, rows.placeTotal, rows.placeLibre))
         }
         catch (err) {
-            console.log(err);
+            console.log("err : " + err);
             return undefined;
         }
 

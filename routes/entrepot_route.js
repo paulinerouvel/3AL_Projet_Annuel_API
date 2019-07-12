@@ -58,8 +58,9 @@ router.get('/', async (req, res) => {
     }
 
     //get entrepot by ville
-    else if (req.body.ville !== undefined) {
-        const warehouse = await EntrepotController.getWarehouseByCity(req.body.ville);
+    else if (req.query.city !== undefined) {
+        console.log("city");
+        const warehouse = await EntrepotController.getWarehouseByCity(req.query.city);
         if (warehouse) {
             return res.json(warehouse);
         }
@@ -68,6 +69,7 @@ router.get('/', async (req, res) => {
 
     //get all entrepots
     else {
+        console.log("get all entrepot");
         const warehouses = await EntrepotController.getAllWarehouse();
         if (warehouses) {
             return res.json(warehouses);
