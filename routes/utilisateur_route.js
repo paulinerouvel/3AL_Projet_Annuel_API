@@ -40,7 +40,6 @@ router.post('/register', async (req, res) => {
         mdp = cryptedPass;
     }
     catch (err) {
-        console.log("POUI")
         console.log(err);
         res.status(409).end(); // status conflict
     }
@@ -225,6 +224,15 @@ router.put('/', async (req, res) => {
     let siret = req.body.siret;
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
+
+    let cryptedPass = await bcrypt.hashSync(mdp, 5);
+    try {
+        mdp = cryptedPass;
+    }
+    catch (err) {
+        console.log(err);
+        res.status(409).end(); // status conflict
+    }
 
     const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
         codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
