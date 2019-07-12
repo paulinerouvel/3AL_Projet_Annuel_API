@@ -15,6 +15,7 @@ router.use(bodyParser.json());
 
 //add an order
 router.post('/', async (req, res) => {
+
     const date = req.body.date;
     const utilisateur_id = req.body.utilisateur_id;
 
@@ -32,6 +33,7 @@ router.post('/', async (req, res) => {
         return res.status(408).end();
     }
     if(idProduct != undefined && idCommande != undefined && quantite){
+
         let chp = new Commande_Has_Produit(idProduct, idCommande, quantite);
         let result = await CommandeController.addProductInOrder(chp);
 

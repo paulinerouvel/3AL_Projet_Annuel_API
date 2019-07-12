@@ -145,6 +145,27 @@ class UtilisateurController {
 
 
 
+    async getAllCategoryAssociation() {
+        try{
+            const res = await Database.connection.query('SELECT * FROM `categorie_association`');
+            const rows = res[0];
+    
+
+            if (rows.length > 0) {
+                return res[0];
+    
+            }
+            else{
+                return [];
+            }
+        }
+        catch(err){
+            throw err;
+        }
+
+    }
+
+
     /***********************************************************************************/
     /**                               UPDATE FUNCTIONS                                **/
     /***********************************************************************************/

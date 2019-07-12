@@ -184,6 +184,9 @@ router.get('/allByCategory', async (req, res) => {
 
 
 
+
+
+
 //get all user by categories
 router.get('/allValidByCategory', async (req, res) => {
 
@@ -199,6 +202,17 @@ router.get('/allValidByCategory', async (req, res) => {
 });
 
 
+router.get('/categorieAssociation', async (req, res) => {
+
+
+    const result = await UtilisateurController.getAllCategoryAssociation();
+
+    if (result) {
+        return res.json(result);
+    }
+    return res.status(408).end();
+
+});
 
 
 
