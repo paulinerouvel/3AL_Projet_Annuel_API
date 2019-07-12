@@ -14,7 +14,7 @@ class CommandeController {
     async addOrder(date, utilisateurID) {
 
         try {
-            const res = await Database.connection.execute('INSERT INTO commande (date, utilisateur_id) VALUES (?, ?)', [date, utilisateurID]);
+            const res = await Database.connection.execute('INSERT INTO `commande` (`date`, `Utilisateur_id`) VALUES (?, ?)', [date, utilisateurID]);
             return res;
         }
         catch (err) {
