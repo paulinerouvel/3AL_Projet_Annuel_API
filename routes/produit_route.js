@@ -6,6 +6,7 @@ const ProduitController = require('../controllers').produitController;
 const AlertController = require('../controllers').alerteController;
 const MailController = require('../controllers').mailController;
 const UserController = require('../controllers').utilisateurController;
+const Produit = require('../models/produit_model');
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -114,30 +115,56 @@ router.put('/', async (req, res) => {
     let dlc = req.body.dlc;
     let codeBarre = req.body.codeBarre;
     let enRayon = req.body.enRayon;
-    let dateMiseEnRayon = req.body.dateMiseEnRayon || null;
+    let dateMiseEnRayon = req.body.dateMiseEnRayon ;
     let categorieProduit_id = req.body.categorieProduit_id;
     let listProduct_id = req.body.listProduct_id;
     let entrepotwm_id = req.body.entrepotwm_id;
     let destinataire = req.body.destinataire;
 
-    if(id !== undefined && libelle !== undefined && desc !== undefined && photo !== undefined && prix !== undefined &&
-        prixInitial !== undefined && quantite !== undefined && dlc !== undefined && codeBarre !== undefined &&
-        enRayon !== undefined && dateMiseEnRayon !== undefined && categorieProduit_id !== undefined &&
-        listProduct_id !== undefined && entrepotwm_id !== undefined && destinataire !== undefined){
+
+    console.log(
+        req.body.id,
+        req.body.libelle,
+        req.body.desc,
+        req.body.photo,
+        req.body.prix,
+        req.body.prixInitial,
+        req.body.quantite,
+        req.body.dlc,
+        req.body.codeBarre,
+        req.body.enRayon,
+        req.body.dateMiseEnRayon ,
+        req.body.categorieProduit_id,
+        req.body.listProduct_id,
+        req.body.entrepotwm_id,
+        req.body.destinataire
+
+
+
+    );
+
+    if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
+        prixInitial != undefined && quantite != undefined && dlc != undefined && codeBarre != undefined &&
+        enRayon != undefined && dateMiseEnRayon != undefined && categorieProduit_id != undefined &&
+        listProduct_id != undefined && entrepotwm_id != undefined && destinataire != undefined){
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 
-        ProduitController.updateProduct(product).then(() => {
-            res.status(200).end(); // status OK
-        }).catch((err) => {
-            console.log(err);
-            res.status(409).end(); // status conflict
-        })
+        let productRes = await ProduitController.updateProduct(product);
+        
+        if( productRes){
+            return res.status(200).end(); // status OK
+        }
+        else{
+            return res.status(409).end(); // status conflict
+        }
+
+        
 
 
     }
-    res.status(400).end();
+    return res.status(400).end();
 
 
 });
