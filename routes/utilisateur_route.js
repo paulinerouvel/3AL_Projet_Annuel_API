@@ -66,8 +66,11 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/categorieAssociation', async(req, res)=>{
-    const CategorieAssociation_id = req.query.CategorieAssociation_id;
-    const Utilisateur_id = req.query.Utilisateur_id;
+    const CategorieAssociation_id = req.body.CategorieAssociation_id;
+    const Utilisateur_id = req.body.Utilisateur_id;
+
+
+    console.log(CategorieAssociation_id, Utilisateur_id)
 
     if(CategorieAssociation_id != undefined && Utilisateur_id != undefined){
         let resUser = await UtilisateurController.addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id);
