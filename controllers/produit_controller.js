@@ -219,13 +219,11 @@ class ProduitController {
     async updateProduct(product) {
         console.log(product)
         try {
-            const res = await Database.connection.execute('UPDATE `produit` SET libelle = ?, desc = ?, photo = ?,' +
-                'prix = ?, prixInitial = ?, quantite = ?, DLC = ?, codeBarre = ?, enRayon = ?, dateMiseEnRayon = ?,' +
-                'CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?, destinataire = ?' +
-                'WHERE id = ?',
+
+            const res = await Database.connection.execute('UPDATE `produit` SET `libelle` = ?, `desc` = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, DLC = ?, codeBarre = ?, enRayon = ?, dateMiseEnRayon = ?,CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?, destinataire = ? WHERE id = ?',
                 [product.libelle, product.desc, product.photo, product.prix, product.prixInitial, product.quantite,
-                product.DLC, product.codeBarre, product.enRayon, product.dateMiseEnRayon,
-                product.CategorieProduit_id, product.Liste_Produit_id, product.Entrepot_id, product.destinataire,
+                product.dlc, product.codeBarre, product.enRayon, product.dateMiseEnRayon,
+                product.categorieProduit_id, product.listProduct_id, product.entrepotwm_id, product.destinataire,
                     product.id]);
             return res;
         }

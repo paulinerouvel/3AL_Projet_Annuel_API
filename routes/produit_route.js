@@ -160,9 +160,6 @@ router.put('/', async (req, res) => {
             return res.status(409).end(); // status conflict
         }
 
-        
-
-
     }
     return res.status(400).end();
 
