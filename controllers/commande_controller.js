@@ -81,9 +81,8 @@ class CommandeController {
 
 
     async getLastOrderByIdUser(id) {
-
         try {
-            const results = await Database.connection.query('SELECT MAX(date), id, date, Utilisateur_id FROM `commande` WHERE Utilisateur_id = ?', [id]);
+            const results = await Database.connection.query('select * FROM commande c WHERE c.date = (select max(date) FROM commande WHERE Utilisateur_id = ?)', [id]);
 
             return results[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id));
         }
