@@ -255,6 +255,19 @@ class ProduitController {
     }
 
 
+    async updateProductWarehouse(idProduct, idWarehouse) {
+        try {
+            const res = await Database.connection.execute('UPDATE `produit` SET Entrepot_id = ? WHERE id = ?',
+                [idWarehouse, idProduct]);
+            return res;
+        }
+        catch (err) {
+            console.log(err);
+            return undefined;
+        }
+    }
+
+
 
 
 
