@@ -11,12 +11,21 @@ class ProduitController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire) {
+    async addUser(newUser) {
+        try {
+            const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `nom`, `prenom`, `mail`, `tel`, `adresse`, `ville`,' +
+                '`codePostal`, `pseudo`, `mdp`, `photo`, `desc`, `tailleOrganisme`, `estValide`, `siret`, `dateDeNaissance`, `nbPointsSourire`) ' +
+                'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                [newUser.libelle, newUser.nom, newUser.prenom, newUser.mail, newUser.tel, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo,
+                    newUser.mdp, newUser.photo, newUser.desc, newUser.tailleOrganisme, newUser.estValide, newUser.siret, newUser.dateDeNaissance, newUser.nbPointsSourire]);
+            return res;
 
-        return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, quantite, `DLC`,' +
-            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`, `destinataire`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
-            [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire]);
 
+        }
+        catch (err) {
+            console.log("Erreur lors de l'enregistrement de l'utilisateur : " + err);
+            throw err;
+        }
     }
 
 
