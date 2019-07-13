@@ -144,9 +144,8 @@ router.put('/', async (req, res) => {
     );
 
     if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && dlc != undefined && codeBarre != undefined &&
-        enRayon != undefined && dateMiseEnRayon != undefined && categorieProduit_id != undefined &&
-        listProduct_id != undefined && destinataire != undefined){
+        prixInitial != undefined && quantite != undefined && enRayon != undefined && categorieProduit_id != undefined
+        && listProduct_id != undefined){
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
