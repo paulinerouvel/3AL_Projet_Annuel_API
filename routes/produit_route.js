@@ -166,6 +166,25 @@ router.put('/', async (req, res) => {
 
 });
 
+
+router.put('/warehouse', async (req, res) => {
+
+    let idProduct = req.body.idProduct;
+    let idWarehouse = req.body.idWarehouse;
+
+    if(idProduct && idWarehouse) {
+        let result = await ProduitController.updateProductWarehouse(idProduct, idWarehouse);
+
+        if(result) {
+            return res.status(200).end(); // status ok
+        }
+        else {
+            return res.status(409).end(); // status conflict
+        }
+    }
+    return res.status(400).end();
+});
+
 /***********************************************************************************/
 /**                                   GET  REQUESTS                               **/
 /***********************************************************************************/
