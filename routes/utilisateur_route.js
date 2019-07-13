@@ -258,14 +258,20 @@ router.put('/', async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    let cryptedPass = await bcrypt.hashSync(mdp, 5);
-    try {
-        mdp = cryptedPass;
+    let curUser = await UtilisateurController.getUserByID(id);
+
+    if(curUser.mdp != mdp){
+        let cryptedPass = await bcrypt.hashSync(mdp, 5);
+        try {
+            mdp = cryptedPass;
+        }
+        catch (err) {
+            console.log(err);
+            res.status(409).end(); // status conflict
+        }
     }
-    catch (err) {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    }
+
+
 
     const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
         codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);

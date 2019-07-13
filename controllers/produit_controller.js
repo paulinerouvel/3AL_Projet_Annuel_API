@@ -57,7 +57,7 @@ class ProduitController {
     async getAllProductsEnRayonByDest(dest) {
         // on select les produits en rayon chez wastemart
         try {
-            const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = 1 AND destinataire = ?', [dest]);
+            const results = await Database.connection.query('SELECT * FROM produit WHERE produit.enRayon = 1 AND destinataire = ? AND quantite > 0', [dest]);
 
             if (results[0].length > 0) {
                 return results[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
@@ -142,7 +142,7 @@ class ProduitController {
 
     async getProductByCategorieAndDest(idCategorie, dest) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE CategorieProduit_id = ? AND destinataire = ? AND enRayon = 1', [idCategorie, dest]);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE CategorieProduit_id = ? AND destinataire = ? AND enRayon = 1 AND quantite > 0', [idCategorie, dest]);
             if (res.length > 0) {
                 return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                     rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
@@ -161,7 +161,7 @@ class ProduitController {
 
     async getProductByNameAndDest(name, dest) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE (`libelle` LIKE ? OR `desc` LIKE ? ) AND destinataire = ? AND enRayon = 1', ['%' + name + '%', '%' + name + '%', dest]);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE (`libelle` LIKE ? OR `desc` LIKE ? ) AND destinataire = ? AND enRayon = 1 AND quantite > 0', ['%' + name + '%', '%' + name + '%', dest]);
             if (res.length > 0) {
                 return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                     rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
@@ -179,7 +179,7 @@ class ProduitController {
 
     async getProductByName(name) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE (`libelle` LIKE ? OR `desc` LIKE ? ) AND enRayon = 1', ['%' + name + '%', '%' + name + '%']);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE (`libelle` LIKE ? OR `desc` LIKE ? ) AND enRayon = 1 AND quantite > 0', ['%' + name + '%', '%' + name + '%']);
             if (res.length > 0) {
                 return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                     rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
@@ -197,7 +197,7 @@ class ProduitController {
 
     async getProductByPrixAndDest(prixMin, prixMax, dest) {
         try {
-            const res = await Database.connection.query('SELECT * FROM `produit` WHERE `prix` >= ? AND `prix` <= ? AND `destinataire`= ? AND enRayon = 1', [prixMin, prixMax, dest]);
+            const res = await Database.connection.query('SELECT * FROM `produit` WHERE `prix` >= ? AND `prix` <= ? AND `destinataire`= ? AND enRayon = 1 AND quantite > 0', [prixMin, prixMax, dest]);
             if (res.length > 0) {
                 return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                     rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
