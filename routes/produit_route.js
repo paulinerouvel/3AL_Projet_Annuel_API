@@ -122,26 +122,7 @@ router.put('/', async (req, res) => {
     let destinataire = req.body.destinataire;
 
 
-    console.log(
-        req.body.id,
-        req.body.libelle,
-        req.body.desc,
-        req.body.photo,
-        req.body.prix,
-        req.body.prixInitial,
-        req.body.quantite,
-        req.body.dlc,
-        req.body.codeBarre,
-        req.body.enRayon,
-        req.body.dateMiseEnRayon ,
-        req.body.categorieProduit_id,
-        req.body.listProduct_id,
-        req.body.entrepotwm_id,
-        req.body.destinataire
 
-
-
-    );
 
     if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
         prixInitial != undefined && quantite != undefined && dlc != undefined && codeBarre != undefined &&
@@ -228,6 +209,19 @@ router.get('/enRayon', async (req, res) => {
     return res.status(400).end();
 
 });
+
+
+router.get('/category', async (req, res) => {
+
+
+    const produit = await ProduitController.getAllProductCategories();
+    if (produit) {
+        return res.json(produit);
+    }
+    return res.status(408).end();
+    
+});
+
 
 
 
