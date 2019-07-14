@@ -233,6 +233,18 @@ router.get('/categorieAssociation', async (req, res) => {
 
 });
 
+router.get('/categories', async (req, res) => {
+
+
+    const result = await UtilisateurController.getAllCategoriesExceptAdmin();
+
+    if (result) {
+        return res.json(result);
+    }
+    return res.status(408).end();
+
+});
+
 
 
 /***********************************************************************************/

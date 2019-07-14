@@ -179,6 +179,23 @@ class UtilisateurController {
 
     }
 
+    async getAllCategoriesExceptAdmin() {
+        try {
+            const res = await Database.connection.query("SELECT libelle FROM categorie_utilisateur WHERE libelle <> \"Administrateur\"");
+            const rows = res [0];
+
+            if(rows.length > 0) {
+                return res[0];
+            }
+            else {
+                return [];
+            }
+        }
+        catch(err) {
+            throw err;
+        }
+    }
+
 
     /***********************************************************************************/
     /**                               UPDATE FUNCTIONS                                **/
