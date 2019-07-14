@@ -209,7 +209,15 @@ router.get('/warehouse', async (req, res) => {
         }
         return res.status(408).end();
     }
-});
+    else if (req.query.idOrder) {
+            const produit = await ProduitController.getProductOfAnOrder(req.query.idOrder);
+            if (produit) {
+                return res.json(produit);
+            }
+            return res.status(408).end();
+        }
+    }
+);
 
 router.get('/enRayon', async (req, res) => {
 

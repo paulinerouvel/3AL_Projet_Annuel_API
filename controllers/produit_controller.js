@@ -115,7 +115,18 @@ class ProduitController {
 
     // faut faire un getbydatemiseenrayon aussi
 
+    async getProductOfAnOrder(commandID) {
+        try {
+            const res = await Database.connection.query('SELECT produit.* FROM produit JOIN commande_has_produit ON produit.id = commande_has_produit.Produit_id WHERE commande_has_produit.Commande_id = ?', [commandID]);
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
+        }
+        catch (err) {
+            console.log(err);
+            return undefined;
+        }
 
+    }
 
     async getProductCategoryByID(id) {
         const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
