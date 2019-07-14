@@ -125,9 +125,8 @@ router.put('/', async (req, res) => {
 
 
     if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && dlc != undefined && codeBarre != undefined &&
-        enRayon != undefined && dateMiseEnRayon != undefined && categorieProduit_id != undefined &&
-        listProduct_id != undefined && entrepotwm_id != undefined && destinataire != undefined){
+        prixInitial != undefined && quantite != undefined && enRayon != undefined && categorieProduit_id != undefined
+        && listProduct_id != undefined){
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
@@ -145,6 +144,25 @@ router.put('/', async (req, res) => {
     return res.status(400).end();
 
 
+});
+
+
+router.put('/warehouse', async (req, res) => {
+
+    let idProduct = req.body.idProduct;
+    let idWarehouse = req.body.idWarehouse;
+
+    if(idProduct && idWarehouse) {
+        let result = await ProduitController.updateProductWarehouse(idProduct, idWarehouse);
+
+        if(result) {
+            return res.status(200).end(); // status ok
+        }
+        else {
+            return res.status(409).end(); // status conflict
+        }
+    }
+    return res.status(400).end();
 });
 
 /***********************************************************************************/
@@ -172,7 +190,15 @@ router.get('/warehouse', async (req, res) => {
         }
         return res.status(408).end();
     }
-});
+    else if (req.query.idOrder) {
+            const produit = await ProduitController.getProductOfAnOrder(req.query.idOrder);
+            if (produit) {
+                return res.json(produit);
+            }
+            return res.status(408).end();
+        }
+    }
+);
 
 router.get('/enRayon', async (req, res) => {
 

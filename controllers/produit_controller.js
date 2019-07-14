@@ -11,12 +11,21 @@ class ProduitController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire) {
+    async addUser(newUser) {
+        try {
+            const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `nom`, `prenom`, `mail`, `tel`, `adresse`, `ville`,' +
+                '`codePostal`, `pseudo`, `mdp`, `photo`, `desc`, `tailleOrganisme`, `estValide`, `siret`, `dateDeNaissance`, `nbPointsSourire`) ' +
+                'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                [newUser.libelle, newUser.nom, newUser.prenom, newUser.mail, newUser.tel, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo,
+                    newUser.mdp, newUser.photo, newUser.desc, newUser.tailleOrganisme, newUser.estValide, newUser.siret, newUser.dateDeNaissance, newUser.nbPointsSourire]);
+            return res;
 
-        return Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, quantite, `DLC`,' +
-            '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`, `destinataire`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
-            [libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire]);
 
+        }
+        catch (err) {
+            console.log("Erreur lors de l'enregistrement de l'utilisateur : " + err);
+            throw err;
+        }
     }
 
 
@@ -106,7 +115,18 @@ class ProduitController {
 
     // faut faire un getbydatemiseenrayon aussi
 
+    async getProductOfAnOrder(commandID) {
+        try {
+            const res = await Database.connection.query('SELECT produit.* FROM produit JOIN commande_has_produit ON produit.id = commande_has_produit.Produit_id WHERE commande_has_produit.Commande_id = ?', [commandID]);
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
+        }
+        catch (err) {
+            console.log(err);
+            return undefined;
+        }
 
+    }
 
     async getProductCategoryByID(id) {
         const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
@@ -241,6 +261,19 @@ class ProduitController {
             return res;
         }
         catch {
+            return undefined;
+        }
+    }
+
+
+    async updateProductWarehouse(idProduct, idWarehouse) {
+        try {
+            const res = await Database.connection.execute('UPDATE `produit` SET Entrepot_id = ? WHERE id = ?',
+                [idWarehouse, idProduct]);
+            return res;
+        }
+        catch (err) {
+            console.log(err);
             return undefined;
         }
     }

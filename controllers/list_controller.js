@@ -4,6 +4,25 @@ const Produit = require('../models/produit_model');
 
 class ListController {
 
+    /***********************************************************************************/
+    /**                                   ADD FUNCTIONS                               **/
+    /***********************************************************************************/
+
+    async addList(newList) {
+        try {
+            const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `date`,' +
+                ' `Utilisateur_id`, `estArchive`) VALUES (?, ?, ?, ?);',
+                [newList.libelle, newList.date, newList.Utilisateur_id, newList.estArchive]);
+            return res;
+
+
+        }
+        catch (err) {
+            console.log("Erreur lors de l'enregistrement de la liste : " + err);
+            throw err;
+        }
+    }
+
 
     /***********************************************************************************/
     /**                                   GET FUNCTIONS                               **/
@@ -62,6 +81,37 @@ class ListController {
             return undefined;
         }
     }
+
+
+    /***********************************************************************************/
+    /**                               UPDATE FUNCTIONS                                **/
+    /***********************************************************************************/
+    async updateList(list) {
+        try {
+            const res = await Database.connection.execute('UPDATE `liste_produit` SET libelle = ?, date = ?,' +
+                ' Utilisateur_id = ?, estArchive = ? WHERE id = ?',
+                [list.libelle, list.date, list.Utilisateur_id, list.estArchive, list.id]);
+            return res;
+        }
+        catch {
+            return undefined;
+        }
+    }
+
+
+    /***********************************************************************************/
+    /**                                 DELETE FUNCTIONS                              **/
+    /***********************************************************************************/
+    async deleteList(id) {
+        try {
+            const res = await Database.connection.execute('DELETE FROM liste_produit WHERE liste_produit.id = ?', [id]);
+            return res;
+        }
+        catch (err) {
+            return undefined;
+        }
+    }
+
 }
 
 
