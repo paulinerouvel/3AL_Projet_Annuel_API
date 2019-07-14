@@ -44,14 +44,14 @@ router.post('/', async (req, res) => {
     const prix = req.body.prix;
     const prixInitial = req.body.prixInitial;
     const quantite = req.body.quantite;
-    const dlc = req.body.dlc;
-    const codeBarre = req.body.codeBarre;
+    const dlc = req.body.dlc || null;
+    const codeBarre = req.body.codeBarre || null;
     const enRayon = req.body.enRayon;
     const dateMiseEnRayon = req.body.dateMiseEnRayon || null;
     const categorieProduit_id = req.body.categorieProduit_id;
-    const listProduct_id = req.body.listProduct_id;
-    const entrepotwm_id = req.body.entrepotwm_id;
-    const destinataire = req.body.destinataire;
+    const listProduct_id = req.body.listProduct_id || null;
+    const entrepotwm_id = req.body.entrepotwm_id || null;
+    const destinataire = req.body.destinataire || null;
 
     let produitsRes = await ProduitController.addProduct(libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 

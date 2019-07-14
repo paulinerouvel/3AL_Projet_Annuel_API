@@ -11,19 +11,19 @@ class ProduitController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    async addUser(newUser) {
+    async addProduct(newProduct) {
         try {
-            const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `nom`, `prenom`, `mail`, `tel`, `adresse`, `ville`,' +
-                '`codePostal`, `pseudo`, `mdp`, `photo`, `desc`, `tailleOrganisme`, `estValide`, `siret`, `dateDeNaissance`, `nbPointsSourire`) ' +
-                'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                [newUser.libelle, newUser.nom, newUser.prenom, newUser.mail, newUser.tel, newUser.adresse, newUser.ville, newUser.codePostal, newUser.pseudo,
-                    newUser.mdp, newUser.photo, newUser.desc, newUser.tailleOrganisme, newUser.estValide, newUser.siret, newUser.dateDeNaissance, newUser.nbPointsSourire]);
+            const res = await Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, `quantite`, `DLC`,' +
+                '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`, `destinataire`) ' +
+                'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                [newProduct.libelle, newProduct.desc, newProduct.photo, newProduct.prix, newProduct.prixInitial, newProduct.quantite, newProduct.dlc, newProduct.codeBarre, newProduct.enRayon,
+                    newProduct.dateMiseEnRayon, newProduct.categorieProduit_id, newProduct.listProduct_id, newProduct.entrepotwm_id, newProduct.destinataire]);
             return res;
 
 
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement de l'utilisateur : " + err);
+            console.log("Erreur lors de l'enregistrement du produit : " + err);
             throw err;
         }
     }
