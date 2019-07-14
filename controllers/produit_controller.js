@@ -140,7 +140,7 @@ class ProduitController {
     async getAllProductCategories() {
         try {
             const res = await Database.connection.query('SELECT * FROM `categorie_produit`');
-            return res[0].map((rows) => new CategorieProduit(rows[0].id, rows[0].libelle));
+            return res[0].map((rows) => new CategorieProduit(rows.id, rows.libelle));
         }
         catch (err) {
             console.log(err);
