@@ -13,7 +13,6 @@ class ProduitController {
 
     async addProduct(newProduct) {
 
-        console.log("lalala", newProduct)
         try {
             const res = await Database.connection.execute('INSERT INTO `produit` (`libelle`, `desc`, `photo`, `prix`, `prixInitial`, `quantite`, `DLC`,' +
                 '`codeBarre`, `enRayon`, `dateMiseEnRayon`, `CategorieProduit_id`, `Liste_Produit_id`, `Entrepot_id`, `destinataire`) ' +

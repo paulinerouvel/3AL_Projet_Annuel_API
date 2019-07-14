@@ -10,7 +10,7 @@ class ListController {
 
     async addList(newList) {
         try {
-            const res = await Database.connection.execute('INSERT INTO `utilisateur` (`libelle`, `date`,' +
+            const res = await Database.connection.execute('INSERT INTO `liste_produit` (`libelle`, `date`,' +
                 ' `Utilisateur_id`, `estArchive`) VALUES (?, ?, ?, ?);',
                 [newList.libelle, newList.date, newList.Utilisateur_id, newList.estArchive]);
             return res;
