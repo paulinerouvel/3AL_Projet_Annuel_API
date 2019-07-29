@@ -10,7 +10,6 @@ class CommandeController {
     /***********************************************************************************/
 
 
-
     async addOrder(date, utilisateurID) {
 
         try {
@@ -18,8 +17,8 @@ class CommandeController {
             return res;
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement : " + err);
-            throw err;
+            console.log(err);
+            return 500;
         }
 
 
@@ -35,8 +34,8 @@ class CommandeController {
             return res;
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement : " + err);
-            throw err;
+            console.log(err);
+            return 500;
 
         }
 
@@ -61,7 +60,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
 
     }
@@ -74,7 +73,8 @@ class CommandeController {
             return results[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id));
         }
         catch (err) {
-            return err;
+            console.log(err);
+            return 500;
         }
 
     }
@@ -87,7 +87,8 @@ class CommandeController {
             return results[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id));
         }
         catch (err) {
-            return err;
+            console.log(err);
+            return 500;
         }
 
     }
@@ -109,7 +110,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -131,7 +132,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
 
     }
@@ -152,28 +153,11 @@ class CommandeController {
             return 0;
         }
         catch (err) {
-            throw err;
+            console.log(err);
+            return 500;
         }
 
     }
-
-    /***********************************************************************************/
-    /**                               UPDATE  FUNCTIONS                               **/
-    /***********************************************************************************/
-
-    // A TESTER / A CORRIGER
-    /*async updateQuantityCommande_has_produit(commande_id, produit_id, quantite) {
-        try {
-            const res = await Database.connection.execute('UPDATE `commande_has_produit` SET quantity = ? WHERE Produit_id = ? AND Commande_id = ?',
-                [quantite, produit_id, commande_id]);
-            return res;
-        }
-        catch {
-            return undefined;
-        }
-    }*/
-
-
 
 
     /***********************************************************************************/
@@ -187,8 +171,8 @@ class CommandeController {
             return res;
         }
         catch (err) {
-            console.log("Erreur lors de la suppression: " + err);
-            throw err;
+            console.log(err);
+            return 500;
         }
     }
 
@@ -199,8 +183,8 @@ class CommandeController {
             return res;
         }
         catch (err) {
-            console.log("Erreur lors de la suppression: " + err);
-            throw err;
+            console.log(err);
+            return 500;
         }
     }
 }

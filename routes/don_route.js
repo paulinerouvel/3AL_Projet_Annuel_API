@@ -23,11 +23,10 @@ router.post('/', async (req, res) => {
 
     const date = req.body.date;
     const montant = req.body.montant;
-    const type = req.body.type;
     const donneur_id = req.body.donneur_id;
     const receveur_id = req.body.receveur_id;
 
-    const don = new Don(-1, date, montant, type, donneur_id, receveur_id);
+    const don = new Don(-1, date, montant, donneur_id, receveur_id);
 
     DonController.addDon(don).then(() => {
         res.status(201).end(); // status created

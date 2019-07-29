@@ -1,6 +1,6 @@
 'use strict';
 
-class List {
+class Liste_produit {
 
   constructor(id, libelle, date, Utilisateur_id, estArchive) {
     this.id = id;
@@ -11,6 +11,6 @@ class List {
   }
 }
 
-module.exports = List;
+module.exports = Liste_produit;
 
 

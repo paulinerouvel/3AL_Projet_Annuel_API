@@ -11,8 +11,16 @@ class DonController {
 
     async addDon(don) {
 
-        // crée un new don 
-        return await Database.connection.execute('INSERT INTO `don` (date, montant, type, Donneur_id, Receveur_id ) VALUES (?, ?, ?, ?, ?);', [don.date, don.montant, don.type, don.Donneur_id, don.Receveur_id]);
+        try{
+
+        
+            return await Database.connection.execute('INSERT INTO `don` (date, montant, Donneur_id, Receveur_id ) VALUES (?, ?, ?, ?);', [don.date, don.montant, don.Donneur_id, don.Receveur_id]);
+    
+        }
+        catch (err) {
+            console.log(err);
+            return 500;
+        }
     }
 
 
@@ -20,38 +28,38 @@ class DonController {
     /**                                   GET FUNCTIONS                               **/
     /***********************************************************************************/
     async getAllDonByDonneurID(id) {
-        // on select les alertes avec l'id d'un utilisateur
-        const results = await Database.connection.query('SELECT * FROM don WHERE don.Donneur_id = ?', [id]);
+        
         try {
-            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.type, rows.Donneur_id, rows.Receveur_id));
+            const results = await Database.connection.query('SELECT * FROM don WHERE don.Donneur_id = ?', [id]);
+            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.Donneur_id, rows.Receveur_id));
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
     async getAllDonByReceveurID(id) {
-        // on select les alertes avec l'id d'un utilisateur
-        const results = await Database.connection.query('SELECT * FROM don WHERE don.Receveur_id = ?', [id]);
+        
         try {
-            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.type, rows.Donneur_id, rows.Receveur_id));
+            const results = await Database.connection.query('SELECT * FROM don WHERE don.Receveur_id = ?', [id]);
+            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
     async getDonOfTheDay(date) {
-        // on select toutes les alertes enregistrées à cette date
-        const results = await Database.connection.query('SELECT * FROM don WHERE date = ?', [date]);
+        
         try {
-            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.type, rows.Donneur_id, rows.Receveur_id));
+            const results = await Database.connection.query('SELECT * FROM don WHERE date = ?', [date]);
+            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -59,13 +67,12 @@ class DonController {
     async getAllDons() {
         try {
             const res = await Database.connection.query('SELECT * FROM `don`');
-            return res[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.type, rows.Donneur_id, rows.Receveur_id));
-
+            return res[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
 
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -73,17 +80,11 @@ class DonController {
 
 
 
-    /***********************************************************************************/
-    /**                               UPDATE FUNCTIONS                                **/
-    /***********************************************************************************/
-    // TO DO
-
-
 
     /***********************************************************************************/
     /**                              DELETE FUNCTIONS                                 **/
     /***********************************************************************************/
-    // Normalement pas de delete de don mais sait-on jamais
+
     async deleteDon(id) {
         try {
 
@@ -91,7 +92,8 @@ class DonController {
             return res;
         }
         catch (err) {
-            return undefined;
+            console.log(err)
+            return 500;
         }
     }
 }

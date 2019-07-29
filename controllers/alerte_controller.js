@@ -9,10 +9,14 @@ class AlerteController {
     /***********************************************************************************/
 
     async addAlerte(alerte) {
-
-        // crée une new alerte avec les valeurs, puis ajouter ses valeurs dans l'INSERT pour éviter des erreurs et géré les NULLABLE
-        return await Database.connection.execute('INSERT INTO `alerte` (`libelle`, date, Utilisateur_id ) VALUES (?, ?, ?);',
+        try{
+            return await Database.connection.execute('INSERT INTO `alerte` (`libelle`, date, Utilisateur_id ) VALUES (?, ?, ?);',
             [alerte.libelle, alerte.date, alerte.utilisateur_id]);
+        }
+        catch(err){
+            console.log(err);
+        }
+
     }
 
 
@@ -21,28 +25,28 @@ class AlerteController {
     /***********************************************************************************/
 
     async getAllAlertByUserID(id) {
-        // on select les alertes avec l'id d'un utilisateur
-        const results = await Database.connection.query('SELECT * FROM alerte WHERE alerte.Utilisateur_id = ?', [id]);
+        
         try {
+            const results = await Database.connection.query('SELECT * FROM alerte WHERE alerte.Utilisateur_id = ?', [id]);
             return results[0].map((rows) => new Alerte(rows.id, rows.libelle, rows.date, rows.Utilisateur_id));
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
 
 
     async getAlertOfTheDay(date) {
-        // on select toutes les alertes enregistrées à cette date
-        const results = await Database.connection.query('SELECT * FROM alerte WHERE date = ?', [date]);
+        
         try {
+            const results = await Database.connection.query('SELECT * FROM alerte WHERE date = ?', [date]);
             return results[0].map((rows) => new Alerte(rows[0].id, rows[0].libelle, rows[0].date, rows[0].Utilisateur_id));
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -52,22 +56,14 @@ class AlerteController {
             const res = await Database.connection.query('SELECT * FROM `alerte`');
             return res[0].map((rows) => new Alerte(rows.id, rows.libelle, rows.date, rows.Utilisateur_id)
             );
-
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
 
-
-    /***********************************************************************************/
-    /**                                 UPDATE FUNCTIONS                              **/
-    /***********************************************************************************/
-
-
-    // A PREMIERE VUE PAS BESOIN D'UPDATE LES ALERTES
 
 
     /***********************************************************************************/
@@ -77,14 +73,12 @@ class AlerteController {
     async deleteAlert(alertId) {
         try {
 
-            const res = await Database.connection.execute('DELETE FROM alerte WHERE alerte.id = ?', [alertId]);
+            return await Database.connection.execute('DELETE FROM alerte WHERE alerte.id = ?', [alertId]);
 
-
-            return res;
         }
         catch (err) {
-            console.log("error : " + err);
-            return undefined;
+            console.log( err);
+            return 500;
         }
     }
 }

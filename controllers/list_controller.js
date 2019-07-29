@@ -18,8 +18,8 @@ class ListController {
 
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement de la liste : " + err);
-            throw err;
+            console.log(err);
+            return 500
         }
     }
 
@@ -36,7 +36,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
         
     }
@@ -49,7 +49,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -63,7 +63,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -78,7 +78,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -93,8 +93,9 @@ class ListController {
                 [list.libelle, list.date, list.Utilisateur_id, list.estArchive, list.id]);
             return res;
         }
-        catch {
-            return undefined;
+        catch (err){
+            console.log(err)
+            return 500;
         }
     }
 
@@ -108,7 +109,8 @@ class ListController {
             return res;
         }
         catch (err) {
-            return undefined;
+            console.log(err);
+            return 500;
         }
     }
 

@@ -39,8 +39,8 @@ class UtilisateurController {
 
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement de l'utilisateur : " + err);
-            throw err;
+            console.log( err);
+            return 500;
         }
     }
 
@@ -50,7 +50,8 @@ class UtilisateurController {
             return res;
         }
         catch {
-            return undefined;
+            console.log(err)
+            return 500;
         }
     }
 
@@ -64,7 +65,8 @@ class UtilisateurController {
             return res;
         }
         catch(err){
-            throw err;
+            console.log(err)
+            return 500;
         }
     }
 
@@ -75,28 +77,37 @@ class UtilisateurController {
     /***********************************************************************************/
 
     async getUserByID(id) {
-        // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.id = ?', [id]);
-        const rows = results[0];
-        console.log(rows)
-        if (rows.length > 0) {
-            return new Utilisateur(rows[0].id, rows[0].Libelle, rows[0].nom, rows[0].prenom, rows[0].mail, rows[0].tel, rows[0].adresse, rows[0].ville,
-                rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
-                rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
+        try{
+            const results = await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.id = ?', [id]);
+            const rows = results[0];
+            if (rows.length > 0) {
+                return new Utilisateur(rows[0].id, rows[0].Libelle, rows[0].nom, rows[0].prenom, rows[0].mail, rows[0].tel, rows[0].adresse, rows[0].ville,
+                    rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
+                    rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
+            }
         }
-        return undefined;
+
+        catch(err){
+            console.log(err);
+            return 500;
+        }
     }
 
     async getUserByEmail(email) {
-        // on select un utilisateur avec son prenom
-        const results = await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.mail = ?', [email]);
-        const rows = results[0];
-        if (rows.length > 0) {
-            return new Utilisateur(rows[0].id, rows[0].Libelle, rows[0].nom, rows[0].prenom, rows[0].mail, rows[0].tel, rows[0].adresse, rows[0].ville,
-                rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
-                rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
+        try{
+            const results = await Database.connection.query('SELECT * FROM utilisateur WHERE utilisateur.mail = ?', [email]);
+            const rows = results[0];
+            if (rows.length > 0) {
+                return new Utilisateur(rows[0].id, rows[0].Libelle, rows[0].nom, rows[0].prenom, rows[0].mail, rows[0].tel, rows[0].adresse, rows[0].ville,
+                    rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
+                    rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
+            }
         }
-        return undefined;
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+
     }
 
 
@@ -110,51 +121,69 @@ class UtilisateurController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
 
     //Get le type d\'un user
     async getUserCategory(userID) {
-        const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
-        const rows = res[0];
-        if (rows.length > 0) {
-            console.log("test :", rows[0].Categorie_utilisateur_id);
-            return rows[0].Categorie_utilisateur_id;
+        try{
+            const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
+            const rows = res[0];
+            if (rows.length > 0) {
+                console.log("test :", rows[0].Categorie_utilisateur_id);
+                return rows[0].Categorie_utilisateur_id;
+            }
         }
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+
     }
 
 
     //Get tout les users par type
     async getUsersByCategory(category) {
-
-        /*;*/
-        const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id', [category]);
-        const rows = res[0];
-
-        console.log(rows)
-        if (rows.length > 0) {
-            return res[0];
-            // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
-            //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
-            //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
-            //     ;
+        try{
+            const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id', [category]);
+            const rows = res[0];
+    
+            if (rows.length > 0) {
+                return res[0];
+                // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
+                //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
+                //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+                //     ;
+            }
         }
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+
     }
 
     async getValidUsersByCategory(category) {
-        const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
-        const rows = res[0];
-
-        console.log(rows)
-        if (rows.length > 0) {
-            return res[0];
-            // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
-            //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
-            //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
-            //     ;
+        try{
+            const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
+            const rows = res[0];
+    
+            console.log(rows)
+            if (rows.length > 0) {
+                return res[0];
+                // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
+                //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
+                //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+                //     ;
+            }
         }
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+
     }
 
 
@@ -174,7 +203,8 @@ class UtilisateurController {
             }
         }
         catch(err){
-            throw err;
+            console.log(err);
+            return 500;
         }
 
     }
@@ -192,7 +222,8 @@ class UtilisateurController {
             }
         }
         catch(err) {
-            throw err;
+            console.log(err)
+            return 500;
         }
     }
 
@@ -209,8 +240,9 @@ class UtilisateurController {
                 user.desc, user.tailleOrganisme, user.estValide, user.siret, user.dateDeNaissance, user.nbPointsSourire, user.id]);
             return res;
         }
-        catch {
-            return undefined;
+        catch(err) {
+            console.log(err)
+            return 500;
         }
     }
 
@@ -229,8 +261,8 @@ class UtilisateurController {
             return res;
         }
         catch (err) {
-            console.log("error delete : " + err);
-            return undefined;
+            console.log(err);
+            return 500;
         }
     }
 }

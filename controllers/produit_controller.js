@@ -24,14 +24,21 @@ class ProduitController {
 
         }
         catch (err) {
-            console.log("Erreur lors de l'enregistrement du produit : " + err);
-            throw err;
+            console.log(err);
+            return 500;
         }
     }
 
 
-    addProductCategory(libelle) {
-        return Database.connection.execute('INSERT INTO categorie_produit (libelle) VALUES (?)', [libelle]);
+    async addProductCategory(libelle) {
+        try{
+            return await Database.connection.execute('INSERT INTO categorie_produit (libelle) VALUES (?)', [libelle]);
+        }
+        catch(err){
+            console.log(500);
+            return 500;
+        }
+        
     }
 
 
@@ -41,13 +48,20 @@ class ProduitController {
 
     async getProductByID(id) {
         // on select un produit avec son id
-        const results = await Database.connection.query('SELECT * FROM produit WHERE produit.id = ?', [id]);
-        const rows = results[0];
-        if (rows.length > 0) {
-            return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].DLC, rows[0].codeBarre,
-                rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id, rows[0].destinataire);
+        try{
+            const results = await Database.connection.query('SELECT * FROM produit WHERE produit.id = ?', [id]);
+            const rows = results[0];
+            if (rows.length > 0) {
+                return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].DLC, rows[0].codeBarre,
+                    rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id, rows[0].destinataire);
+            }
         }
-        return undefined;
+
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+        
     }
 
     async getAllProductsEnRayon() {
@@ -59,7 +73,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -78,12 +92,10 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
 
     }
-
-
 
 
     // On récupère tous les produits qui sont dans un entrepot
@@ -95,7 +107,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -109,7 +121,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -124,18 +136,24 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
 
     async getProductCategoryByID(id) {
-        const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
-        const rows = results[0];
-        if (rows.length > 0) {
-            return new CategorieProduit(rows[0].id, rows[0].libelle);
+        try {
+            const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
+            const rows = results[0];
+            if (rows.length > 0) {
+                return new CategorieProduit(rows[0].id, rows[0].libelle);
+            }
         }
-        return undefined;
+        catch(err){
+            console.log(err);
+            return 500;
+        }
+
     }
 
     async getAllProductCategories() {
@@ -145,7 +163,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
 
     }
@@ -157,7 +175,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -175,7 +193,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
     }
 
@@ -194,7 +212,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
     }
 
@@ -212,7 +230,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
     }
 
@@ -230,7 +248,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            throw err;
+            return 500;
         }
     }
 
@@ -250,7 +268,7 @@ class ProduitController {
         }
         catch(err) {
             console.log(err)
-            return undefined;
+            return 500;
         }
     }
 
@@ -262,7 +280,8 @@ class ProduitController {
             return res;
         }
         catch {
-            return undefined;
+            console.log(err)
+            return 500;
         }
     }
 
@@ -275,7 +294,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
-            return undefined;
+            return 500;
         }
     }
 
@@ -292,7 +311,8 @@ class ProduitController {
             return res;
         }
         catch (err) {
-            return undefined;
+            console.log(err);
+            return 500;
         }
     }
 
