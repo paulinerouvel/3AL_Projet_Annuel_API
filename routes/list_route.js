@@ -4,7 +4,7 @@ const express = require('express');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
 const ListController = require('../controllers').listController;
-const List = require('../models/list_model');
+const List = require('../models/liste_produit_model');
 
 
 

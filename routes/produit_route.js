@@ -7,7 +7,7 @@ const AlertController = require('../controllers').alerteController;
 const MailController = require('../controllers').mailController;
 const UserController = require('../controllers').utilisateurController;
 const Produit = require('../models/produit_model');
-
+const verifyToken = require('../utils/jwt.utils').verifyToken;
 const router = express.Router();
 router.use(bodyParser.json());
 

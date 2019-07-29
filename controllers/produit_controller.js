@@ -2,7 +2,7 @@
 
 const Database = require('../models/database');
 const Produit = require('../models/produit_model');
-const CategorieProduit = require('../models/categorieproduit_model');
+const CategorieProduit = require('../models/categorie_produit_model');
 
 class ProduitController {
 

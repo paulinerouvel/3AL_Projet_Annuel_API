@@ -1,7 +1,5 @@
 'use strict';
 
-const jwtUtils = require('../utils/jwt.utils')
-const bcrypt = require('bcrypt');
 const express = require('express');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
@@ -13,9 +11,9 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
-    /***********************************************************************************/
-    /**                                   POST REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 
 
 //Création d'une alerte
@@ -25,24 +23,29 @@ router.post('/', async (req, res) => {
     const date = req.body.date;
     const utilisateur_id = req.body.utilisateur_id;
 
+    if(libelle && date && utilisateur_id){
+        
+        const alert = new Alert(-1, libelle, date, utilisateur_id);
 
-    const alert = new Alert(-1, libelle, date, utilisateur_id);
+        let response = await AlerteController.addAlerte(alert);
 
-    AlerteController.addAlerte(alert).then(() => {
-        res.status(201).end(); // status created
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
+        if(response == 500){
+            return res.status(500).end();
+        }
+        else{
+            return res.status(201).end(); // status created
+        }
+
+    }
+    return res.status(400).end();
 
 });
 
 
-    /***********************************************************************************/
-    /**                                   GET REQUESTS                                **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET REQUESTS                                **/
+/***********************************************************************************/
 
-//Get Functions
 router.get('/', async (req, res) => {
 
     //get all alerts by user_id
@@ -54,7 +57,7 @@ router.get('/', async (req, res) => {
         return res.status(408).end();
     }
 
-    else if (req.body.date != undefined) // Pour l'instant ça marche pas bc l'enregistrement en base est un peu chelou (pour la date)
+    else if (req.body.date != undefined) 
     {
         console.log(req.body.date);
         const alert = await AlerteController.getAlertOfTheDay(req.query.date);

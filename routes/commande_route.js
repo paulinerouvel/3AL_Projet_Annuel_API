@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const CommandeController = require('../controllers').commandeController;
 const Commande_Has_Produit = require('../models/commande_has_produit_model');
+const verifyToken = require('../utils/jwt.utils').verifyToken;
 
 const router = express.Router();
 router.use(bodyParser.json());
