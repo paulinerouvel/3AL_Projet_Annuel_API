@@ -31,7 +31,9 @@ class DonController {
         
         try {
             const results = await Database.connection.query('SELECT * FROM don WHERE don.Donneur_id = ?', [id]);
+
             return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.Donneur_id, rows.Receveur_id));
+
         }
         catch (err) {
             console.log(err);

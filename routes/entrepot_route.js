@@ -28,14 +28,24 @@ router.post('/', async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
-    const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
+    if (libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre){
+        const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
-    EntrepotController.addWarehouse(warehouse).then(() => {
-        res.status(201).end(); // status created
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
+        let result = await EntrepotController.addWarehouse(warehouse);
+
+        if(result != 500){
+            return res.status(201).end(); // status created
+        }
+        else{
+            return res.status(500);
+        }
+            
+    }
+    else{
+        return res.status(400).end();
+    }
+
+
 
 });
 
@@ -51,30 +61,28 @@ router.get('/', async (req, res) => {
     //get entrepot by id
     if (req.query.id) {
         const warehouse = await EntrepotController.getWarehouseByID(req.query.id);
-        if (warehouse) {
+        if (warehouse != 500) {
             return res.json(warehouse);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
     //get entrepot by ville
     else if (req.query.city !== undefined) {
-        console.log("city");
         const warehouse = await EntrepotController.getWarehouseByCity(req.query.city);
-        if (warehouse) {
+        if (warehouse != 500) {
             return res.json(warehouse);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
     //get all entrepots
     else {
-        console.log("get all entrepot");
         const warehouses = await EntrepotController.getAllWarehouse();
-        if (warehouses) {
+        if (warehouses != 500) {
             return res.json(warehouses);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
 });
@@ -97,15 +105,23 @@ router.put('/', async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
+    if(id && libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre){
+        
+        const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
-    const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
+        let result = await EntrepotController.updateWarehouse(warehouse);
 
-    EntrepotController.updateWarehouse(warehouse).then(() => {
-        res.status(200).end(); // status OK
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
+        if(result != 500){
+            return res.status(200).end(); // status OK
+        }
+        else{
+            return res.status(500).end();
+        }
+            
+    }
+    else{
+        return res.status(400).end();
+    }
 
 });
 
@@ -113,13 +129,15 @@ router.put('/', async (req, res) => {
     /**                                 DELETE REQUESTS                               **/
     /***********************************************************************************/
 router.delete('/:id', async (req, res) => {
+
+
     if (req.params.id !== undefined) {
-        let a = await EntrepotController.deleteWarehouse(req.params.id);
-        if (a) {
+        let result= await EntrepotController.deleteWarehouse(req.params.id);
+        if (result != 500) {
             return res.status(200).end();
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
-    res.status(400).end();
+    return res.status(400).end();
 });
 module.exports = router;

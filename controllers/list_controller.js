@@ -19,7 +19,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
-            return 500
+            return 500;
         }
     }
 

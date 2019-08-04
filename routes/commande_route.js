@@ -24,26 +24,31 @@ router.post('/', async (req, res) => {
     const idCommande = req.body.idCommande;
     const quantite = req.body.quantite;
 
-    if(date != undefined && utilisateur_id != undefined){
+    if (date != undefined && utilisateur_id != undefined) {
         let result = await CommandeController.addOrder(date, utilisateur_id);
 
-        if(result){
-            return res.status(201).end(); 
+        if (result == 500) {
+            return res.status(500).end();
+
         }
-            
-        return res.status(408).end();
+        else {
+            return res.status(201).end();
+        }
+
+
     }
-    if(idProduct != undefined && idCommande != undefined && quantite){
+    if (idProduct != undefined && idCommande != undefined && quantite) {
 
         let chp = new Commande_Has_Produit(idProduct, idCommande, quantite);
         let result = await CommandeController.addProductInOrder(chp);
 
-        if(result){
-            return res.status(201).end(); 
+        if (result == 500) {
+            return res.status(500).end();
         }
-        
-            
-        return res.status(408).end();
+        else {
+            return res.status(201).end();
+        }
+
     }
     return res.status(400).end();
 });
@@ -59,28 +64,39 @@ router.get('/', async (req, res) => {
     if (req.query.idUser) {
         const commandes = await CommandeController.getOrderByIdUser(req.query.idUser);
 
-        if (commandes) {
+        if (commandes == 500) {
+            return res.status(500).end();
+            
+        }
+        else{
             return res.json(commandes);
         }
-        return res.status(408).end();
+        
     }
 
     //get commande by id
     else if (req.query.id) {
         const commandes = await CommandeController.getOrderByID(req.query.id);
 
-        if (commandes) {
+        if (commandes == 500) {
+            return res.status(500).end();
+            
+        }
+        else{
             return res.json(commandes);
         }
-        return res.status(408).end();
+        
     }
-    else{
+    else {
         const commandes = await CommandeController.getAllOrders();
 
-        if (commandes) {
+        if (commandes == 500) {
+            return res.status(500).end();
+        }
+        else{
             return res.json(commandes);
         }
-        return res.status(408).end();
+        
     }
 
 });
@@ -91,10 +107,14 @@ router.get('/last', async (req, res) => {
     if (req.query.idUser) {
         const commandes = await CommandeController.getLastOrderByIdUser(req.query.idUser);
 
-        if (commandes) {
+        if (commandes == 500) {
+            return res.status(500).end();
+            
+        }
+        else{
             return res.json(commandes);
         }
-        return res.status(408).end();
+        
     }
 
     return res.status(400).end();
@@ -103,32 +123,39 @@ router.get('/last', async (req, res) => {
 
 
 
-router.get('/products', async (req, res)=>{
+router.get('/products', async (req, res) => {
+
     const idOrder = req.query.idOrder;
 
-    console.log("test", req.query.dateDebut)
 
     const dateDebut = req.query.dateDebut;
     const dateFin = req.query.dateFin;
     const idUser = req.query.idUser;
-    if(idOrder){
+
+    if (idOrder) {
         const products = await CommandeController.getAllProductsInOrder(idOrder);
 
-        if (products) {
+        if (products != 500) {
             return res.json(products);
         }
-        return res.status(408).end();
+        else{
+            return res.status(500).end();
+        }
+        
     }
-    else if(dateDebut && dateFin && idUser){
+    else if (dateDebut && dateFin && idUser) {
         const total = await CommandeController.getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser);
 
-        if (total) {
+        if (total != 500) {
             return res.json(total);
         }
-        return res.status(408).end();
+        else{
+            return res.status(500).end();
+        }
+        
     }
     return res.status(400).end();
-    
+
 });
 
 
@@ -139,18 +166,18 @@ router.get('/products', async (req, res)=>{
 /**                                 DELETE REQUESTS                               **/
 /***********************************************************************************/
 
-router.delete('/', async (req, res)=>{
+router.delete('/', async (req, res) => {
     const id = req.query.id;
-    if(id){
+    if (id) {
         const result = await CommandeController.deleteOrder(id);
 
-        if (result) {
+        if (result != 500) {
             return res.status(200).end();
         }
         return res.status(500).end();
     }
     return res.status(400).end();
-    
+
 });
 
 module.exports = router;

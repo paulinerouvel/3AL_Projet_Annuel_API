@@ -53,15 +53,17 @@ router.post('/register', async (req, res) => {
             codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
 
 
-        UtilisateurController.addUser(user).then(() => {
-            res.status(201).end(); // status created
-        }).catch((err) => {
-            console.log(err);
-            res.status(409).end(); // status conflict
-        });
+        let result = await UtilisateurController.addUser(user);
+
+        if(result != 500){
+            res.status(201).end();
+        }
+        else{
+            return res.status(500).end();
+        }
     }
     else {
-        res.status(400).end();
+        return res.status(400).end();
     }
 });
 
@@ -70,15 +72,13 @@ router.post('/categorieAssociation', async(req, res)=>{
     const Utilisateur_id = req.body.Utilisateur_id;
 
 
-    console.log(CategorieAssociation_id, Utilisateur_id)
-
     if(CategorieAssociation_id != undefined && Utilisateur_id != undefined){
         let resUser = await UtilisateurController.addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id);
 
-        if (resUser) {
+        if (resUser != 500) {
             return res.status(201).end();
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     return res.status(400).end();
 
@@ -87,7 +87,6 @@ router.post('/categorieAssociation', async(req, res)=>{
 
 //login
 router.post('/login', async (req, res) => {
-    console.log("je rentre post/login");
 
     let mail = req.body.mail;
     let mot_de_passe = req.body.mdp;
@@ -99,13 +98,13 @@ router.post('/login', async (req, res) => {
         if (userFound != undefined && userFound.estValide == 1) {
 
             let userCategory = await UtilisateurController.getUserCategory(userFound.id);
-            console.log("user category :", userCategory)
+
             bcrypt.compare(mot_de_passe, userFound.mdp, function (errBycrypt, resBycrypt) {
                 if (resBycrypt) {
                     return res.status(200).json({
                         'userId': userFound.id,
                         'userCategory': userCategory,
-                        // 'typeUtil': userFound.status, normalement c'est pas ça le type
+                        // 'typeUtil': userFound.status, 
                         'token': jwtUtils.generateToken(userFound, userCategory)
                     });
                 }
@@ -118,7 +117,7 @@ router.post('/login', async (req, res) => {
         }
     }
     else{
-        return res.status(404).end();
+        return res.status(400).end();
     }
     
 });
@@ -128,12 +127,19 @@ router.post('/category', async (req, res) => {
 
     let user_has_category_id = req.body.categoryUserId;
     let userId = req.body.userId;
-    UtilisateurController.addUser_has_category(user_has_category_id, userId).then(() => {
-        res.status(200).end(); // status OK
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // Status conflict
-    });
+
+    if( user_has_category_id && userId){
+        let result = await UtilisateurController.addUser_has_category(user_has_category_id, userId);
+        if(result != 500){
+            return res.status(201).end();
+
+        }
+        return res.status(500).end();
+
+    }
+    return res.status(400).end();
+
+
 });
 
 
@@ -147,29 +153,29 @@ router.get('/', async (req, res) => {
     //get user by id
     if (req.query.id) {
         const user = await UtilisateurController.getUserByID(req.query.id);
-        if (user) {
+        if (user != 500) {
             return res.json(user);
         }
-        return res.status(408).end();
+        return res.status(500).end();
 
     }
 
     //get user by mail
     else if (req.query.mail !== undefined) {
         const user = await UtilisateurController.getUserByEmail(req.query.mail);
-        if (user) {
+        if (user != 500) {
             return res.json(user);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
     //get all users
     else {
         const users = await UtilisateurController.getAllUsers();
-        if (users) {
+        if (users != 500) {
             return res.json(users);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
 });
@@ -178,12 +184,16 @@ router.get('/', async (req, res) => {
 //get category of a user
 router.get('/category', async (req, res) => {
     const userId = req.query.userId;
-    console.log("je rentre dans /category");
-    let categoryId = await UtilisateurController.getUserCategory(userId);
-    if (categoryId) {
-        return res.json(categoryId);
+
+    if( userId){
+        let categoryId = await UtilisateurController.getUserCategory(userId);
+        if (categoryId != 500) {
+            return res.json(categoryId);
+        }
+        return res.status(500).end();
     }
-    return res.status(408).end();
+    return res.status(400).end();
+
 
 });
 
@@ -192,12 +202,19 @@ router.get('/allByCategory', async (req, res) => {
 
     const type = req.query.type;
 
-    const result = await UtilisateurController.getUsersByCategory(type);
+    if(type){
+        
+        const result = await UtilisateurController.getUsersByCategory(type);
 
-    if (result) {
-        return res.json(result);
+        if (result != 500) {
+            return res.json(result);
+        }
+        return res.status(500).end();
     }
-    return res.status(408).end();
+    else{
+        return res.status(400).end();
+    }
+
 
 });
 
@@ -211,12 +228,17 @@ router.get('/allValidByCategory', async (req, res) => {
 
     const type = req.query.type;
 
-    const result = await UtilisateurController.getValidUsersByCategory(type);
+    if(type){
+        const result = await UtilisateurController.getValidUsersByCategory(type);
 
-    if (result) {
-        return res.json(result);
+        if (result != 500) {
+            return res.json(result);
+        }
+        return res.status(500).end();
     }
-    return res.status(408).end();
+
+    return res.status(400).end();
+
 
 });
 
@@ -226,10 +248,10 @@ router.get('/categorieAssociation', async (req, res) => {
 
     const result = await UtilisateurController.getAllCategoryAssociation();
 
-    if (result) {
+    if (result != 500) {
         return res.json(result);
     }
-    return res.status(408).end();
+    return res.status(500).end();
 
 });
 
@@ -238,10 +260,10 @@ router.get('/categories', async (req, res) => {
 
     const result = await UtilisateurController.getAllCategoriesExceptAdmin();
 
-    if (result) {
+    if (result != 500) {
         return res.json(result);
     }
-    return res.status(408).end();
+    return res.status(500).end();
 
 });
 
@@ -270,30 +292,45 @@ router.put('/', async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    let curUser = await UtilisateurController.getUserByID(id);
+    if (libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
+        && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined
+        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined) {
 
-    if(curUser.mdp != mdp){
-        let cryptedPass = await bcrypt.hashSync(mdp, 5);
-        try {
-            mdp = cryptedPass;
+            
+        let curUser = await UtilisateurController.getUserByID(id);
+
+        if(curUser.mdp != mdp){
+            let cryptedPass = await bcrypt.hashSync(mdp, 5);
+            try {
+                mdp = cryptedPass;
+            }
+            catch (err) {
+                console.log(err);
+                res.status(409).end(); // status conflict
+            }
         }
-        catch (err) {
-            console.log(err);
-            res.status(409).end(); // status conflict
+
+
+
+        const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
+            codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
+
+        let result = await UtilisateurController.updateUser(user);
+
+        if(result != 500){
+            return res.status(200).end();
         }
+        else{
+            return res.status(500).end();
+        }
+
+            
     }
 
+    return res.status(400).end();
 
 
-    const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
-        codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
 
-    UtilisateurController.updateUser(user).then(() => {
-        res.status(200).end(); // status OK
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
 
 });
 
@@ -302,14 +339,12 @@ router.put('/', async (req, res) => {
 /**                                   DELETE REQUESTS                             **/
 /***********************************************************************************/
 router.delete('/:id', async (req, res) => {
-    console.log("route delete, params = " + req.params.id);
     if (req.params.id !== undefined) {
-        console.log("route delete");
         let a = await UtilisateurController.deleteUser(req.params.id);
-        if (a) {
+        if (a != 500) {
             return res.status(200).end();
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     res.status(400).end();
 });

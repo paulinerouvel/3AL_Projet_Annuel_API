@@ -145,6 +145,7 @@ class ProduitController {
         try {
             const results = await Database.connection.query('SELECT * FROM categorie_produit WHERE categorie_produit.id = ?', [id]);
             const rows = results[0];
+            
             if (rows.length > 0) {
                 return new CategorieProduit(rows[0].id, rows[0].libelle);
             }

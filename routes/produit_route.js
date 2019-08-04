@@ -53,52 +53,67 @@ router.post('/', async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id ;
     const destinataire = req.body.destinataire ;
 
-    let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
-    let produitsRes = await ProduitController.addProduct(product);
+    if( libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
+        prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
+        && listProduct_id != undefined && entrepotwm_id && destinataire){
 
-
-    if (produitsRes) {
-        let allAlerts = await AlertController.getAllAlerts();
-
-
-        for (const alert of allAlerts) {
-
-            libelle = no_accent(libelle);
-            desc = no_accent(desc);
-            alert.libelle = no_accent(alert.libelle);
-
-            let indexLibelle = libelle.search(alert.libelle);
-            let indexDesc = desc.search(alert.libelle);
-
-            if(indexLibelle != -1 || indexDesc != -1){
-                let user = await UserController.getUserByID(alert.utilisateur_id);
-
-                await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
-                    "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
-    
-            } 
+            let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
+            let produitsRes = await ProduitController.addProduct(product);
+        
+        
+            if (produitsRes != 500) {
+                let allAlerts = await AlertController.getAllAlerts();
+        
+        
+                for (const alert of allAlerts) {
+        
+                    libelle = no_accent(libelle);
+                    desc = no_accent(desc);
+                    alert.libelle = no_accent(alert.libelle);
+        
+                    let indexLibelle = libelle.search(alert.libelle);
+                    let indexDesc = desc.search(alert.libelle);
+        
+                    if(indexLibelle != -1 || indexDesc != -1){
+                        let user = await UserController.getUserByID(alert.utilisateur_id);
+        
+                        await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
+                            "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
+            
+                    } 
+        
+                }
+        
+                res.status(201).end(); // status created
+            }
+            else {
+                res.status(500).end(); 
+            }
 
         }
+        return res.status(400).end();
 
-        res.status(201).end(); // status created
-    }
-    else {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    }
 });
 
 // Création d'une catégorie de produit
-router.post('/Category', (req, res, next) => {
+router.post('/Category', async (req, res, next) => {
 
     const libelle = req.body.libelle;
+    if (libelle){
+        let result = await ProduitController.addProductCategory(libelle);
 
-    ProduitController.addProductCategory(libelle).then(() => {
-        res.status(201).end(); // status created
-    }).catch((err) => {
-        console.log(err);
-        res.status(409).end(); // status conflict
-    })
+        if(result != 500){
+
+            return res.status(201).end();
+        }
+        else{
+            return res.status(500).end();
+        }
+
+    }
+    return res.status(400).end();
+
+
 
 });
 
@@ -126,19 +141,19 @@ router.put('/', async (req, res) => {
 
 
     if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && enRayon != undefined && categorieProduit_id != undefined
-        && listProduct_id != undefined){
+        prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
+        && listProduct_id != undefined && entrepotwm_id && destinataire){
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 
         let productRes = await ProduitController.updateProduct(product);
         
-        if( productRes){
+        if( productRes != 500){
             return res.status(200).end(); // status OK
         }
         else{
-            return res.status(409).end(); // status conflict
+            return res.status(500).end(); 
         }
 
     }
@@ -156,11 +171,11 @@ router.put('/warehouse', async (req, res) => {
     if(idProduct && idWarehouse) {
         let result = await ProduitController.updateProductWarehouse(idProduct, idWarehouse);
 
-        if(result) {
+        if(result != 500) {
             return res.status(200).end(); // status ok
         }
         else {
-            return res.status(409).end(); // status conflict
+            return res.status(500).end(); 
         }
     }
     return res.status(400).end();
@@ -173,10 +188,10 @@ router.get('/', async (req, res) => {
     //get product by id
     if (req.query.id) {
         const produit = await ProduitController.getProductByID(req.query.id);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
     return res.status(400).end();
@@ -186,17 +201,17 @@ router.get('/warehouse', async (req, res) => {
     //get product by warehouse_id
     if (req.query.id) {
         const produit = await ProduitController.getAllProductsByWarehouse(req.query.id);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else if (req.query.idOrder) {
             const produit = await ProduitController.getProductOfAnOrder(req.query.idOrder);
-            if (produit) {
+            if (produit != 500) {
                 return res.json(produit);
             }
-            return res.status(408).end();
+            return res.status(500).end();
         }
     }
 );
@@ -205,32 +220,32 @@ router.get('/enRayon', async (req, res) => {
 
     if (req.query.name && req.query.dest) {
         const produit = await ProduitController.getProductByNameAndDest(req.query.name, req.query.dest);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else if (req.query.idCategorie && req.query.dest) {
         const produit = await ProduitController.getProductByCategorieAndDest(req.query.idCategorie, req.query.dest);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else if (req.query.prixMin && req.query.prixMax && req.query.dest) {
         const produit = await ProduitController.getProductByPrixAndDest(req.query.prixMin, req.query.prixMax, req.query.dest);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else if (req.query.dest) {
         const produit = await ProduitController.getAllProductsEnRayonByDest(req.query.dest);
 
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 
     return res.status(400).end();
@@ -242,10 +257,10 @@ router.get('/category', async (req, res) => {
 
 
     const produit = await ProduitController.getAllProductCategories();
-    if (produit) {
+    if (produit != 500) {
         return res.json(produit);
     }
-    return res.status(408).end();
+    return res.status(500).end();
     
 });
 
@@ -259,11 +274,12 @@ router.delete('/', async (req, res) => {
     //delete product by id
     if (req.query.id) {
         const produit = await ProduitController.deleteProduct(req.query.id);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
+    return res.status(400).end();
 });
 
 module.exports = router;

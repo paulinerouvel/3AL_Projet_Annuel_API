@@ -31,13 +31,13 @@ router.post('/', async (req, res) => {
 
         let listRes = await ListController.addList(list);
 
-        if(listRes){
+        if (listRes != 500) {
             return res.status(201).end();
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else {
-        res.status(400).end();
+        return res.status(400).end();
     }
 });
 
@@ -54,26 +54,19 @@ router.put('/', async (req, res) => {
     let Utilisateur_id = req.body.Utilisateur_id;
     let estArchive = req.body.estArchive;
 
-    console.log(
-        req.body.id,
-        req.body.libelle,
-        req.body.date,
-        req.body.Utilisateur_id,
-        req.body.estArchive,
-    );
 
-    if(id !== undefined && libelle !== undefined && date !== undefined && Utilisateur_id !== undefined
-        && estArchive !== undefined){
+    if (id !== undefined && libelle !== undefined && date !== undefined && Utilisateur_id !== undefined
+        && estArchive !== undefined) {
 
         const list = new List(id, libelle, date, Utilisateur_id, estArchive);
 
         let listRes = await ListController.updateList(list);
 
-        if(listRes){
+        if (listRes != 500) {
             return res.status(200).end(); // status OK
         }
-        else{
-            return res.status(409).end(); // status conflict
+        else {
+            return res.status(500).end();
         }
     }
     return res.status(400).end();
@@ -81,50 +74,47 @@ router.put('/', async (req, res) => {
 
 });
 
-    /***********************************************************************************/
-    /**                                   GET  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET  REQUESTS                               **/
+/***********************************************************************************/
 
 
 router.get('/', async (req, res) => {
-    //get all list by User
+
     if (req.query.idUser) {
         const produit = await ListController.getAllListsByUser(req.query.idUser);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
     else {
         if (req.query.idUserCategory) {
             const produit = await ListController.getAllProductsByUserCategory(req.query.idUserCategory);
-            console.log("ouioui");
-            if(produit) {
+            if (produit != 500) {
                 return res.json(produit);
             }
-            return res.status(408).end();
+            return res.status(500).end();
         }
         //get all lists
         else {
             const produit = await ListController.getAllLists();
-            console.log("nonnon");
-            if (produit) {
+            if (produit != 500) {
                 return res.json(produit);
             }
-            return res.status(408).end();
+            return res.status(500).end();
+        }
     }
-    }
-    
+
 });
 
 router.get('/products', async (req, res) => {
-    //get all product by list
     if (req.query.id) {
         const produit = await ListController.getAllProductsByList(req.query.id);
-        if (produit) {
+        if (produit != 500) {
             return res.json(produit);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 });
 
@@ -135,10 +125,10 @@ router.delete('/', async (req, res) => {
     //delete list by id
     if (req.query.id) {
         const list = await ListController.deleteList(req.query.id);
-        if (list) {
+        if (list != 500) {
             return res.json(list);
         }
-        return res.status(408).end();
+        return res.status(500).end();
     }
 });
 
