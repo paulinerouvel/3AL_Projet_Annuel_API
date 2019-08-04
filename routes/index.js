@@ -34,7 +34,8 @@ class RouterBuilder {
       app.use('/donation', require('./don_route')),
       app.use('/warehouse', require('./entrepot_route')),
       app.use('/list', require('./list_route')),
-      app.use('/mail', require('./mail_route'))
+      app.use('/mail', require('./mail_route')),
+      app.use('/payement', require('./payement_route'))
   }
 }
 
