@@ -1,5 +1,5 @@
 const Database = require('../models/database');
-const Don = require('../models/don_model');
+const Payement = require('../models/payement_model');
 
 
 class PayementController {
@@ -9,95 +9,33 @@ class PayementController {
     /**                                   ADD FUNCTIONS                               **/
     /***********************************************************************************/
 
-    // async addDon(don) {
+    async addPayement(payement) {
+        try{
+            return await Database.connection.execute('INSERT INTO `payement` (montant, titulaire, adresse_facturation, ville_facturation, id_don, id_commande ) VALUES (?, ?, ?, ?, ?, ?, ?);', [payement.montant, payement.titulaire, payement.adresse_facturation, payement.cp_facturation, payement.ville_facturation, payement.id_don, payement.id_commande]);
+        }
+        catch (err) {
+            console.log(err);
+            return 500;
+        }
+    }
 
-    //     try{
 
+    /***********************************************************************************/
+    /**                                   GET FUNCTIONS                               **/
+    /***********************************************************************************/
+    async getAllPayement() {
         
-    //         return await Database.connection.execute('INSERT INTO `don` (date, montant, Donneur_id, Receveur_id ) VALUES (?, ?, ?, ?);', [don.date, don.montant, don.Donneur_id, don.Receveur_id]);
-    
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         return 500;
-    //     }
-    // }
+        try {
+            const results = await Database.connection.query('SELECT * FROM payement');
 
+            return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, id_commande));
 
-    // /***********************************************************************************/
-    // /**                                   GET FUNCTIONS                               **/
-    // /***********************************************************************************/
-    // async getAllDonByDonneurID(id) {
-        
-    //     try {
-    //         const results = await Database.connection.query('SELECT * FROM don WHERE don.Donneur_id = ?', [id]);
-
-    //         return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.Donneur_id, rows.Receveur_id));
-
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         return 500;
-    //     }
-    // }
-
-    // async getAllDonByReceveurID(id) {
-        
-    //     try {
-    //         const results = await Database.connection.query('SELECT * FROM don WHERE don.Receveur_id = ?', [id]);
-    //         return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         return 500;
-    //     }
-    // }
-
-    // async getDonOfTheDay(date) {
-        
-    //     try {
-    //         const results = await Database.connection.query('SELECT * FROM don WHERE date = ?', [date]);
-    //         return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         return 500;
-    //     }
-    // }
-
-
-    // async getAllDons() {
-    //     try {
-    //         const res = await Database.connection.query('SELECT * FROM `don`');
-    //         return res[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
-
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //         return 500;
-    //     }
-
-    // }
-
-
-
-
-
-    // /***********************************************************************************/
-    // /**                              DELETE FUNCTIONS                                 **/
-    // /***********************************************************************************/
-
-    // async deleteDon(id) {
-    //     try {
-
-    //         const res = await Database.connection.execute('DELETE FROM don WHERE don.id', [id]);
-    //         return res;
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //         return 500;
-    //     }
-    // }
+        }
+        catch (err) {
+            console.log(err);
+            return 500;
+        }
+    }
 }
 
 module.exports = new PayementController();

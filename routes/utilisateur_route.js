@@ -67,22 +67,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/categorieAssociation', async(req, res)=>{
-    const CategorieAssociation_id = req.body.CategorieAssociation_id;
-    const Utilisateur_id = req.body.Utilisateur_id;
-
-
-    if(CategorieAssociation_id != undefined && Utilisateur_id != undefined){
-        let resUser = await UtilisateurController.addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id);
-
-        if (resUser != 500) {
-            return res.status(201).end();
-        }
-        return res.status(500).end();
-    }
-    return res.status(400).end();
-
-});
 
 
 //login
@@ -243,17 +227,7 @@ router.get('/allValidByCategory', async (req, res) => {
 });
 
 
-router.get('/categorieAssociation', async (req, res) => {
 
-
-    const result = await UtilisateurController.getAllCategoryAssociation();
-
-    if (result != 500) {
-        return res.json(result);
-    }
-    return res.status(500).end();
-
-});
 
 router.get('/categories', async (req, res) => {
 

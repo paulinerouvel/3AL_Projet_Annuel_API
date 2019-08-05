@@ -3,101 +3,68 @@
 const express = require('express');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
-const Don = require('../models/don_model');
-const DonController = require('../controllers').donController
+const Payement = require('../models/payement_model');
+const PayementController = require('../controllers').payementController;
 
 
 const router = express.Router();
 router.use(bodyParser.json());
 
 
-//     /***********************************************************************************/
-//     /**                                   POST REQUESTS                               **/
-//     /***********************************************************************************/
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 
 
-// //Création d'un don
-// router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
 
-//     const date = req.body.date;
-//     const montant = req.body.montant;
-//     const donneur_id = req.body.donneur_id;
-//     const receveur_id = req.body.receveur_id;
+    const montant = req.body.montant;
+    const titulaire = req.body.titulaire;
+    const adresse_facturation = req.body.adresse_facturation;
+    const cp_facturation = req.body.cp_facturation;
+    const ville_facturation = req.body.ville_facturation;
+    const id_don = req.body.id_don;
+    const id_commande = req.body.id_commande;
 
-//     if(date && montant && donneur_id && receveur_id){
+    if(montant && titulaire && adresse_facturation && cp_facturation && ville_facturation && id_don && id_commande){
         
-//         const don = new Don(-1, date, montant, donneur_id, receveur_id);
+        let payement = new Payement(-1, montant, titulaire, adresse_facturation, cp_facturation, ville_facturation, id_don, id_commande);
 
-//         let result = await DonController.addDon(don);
+        let result = await PayementController.addPayement(payement);
 
-//         if(result != 500){
-//             return res.status(201).end(); // status created
-//         }
-//         else{
-//             return res.status(500).end(); 
-//         }   
+        if(result != 500){
+            return res.status(201).end(); // status created
+        }
+        else{
+            return res.status(500).end(); 
+        }   
 
-//     }
-//     else{
-//         return res.status(400).end();
-//     }
-
-
-// });
+    }
+    else{
+        return res.status(400).end();
+    }
 
 
-//     /***********************************************************************************/
-//     /**                                   GET REQUESTS                                **/
-//     /***********************************************************************************/
+});
 
-// //Get Functions
-// router.get('/', async (req, res) => {
 
-//     //get all don by donneur_id
-//     if (req.query.idD) {
-//         const don = await DonController.getAllDonByDonneurID(req.query.idD);
-//         if (don != 500) {
-//             return res.json(don);
-//         }
-//         else{
-//             return res.status(500).end();
-//         }
+/***********************************************************************************/
+/**                                   GET REQUESTS                                **/
+/***********************************************************************************/
+
+router.get('/', async (req, res) => {      
+    const result = await PayementController.getAllPayement();
+    if (result != 500) {
+        return res.json(result);
+    }
+    return res.status(500).end();
         
-//     }
-//     else if (req.query.idR) {
-//         const don = await DonController.getAllDonByReceveurID(req.query.idR);
-//         if (don != 500) {
-//             return res.json(don);
-//         }
-//         return res.status(500).end();
-//     }
-//     else {
-        
-//         const don = await DonController.getAllDons();
-//         if (don != 500) {
-//             return res.json(don);
-//         }
-//         return res.status(500).end();
-        
-//     }
-
-// });
+});
 
 
 
-//     /***********************************************************************************/
-//     /**                                   DELETE REQUESTS                               **/
-//     /***********************************************************************************/
+/***********************************************************************************/
+/**                                   DELETE REQUESTS                             **/
+/***********************************************************************************/
 
-// router.delete('/:id/:alerte_id', async (req, res) => {
-//     if (req.params.id !== undefined && req.params.alerte_id != undefined) {
-
-//         const result = await MotCleController.deleteMotCle(req.params.id, req.params.alerte_id);
-//         if (result != 500) {
-//             return res.status(200).end();
-//         }
-//         return res.status(500).end();
-//     }
-//     res.status(400).end();
-// });
 module.exports = router;

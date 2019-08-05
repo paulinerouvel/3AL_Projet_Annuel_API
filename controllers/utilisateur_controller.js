@@ -59,16 +59,6 @@ class UtilisateurController {
 
 
 
-    async addCategorieToAssociation(CategorieAssociation_id, Utilisateur_id){
-        try{
-            const res = await Database.connection.execute('INSERT INTO `utilisateur_has_categorieassociation`(`CategorieAssociation_id`, `Utilisateur_id`) VALUES (?, ?)', [CategorieAssociation_id, Utilisateur_id]);
-            return res;
-        }
-        catch(err){
-            console.log(err)
-            return 500;
-        }
-    }
 
 
 
@@ -187,27 +177,6 @@ class UtilisateurController {
     }
 
 
-
-    async getAllCategoryAssociation() {
-        try{
-            const res = await Database.connection.query('SELECT * FROM `categorie_association`');
-            const rows = res[0];
-    
-
-            if (rows.length > 0) {
-                return res[0];
-    
-            }
-            else{
-                return [];
-            }
-        }
-        catch(err){
-            console.log(err);
-            return 500;
-        }
-
-    }
 
     async getAllCategoriesExceptAdmin() {
         try {
