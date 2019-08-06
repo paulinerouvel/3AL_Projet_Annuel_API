@@ -11,7 +11,7 @@ const verifyToken = require('../utils/jwt.utils').verifyToken;
 const router = express.Router();
 router.use(bodyParser.json());
 
-function no_accent (my_string) {
+function no_accent(my_string) {
     var rules = {
         'a': /[àáâãäå]+/g,
         'ae': /[æ]+/g,
@@ -25,7 +25,7 @@ function no_accent (my_string) {
         'y': /[ýÿ]+/g,
         '_': /[\s\\]+/g
     }
-     
+
 
     my_string = my_string.toLowerCase();
     for (var r in rules) my_string = my_string.replace(rules[r], r);
@@ -37,76 +37,76 @@ function no_accent (my_string) {
 /***********************************************************************************/
 
 //Création d'un produit
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     let libelle = req.body.libelle;
     let desc = req.body.desc;
     const photo = req.body.photo;
     const prix = req.body.prix;
     const prixInitial = req.body.prixInitial;
     const quantite = req.body.quantite;
-    const dlc = req.body.dlc ;
-    const codeBarre = req.body.codeBarre ;
+    const dlc = req.body.dlc;
+    const codeBarre = req.body.codeBarre;
     const enRayon = req.body.enRayon;
-    const dateMiseEnRayon = req.body.dateMiseEnRayon ;
+    const dateMiseEnRayon = req.body.dateMiseEnRayon;
     const categorieProduit_id = req.body.categorieProduit_id;
-    const listProduct_id = req.body.listProduct_id ;
-    const entrepotwm_id = req.body.entrepotwm_id ;
-    const destinataire = req.body.destinataire ;
+    const listProduct_id = req.body.listProduct_id;
+    const entrepotwm_id = req.body.entrepotwm_id;
+    const destinataire = req.body.destinataire;
 
-    if( libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
+    if (libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
         prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
-        && listProduct_id != undefined && entrepotwm_id && destinataire){
+        && listProduct_id != undefined && entrepotwm_id && destinataire) {
 
-            let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
-            let produitsRes = await ProduitController.addProduct(product);
-        
-        
-            if (produitsRes != 500) {
-                let allAlerts = await AlertController.getAllAlerts();
-        
-        
-                for (const alert of allAlerts) {
-        
-                    libelle = no_accent(libelle);
-                    desc = no_accent(desc);
-                    alert.libelle = no_accent(alert.libelle);
-        
-                    let indexLibelle = libelle.search(alert.libelle);
-                    let indexDesc = desc.search(alert.libelle);
-        
-                    if(indexLibelle != -1 || indexDesc != -1){
-                        let user = await UserController.getUserByID(alert.utilisateur_id);
-        
-                        await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
-                            "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
-            
-                    } 
-        
+        let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
+        let produitsRes = await ProduitController.addProduct(product);
+
+
+        if (produitsRes != 500) {
+            let allAlerts = await AlertController.getAllAlerts();
+
+
+            for (const alert of allAlerts) {
+
+                libelle = no_accent(libelle);
+                desc = no_accent(desc);
+                alert.libelle = no_accent(alert.libelle);
+
+                let indexLibelle = libelle.search(alert.libelle);
+                let indexDesc = desc.search(alert.libelle);
+
+                if (indexLibelle != -1 || indexDesc != -1) {
+                    let user = await UserController.getUserByID(alert.utilisateur_id);
+
+                    await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
+                        "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
+
                 }
-        
-                res.status(201).end(); // status created
-            }
-            else {
-                res.status(500).end(); 
+
             }
 
+            res.status(201).end(); // status created
         }
-        return res.status(400).end();
+        else {
+            res.status(500).end();
+        }
+
+    }
+    return res.status(400).end();
 
 });
 
 // Création d'une catégorie de produit
-router.post('/Category', async (req, res, next) => {
+router.post('/Category', verifyToken, async (req, res, next) => {
 
     const libelle = req.body.libelle;
-    if (libelle){
+    if (libelle) {
         let result = await ProduitController.addProductCategory(libelle);
 
-        if(result != 500){
+        if (result != 500) {
 
             return res.status(201).end();
         }
-        else{
+        else {
             return res.status(500).end();
         }
 
@@ -120,7 +120,7 @@ router.post('/Category', async (req, res, next) => {
 /***********************************************************************************/
 /**                                   PUT  REQUESTS                               **/
 /***********************************************************************************/
-router.put('/', async (req, res) => {
+router.put('/', verifyToken, async (req, res) => {
     const id = req.body.id;
     let libelle = req.body.libelle;
     let desc = req.body.desc;
@@ -131,7 +131,7 @@ router.put('/', async (req, res) => {
     let dlc = req.body.dlc;
     let codeBarre = req.body.codeBarre;
     let enRayon = req.body.enRayon;
-    let dateMiseEnRayon = req.body.dateMiseEnRayon ;
+    let dateMiseEnRayon = req.body.dateMiseEnRayon;
     let categorieProduit_id = req.body.categorieProduit_id;
     let listProduct_id = req.body.listProduct_id;
     let entrepotwm_id = req.body.entrepotwm_id;
@@ -140,20 +140,20 @@ router.put('/', async (req, res) => {
 
 
 
-    if(id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
+    if (id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
         prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
-        && listProduct_id != undefined && entrepotwm_id && destinataire){
+        && listProduct_id != undefined && entrepotwm_id && destinataire) {
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
 
         let productRes = await ProduitController.updateProduct(product);
-        
-        if( productRes != 500){
+
+        if (productRes != 500) {
             return res.status(200).end(); // status OK
         }
-        else{
-            return res.status(500).end(); 
+        else {
+            return res.status(500).end();
         }
 
     }
@@ -163,19 +163,19 @@ router.put('/', async (req, res) => {
 });
 
 
-router.put('/warehouse', async (req, res) => {
+router.put('/warehouse', verifyToken, async (req, res) => {
 
     let idProduct = req.body.idProduct;
     let idWarehouse = req.body.idWarehouse;
 
-    if(idProduct && idWarehouse) {
+    if (idProduct && idWarehouse) {
         let result = await ProduitController.updateProductWarehouse(idProduct, idWarehouse);
 
-        if(result != 500) {
+        if (result != 500) {
             return res.status(200).end(); // status ok
         }
         else {
-            return res.status(500).end(); 
+            return res.status(500).end();
         }
     }
     return res.status(400).end();
@@ -207,13 +207,13 @@ router.get('/warehouse', async (req, res) => {
         return res.status(500).end();
     }
     else if (req.query.idOrder) {
-            const produit = await ProduitController.getProductOfAnOrder(req.query.idOrder);
-            if (produit != 500) {
-                return res.json(produit);
-            }
-            return res.status(500).end();
+        const produit = await ProduitController.getProductOfAnOrder(req.query.idOrder);
+        if (produit != 500) {
+            return res.json(produit);
         }
+        return res.status(500).end();
     }
+}
 );
 
 router.get('/enRayon', async (req, res) => {
@@ -261,7 +261,7 @@ router.get('/category', async (req, res) => {
         return res.json(produit);
     }
     return res.status(500).end();
-    
+
 });
 
 
@@ -270,7 +270,7 @@ router.get('/category', async (req, res) => {
 /***********************************************************************************/
 /**                                DELETE  REQUESTS                               **/
 /***********************************************************************************/
-router.delete('/', async (req, res) => {
+router.delete('/', verifyToken, async (req, res) => {
     //delete product by id
     if (req.query.id) {
         const produit = await ProduitController.deleteProduct(req.query.id);

@@ -12,12 +12,12 @@ const Entrepot = require('../models/entrepot_model');
 const router = express.Router();
 router.use(bodyParser.json());
 
-    /***********************************************************************************/
-    /**                                   POST REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 
 //Création d'un entrepot
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
 
     const libelle = req.body.libelle;
     const adresse = req.body.adresse;
@@ -28,20 +28,20 @@ router.post('/', async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
-    if (libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre){
+    if (libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre) {
         const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
         let result = await EntrepotController.addWarehouse(warehouse);
 
-        if(result != 500){
+        if (result != 500) {
             return res.status(201).end(); // status created
         }
-        else{
+        else {
             return res.status(500);
         }
-            
+
     }
-    else{
+    else {
         return res.status(400).end();
     }
 
@@ -51,9 +51,9 @@ router.post('/', async (req, res) => {
 
 
 
-    /***********************************************************************************/
-    /**                                   GET  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET  REQUESTS                               **/
+/***********************************************************************************/
 
 //Get Functions
 router.get('/', async (req, res) => {
@@ -88,12 +88,12 @@ router.get('/', async (req, res) => {
 });
 
 
-    /***********************************************************************************/
-    /**                                   PUT  REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   PUT  REQUESTS                               **/
+/***********************************************************************************/
 
 //Update d'un entrepot
-router.put('/', async (req, res) => {
+router.put('/', verifyToken, async (req, res) => {
 
     let id = req.body.id;
     const libelle = req.body.libelle;
@@ -105,34 +105,34 @@ router.put('/', async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
-    if(id && libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre){
-        
+    if (id && libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre) {
+
         const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
         let result = await EntrepotController.updateWarehouse(warehouse);
 
-        if(result != 500){
+        if (result != 500) {
             return res.status(200).end(); // status OK
         }
-        else{
+        else {
             return res.status(500).end();
         }
-            
+
     }
-    else{
+    else {
         return res.status(400).end();
     }
 
 });
 
-    /***********************************************************************************/
-    /**                                 DELETE REQUESTS                               **/
-    /***********************************************************************************/
-router.delete('/:id', async (req, res) => {
+/***********************************************************************************/
+/**                                 DELETE REQUESTS                               **/
+/***********************************************************************************/
+router.delete('/:id', verifyToken, async (req, res) => {
 
 
     if (req.params.id !== undefined) {
-        let result= await EntrepotController.deleteWarehouse(req.params.id);
+        let result = await EntrepotController.deleteWarehouse(req.params.id);
         if (result != 500) {
             return res.status(200).end();
         }

@@ -55,10 +55,10 @@ router.post('/register', async (req, res) => {
 
         let result = await UtilisateurController.addUser(user);
 
-        if(result != 500){
+        if (result != 500) {
             res.status(201).end();
         }
-        else{
+        else {
             return res.status(500).end();
         }
     }
@@ -100,10 +100,10 @@ router.post('/login', async (req, res) => {
             });
         }
     }
-    else{
+    else {
         return res.status(400).end();
     }
-    
+
 });
 
 // ajouter 1 catégorie à un utilisateur
@@ -112,9 +112,9 @@ router.post('/category', async (req, res) => {
     let user_has_category_id = req.body.categoryUserId;
     let userId = req.body.userId;
 
-    if( user_has_category_id && userId){
+    if (user_has_category_id && userId) {
         let result = await UtilisateurController.addUser_has_category(user_has_category_id, userId);
-        if(result != 500){
+        if (result != 500) {
             return res.status(201).end();
 
         }
@@ -169,7 +169,7 @@ router.get('/', async (req, res) => {
 router.get('/category', async (req, res) => {
     const userId = req.query.userId;
 
-    if( userId){
+    if (userId) {
         let categoryId = await UtilisateurController.getUserCategory(userId);
         if (categoryId != 500) {
             return res.json(categoryId);
@@ -186,8 +186,8 @@ router.get('/allByCategory', async (req, res) => {
 
     const type = req.query.type;
 
-    if(type){
-        
+    if (type) {
+
         const result = await UtilisateurController.getUsersByCategory(type);
 
         if (result != 500) {
@@ -195,7 +195,7 @@ router.get('/allByCategory', async (req, res) => {
         }
         return res.status(500).end();
     }
-    else{
+    else {
         return res.status(400).end();
     }
 
@@ -212,7 +212,7 @@ router.get('/allValidByCategory', async (req, res) => {
 
     const type = req.query.type;
 
-    if(type){
+    if (type) {
         const result = await UtilisateurController.getValidUsersByCategory(type);
 
         if (result != 500) {
@@ -246,7 +246,7 @@ router.get('/categories', async (req, res) => {
 /***********************************************************************************/
 /**                                   PUT  REQUESTS                               **/
 /***********************************************************************************/
-router.put('/', async (req, res) => {
+router.put('/', verifyToken, async (req, res) => {
     const id = req.body.id;
     let libelle = req.body.libelle;
     let nom = req.body.nom;
@@ -270,10 +270,10 @@ router.put('/', async (req, res) => {
         && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined
         && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined) {
 
-            
+
         let curUser = await UtilisateurController.getUserByID(id);
 
-        if(curUser.mdp != mdp){
+        if (curUser.mdp != mdp) {
             let cryptedPass = await bcrypt.hashSync(mdp, 5);
             try {
                 mdp = cryptedPass;
@@ -291,14 +291,14 @@ router.put('/', async (req, res) => {
 
         let result = await UtilisateurController.updateUser(user);
 
-        if(result != 500){
+        if (result != 500) {
             return res.status(200).end();
         }
-        else{
+        else {
             return res.status(500).end();
         }
 
-            
+
     }
 
     return res.status(400).end();
@@ -312,7 +312,7 @@ router.put('/', async (req, res) => {
 /***********************************************************************************/
 /**                                   DELETE REQUESTS                             **/
 /***********************************************************************************/
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
     if (req.params.id !== undefined) {
         let a = await UtilisateurController.deleteUser(req.params.id);
         if (a != 500) {

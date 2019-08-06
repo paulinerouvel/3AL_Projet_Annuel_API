@@ -15,7 +15,7 @@ router.use(bodyParser.json());
 /***********************************************************************************/
 
 //add an order
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
 
     const date = req.body.date;
     const utilisateur_id = req.body.utilisateur_id;
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 /**                                   GET REQUESTS                                **/
 /***********************************************************************************/
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
 
     //get commande by id user
     if (req.query.idUser) {
@@ -66,12 +66,12 @@ router.get('/', async (req, res) => {
 
         if (commandes == 500) {
             return res.status(500).end();
-            
+
         }
-        else{
+        else {
             return res.json(commandes);
         }
-        
+
     }
 
     //get commande by id
@@ -80,12 +80,12 @@ router.get('/', async (req, res) => {
 
         if (commandes == 500) {
             return res.status(500).end();
-            
+
         }
-        else{
+        else {
             return res.json(commandes);
         }
-        
+
     }
     else {
         const commandes = await CommandeController.getAllOrders();
@@ -93,15 +93,15 @@ router.get('/', async (req, res) => {
         if (commandes == 500) {
             return res.status(500).end();
         }
-        else{
+        else {
             return res.json(commandes);
         }
-        
+
     }
 
 });
 
-router.get('/last', async (req, res) => {
+router.get('/last', verifyToken, async (req, res) => {
 
     //get commande by id user
     if (req.query.idUser) {
@@ -109,12 +109,12 @@ router.get('/last', async (req, res) => {
 
         if (commandes == 500) {
             return res.status(500).end();
-            
+
         }
-        else{
+        else {
             return res.json(commandes);
         }
-        
+
     }
 
     return res.status(400).end();
@@ -123,7 +123,7 @@ router.get('/last', async (req, res) => {
 
 
 
-router.get('/products', async (req, res) => {
+router.get('/products', verifyToken, async (req, res) => {
 
     const idOrder = req.query.idOrder;
 
@@ -138,10 +138,10 @@ router.get('/products', async (req, res) => {
         if (products != 500) {
             return res.json(products);
         }
-        else{
+        else {
             return res.status(500).end();
         }
-        
+
     }
     else if (dateDebut && dateFin && idUser) {
         const total = await CommandeController.getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser);
@@ -149,10 +149,10 @@ router.get('/products', async (req, res) => {
         if (total != 500) {
             return res.json(total);
         }
-        else{
+        else {
             return res.status(500).end();
         }
-        
+
     }
     return res.status(400).end();
 
@@ -166,7 +166,7 @@ router.get('/products', async (req, res) => {
 /**                                 DELETE REQUESTS                               **/
 /***********************************************************************************/
 
-router.delete('/', async (req, res) => {
+router.delete('/', verifyToken, async (req, res) => {
     const id = req.query.id;
     if (id) {
         const result = await CommandeController.deleteOrder(id);

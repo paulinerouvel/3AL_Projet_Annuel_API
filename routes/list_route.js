@@ -18,7 +18,7 @@ router.use(bodyParser.json());
 /***********************************************************************************/
 
 //Création d'une liste
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     const libelle = req.body.libelle;
     const date = req.body.date;
     const Utilisateur_id = req.body.Utilisateur_id;
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
 /***********************************************************************************/
 
 //Update d'une liste
-router.put('/', async (req, res) => {
+router.put('/', verifyToken, async (req, res) => {
     const id = req.body.id;
     let libelle = req.body.libelle;
     let date = req.body.date;
@@ -79,7 +79,7 @@ router.put('/', async (req, res) => {
 /***********************************************************************************/
 
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
 
     if (req.query.idUser) {
         const produit = await ListController.getAllListsByUser(req.query.idUser);
@@ -108,7 +108,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/products', async (req, res) => {
+router.get('/products', verifyToken, async (req, res) => {
     if (req.query.id) {
         const produit = await ListController.getAllProductsByList(req.query.id);
         if (produit != 500) {
@@ -121,7 +121,7 @@ router.get('/products', async (req, res) => {
 /***********************************************************************************/
 /**                                DELETE  REQUESTS                               **/
 /***********************************************************************************/
-router.delete('/', async (req, res) => {
+router.delete('/', verifyToken, async (req, res) => {
     //delete list by id
     if (req.query.id) {
         const list = await ListController.deleteList(req.query.id);

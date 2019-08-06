@@ -16,16 +16,16 @@ router.post('/', async (req, res) => {
     const subject = req.body.subject;
     const message = req.body.message;
 
-    if(sender != undefined && destination != undefined && subject != undefined && message != undefined ){
+    if (sender != undefined && destination != undefined && subject != undefined && message != undefined) {
         let result = await MailController.sendMail(sender, destination, subject, message);
 
-        if(result){
+        if (result) {
             return res.status(200).end();
         }
-        else{
+        else {
             return res.status(500).end();
         }
-        
+
     }
     return res.status(400).end();
 

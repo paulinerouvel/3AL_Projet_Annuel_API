@@ -11,34 +11,34 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 
-    /***********************************************************************************/
-    /**                                   POST REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   POST REQUESTS                               **/
+/***********************************************************************************/
 
 
 //Création d'un don
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
 
     const date = req.body.date;
     const montant = req.body.montant;
     const donneur_id = req.body.donneur_id;
     const receveur_id = req.body.receveur_id;
 
-    if(date && montant && donneur_id && receveur_id){
-        
+    if (date && montant && donneur_id && receveur_id) {
+
         const don = new Don(-1, date, montant, donneur_id, receveur_id);
 
         let result = await DonController.addDon(don);
 
-        if(result != 500){
+        if (result != 500) {
             return res.status(201).end(); // status created
         }
-        else{
-            return res.status(500).end(); 
-        }   
+        else {
+            return res.status(500).end();
+        }
 
     }
-    else{
+    else {
         return res.status(400).end();
     }
 
@@ -46,12 +46,12 @@ router.post('/', async (req, res) => {
 });
 
 
-    /***********************************************************************************/
-    /**                                   GET REQUESTS                                **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   GET REQUESTS                                **/
+/***********************************************************************************/
 
 //Get Functions
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
 
     //get all don by donneur_id
     if (req.query.idD) {
@@ -59,10 +59,10 @@ router.get('/', async (req, res) => {
         if (don != 500) {
             return res.json(don);
         }
-        else{
+        else {
             return res.status(500).end();
         }
-        
+
     }
     else if (req.query.idR) {
         const don = await DonController.getAllDonByReceveurID(req.query.idR);
@@ -72,24 +72,24 @@ router.get('/', async (req, res) => {
         return res.status(500).end();
     }
     else {
-        
+
         const don = await DonController.getAllDons();
         if (don != 500) {
             return res.json(don);
         }
         return res.status(500).end();
-        
+
     }
 
 });
 
 
 
-    /***********************************************************************************/
-    /**                                   DELETE REQUESTS                               **/
-    /***********************************************************************************/
+/***********************************************************************************/
+/**                                   DELETE REQUESTS                               **/
+/***********************************************************************************/
 
-router.delete('/:id/:alerte_id', async (req, res) => {
+router.delete('/:id/:alerte_id', verifyToken, async (req, res) => {
     if (req.params.id !== undefined && req.params.alerte_id != undefined) {
 
         const result = await MotCleController.deleteMotCle(req.params.id, req.params.alerte_id);
