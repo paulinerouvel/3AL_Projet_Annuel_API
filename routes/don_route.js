@@ -24,6 +24,7 @@ router.post('/', verifyToken, async (req, res) => {
     const donneur_id = req.body.donneur_id;
     const receveur_id = req.body.receveur_id;
 
+
     if (date && montant && donneur_id && receveur_id) {
 
         const don = new Don(-1, date, montant, donneur_id, receveur_id);
@@ -41,7 +42,6 @@ router.post('/', verifyToken, async (req, res) => {
     else {
         return res.status(400).end();
     }
-
 
 });
 
@@ -89,10 +89,10 @@ router.get('/', verifyToken, async (req, res) => {
 /**                                   DELETE REQUESTS                               **/
 /***********************************************************************************/
 
-router.delete('/:id/:alerte_id', verifyToken, async (req, res) => {
-    if (req.params.id !== undefined && req.params.alerte_id != undefined) {
+router.delete('/', verifyToken, async (req, res) => {
+    if (req.query.id) {
 
-        const result = await MotCleController.deleteMotCle(req.params.id, req.params.alerte_id);
+        const result = await DonController.deleteDon(req.query.id);
         if (result != 500) {
             return res.status(200).end();
         }
