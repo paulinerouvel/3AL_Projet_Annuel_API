@@ -126,7 +126,7 @@ router.delete('/', verifyToken, async (req, res) => {
     if (req.query.id) {
         const list = await ListController.deleteList(req.query.id);
         if (list != 500) {
-            return res.json(list);
+            return res.status(200).end();
         }
         return res.status(500).end();
     }

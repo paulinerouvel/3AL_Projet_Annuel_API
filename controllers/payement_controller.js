@@ -11,7 +11,7 @@ class PayementController {
 
     async addPayement(payement) {
         try{
-            return await Database.connection.execute('INSERT INTO `payement` (montant, titulaire, adresse_facturation, ville_facturation, id_don, id_commande ) VALUES (?, ?, ?, ?, ?, ?, ?);', [payement.montant, payement.titulaire, payement.adresse_facturation, payement.cp_facturation, payement.ville_facturation, payement.id_don, payement.id_commande]);
+            return await Database.connection.execute('INSERT INTO `payement` (montant, titulaire, adresse_facturation, cp_facturation, ville_facturation, id_don, id_commande ) VALUES (?, ?, ?, ?, ?, ?, ?);', [payement.montant, payement.titulaire, payement.adresse_facturation, payement.cp_facturation, payement.ville_facturation, payement.id_don, payement.id_commande]);
         }
         catch (err) {
             console.log(err);
@@ -28,7 +28,7 @@ class PayementController {
         try {
             const results = await Database.connection.query('SELECT * FROM payement');
 
-            return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, id_commande));
+            return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, rows.id_commande));
 
         }
         catch (err) {
