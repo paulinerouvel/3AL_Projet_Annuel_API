@@ -257,7 +257,6 @@ class ProduitController {
     /**                                UPDATE FUNCTIONS                               **/
     /***********************************************************************************/
     async updateProduct(product) {
-        console.log(product)
         try {
 
             const res = await Database.connection.execute('UPDATE `produit` SET `libelle` = ?, `desc` = ?, photo = ?, prix = ?, prixInitial = ?, quantite = ?, DLC = ?, codeBarre = ?, enRayon = ?, dateMiseEnRayon = ?,CategorieProduit_id = ?, Liste_Produit_id = ?, Entrepot_id = ?, destinataire = ? WHERE id = ?',
@@ -285,22 +284,6 @@ class ProduitController {
             return 500;
         }
     }
-
-
-    async updateProductWarehouse(idProduct, idWarehouse) {
-        try {
-            const res = await Database.connection.execute('UPDATE `produit` SET Entrepot_id = ? WHERE id = ?',
-                [idWarehouse, idProduct]);
-            return res;
-        }
-        catch (err) {
-            console.log(err);
-            return 500;
-        }
-    }
-
-
-
 
 
     /***********************************************************************************/

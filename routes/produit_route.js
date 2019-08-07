@@ -55,6 +55,7 @@ router.post('/', verifyToken, async (req, res) => {
 
     if (libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
 
+
         let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
         let produitsRes = await ProduitController.addProduct(product);
 
@@ -82,10 +83,10 @@ router.post('/', verifyToken, async (req, res) => {
 
             }
 
-            res.status(201).end(); // status created
+            return res.status(201).end(); // status created
         }
         else {
-            res.status(500).end();
+            return res.status(500).end();
         }
 
     }
@@ -94,7 +95,7 @@ router.post('/', verifyToken, async (req, res) => {
 });
 
 // Création d'une catégorie de produit
-router.post('/Category', verifyToken, async (req, res, next) => {
+router.post('/category', verifyToken, async (req, res) => {
 
     const libelle = req.body.libelle;
     if (libelle) {
@@ -138,7 +139,7 @@ router.put('/', verifyToken, async (req, res) => {
 
 
 
-    if (id  && libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
+    if (id && libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
@@ -158,24 +159,6 @@ router.put('/', verifyToken, async (req, res) => {
 
 });
 
-
-router.put('/warehouse', verifyToken, async (req, res) => {
-
-    let idProduct = req.body.idProduct;
-    let idWarehouse = req.body.idWarehouse;
-
-    if (idProduct && idWarehouse) {
-        let result = await ProduitController.updateProductWarehouse(idProduct, idWarehouse);
-
-        if (result != 500) {
-            return res.status(200).end(); // status ok
-        }
-        else {
-            return res.status(500).end();
-        }
-    }
-    return res.status(400).end();
-});
 
 /***********************************************************************************/
 /**                                   GET  REQUESTS                               **/
@@ -209,8 +192,7 @@ router.get('/warehouse', async (req, res) => {
         }
         return res.status(500).end();
     }
-}
-);
+});
 
 router.get('/enRayon', async (req, res) => {
 
@@ -271,7 +253,7 @@ router.delete('/', verifyToken, async (req, res) => {
     if (req.query.id) {
         const produit = await ProduitController.deleteProduct(req.query.id);
         if (produit != 500) {
-            return res.json(produit);
+            return res.status(200).end();
         }
         return res.status(500).end();
     }
