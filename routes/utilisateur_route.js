@@ -45,9 +45,7 @@ router.post('/register', async (req, res) => {
     }
 
 
-    if (libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
-        && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined
-        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined) {
+    if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide) {
 
         const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
             codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
@@ -266,9 +264,7 @@ router.put('/', verifyToken, async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    if (libelle != undefined && nom != undefined && prenom != undefined && mail != undefined && tel != undefined && adresse != undefined
-        && ville != undefined && codePostal != undefined && pseudo != undefined && mdp != undefined && photo != undefined && desc != undefined
-        && tailleOrganisme != undefined && estValide != undefined && siret != undefined && dateDeNaissance != undefined && nbPointsSourire != undefined) {
+    if (id && mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide) {
 
 
         let curUser = await UtilisateurController.getUserByID(id);

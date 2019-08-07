@@ -53,9 +53,7 @@ router.post('/', verifyToken, async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    if (libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
-        && listProduct_id != undefined && entrepotwm_id && destinataire) {
+    if (libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
 
         let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
         let produitsRes = await ProduitController.addProduct(product);
@@ -140,9 +138,7 @@ router.put('/', verifyToken, async (req, res) => {
 
 
 
-    if (id != undefined && libelle != undefined && desc != undefined && photo != undefined && prix != undefined &&
-        prixInitial != undefined && quantite != undefined && dlc && codeBarre && enRayon != undefined && dateMiseEnRayon && categorieProduit_id != undefined
-        && listProduct_id != undefined && entrepotwm_id && destinataire) {
+    if (id  && libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);

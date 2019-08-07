@@ -1,7 +1,6 @@
 'use strict';
 
-const jwtUtils = require('../utils/jwt.utils')
-const bcrypt = require('bcrypt');
+
 const express = require('express');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
@@ -28,7 +27,7 @@ router.post('/', verifyToken, async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
-    if (libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre) {
+    if (libelle && adresse && ville && codePostal ) {
         const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
         let result = await EntrepotController.addWarehouse(warehouse);
@@ -105,7 +104,7 @@ router.put('/', verifyToken, async (req, res) => {
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
-    if (id && libelle && adresse && ville && codePostal && desc && photo && placeTotal && placeLibre) {
+    if (id && libelle && adresse && ville && codePostal ) {
 
         const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 

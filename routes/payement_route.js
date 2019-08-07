@@ -26,7 +26,7 @@ router.post('/', verifyToken, async (req, res) => {
     const id_don = req.body.id_don;
     const id_commande = req.body.id_commande;
 
-    if (montant && titulaire && adresse_facturation && cp_facturation && ville_facturation && id_don && id_commande) {
+    if (montant && titulaire && adresse_facturation && cp_facturation && ville_facturation ) {
 
         let payement = new Payement(-1, montant, titulaire, adresse_facturation, cp_facturation, ville_facturation, id_don, id_commande);
 

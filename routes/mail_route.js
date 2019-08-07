@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
 const MailController = require('../controllers').mailController;
 
