@@ -19,13 +19,16 @@ router.post('/', verifyToken, async (req, res) => {
 
     const date = req.body.date;
     const utilisateur_id = req.body.utilisateur_id;
+    const adresse_livraison = req.body.adresse_livraison;
+    const cp_livraison = req.body.cp_livraison;
+    const ville_livraison = req.body.ville_livraison;
 
     const idProduct = req.body.idProduct;
     const idCommande = req.body.idCommande;
     const quantite = req.body.quantite;
 
-    if (date != undefined && utilisateur_id != undefined) {
-        let result = await CommandeController.addOrder(date, utilisateur_id);
+    if (date && utilisateur_id && adresse_livraison && cp_livraison && ville_livraison) {
+        let result = await CommandeController.addOrder(date,  utilisateur_id, adresse_livraison, cp_livraison, ville_livraison);
 
         if (result == 500) {
             return res.status(500).end();
@@ -37,7 +40,7 @@ router.post('/', verifyToken, async (req, res) => {
 
 
     }
-    if (idProduct != undefined && idCommande != undefined && quantite) {
+    if (idProduct && idCommande && quantite) {
 
         let chp = new Commande_Has_Produit(idProduct, idCommande, quantite);
         let result = await CommandeController.addProductInOrder(chp);
@@ -103,7 +106,7 @@ router.get('/', verifyToken, async (req, res) => {
 
 router.get('/last', verifyToken, async (req, res) => {
 
-    //get commande by id user
+    //last commande of a user
     if (req.query.idUser) {
         const commandes = await CommandeController.getLastOrderByIdUser(req.query.idUser);
 
@@ -147,6 +150,9 @@ router.get('/products', verifyToken, async (req, res) => {
         const total = await CommandeController.getSumOfProductsOrderByUserAndDate(dateDebut, dateFin, idUser);
 
         if (total != 500) {
+            if(total == 0){
+                return res.json([{total : 0}])
+            }
             return res.json(total);
         }
         else {
