@@ -44,20 +44,16 @@ class UtilisateurController {
         }
     }
 
-    async addUser_has_category(user_has_category_id, user_id) {
+    async addUser_has_category(categoryUserId, user_id) {
         try {
-            const res = await Database.connection.execute('INSERT INTO utilisateur_has_categorie (Categorie_utilisateur_id, Utilisateur_id) VALUES (?, ?)', [user_has_category_id, user_id]);
+            const res = await Database.connection.execute('INSERT INTO utilisateur_has_categorie (Categorie_utilisateur_id, Utilisateur_id) VALUES (?, ?)', [categoryUserId, user_id]);
             return res;
         }
-        catch {
+        catch(err) {
             console.log(err)
             return 500;
         }
     }
-
-
-
-
 
 
 
@@ -75,6 +71,7 @@ class UtilisateurController {
                     rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
                     rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
             }
+            return [];
         }
 
         catch(err){
@@ -92,6 +89,7 @@ class UtilisateurController {
                     rows[0].codePostal, rows[0].pseudo, rows[0].mdp, rows[0].photo, rows[0].desc, rows[0].tailleOrganisme, rows[0].estValide,
                     rows[0].siret, rows[0].dateDeNaissance, rows[0].nbPointsSourire);
             }
+            return [];
         }
         catch(err){
             console.log(err);
@@ -125,6 +123,7 @@ class UtilisateurController {
                 console.log("test :", rows[0].Categorie_utilisateur_id);
                 return rows[0].Categorie_utilisateur_id;
             }
+            return [];
         }
         catch(err){
             console.log(err);
@@ -142,11 +141,9 @@ class UtilisateurController {
     
             if (rows.length > 0) {
                 return res[0];
-                // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
-                //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
-                //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
-                //     ;
+
             }
+            return [];
         }
         catch(err){
             console.log(err);
@@ -160,14 +157,12 @@ class UtilisateurController {
             const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
             const rows = res[0];
     
-            console.log(rows)
+
             if (rows.length > 0) {
                 return res[0];
-                // return res[0].map((rows) => rows.libelle, rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel, 
-                //     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo, 
-                //     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
-                //     ;
+
             }
+            return [];
         }
         catch(err){
             console.log(err);

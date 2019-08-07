@@ -107,11 +107,11 @@ router.post('/login', async (req, res) => {
 // ajouter 1 catégorie à un utilisateur
 router.post('/category', async (req, res) => {
 
-    let user_has_category_id = req.body.categoryUserId;
+    let categoryUserId = req.body.categoryUserId;
     let userId = req.body.userId;
 
-    if (user_has_category_id && userId) {
-        let result = await UtilisateurController.addUser_has_category(user_has_category_id, userId);
+    if (categoryUserId && userId) {
+        let result = await UtilisateurController.addUser_has_category(categoryUserId, userId);
         if (result != 500) {
             return res.status(201).end();
 
@@ -299,9 +299,6 @@ router.put('/', verifyToken, async (req, res) => {
 
     return res.status(400).end();
 
-
-
-
 });
 
 
@@ -309,13 +306,14 @@ router.put('/', verifyToken, async (req, res) => {
 /**                                   DELETE REQUESTS                             **/
 /***********************************************************************************/
 router.delete('/:id', verifyToken, async (req, res) => {
-    if (req.params.id !== undefined) {
+
+    if (req.params.id) {
         let a = await UtilisateurController.deleteUser(req.params.id);
         if (a != 500) {
             return res.status(200).end();
         }
         return res.status(500).end();
     }
-    res.status(400).end();
+    return res.status(400).end();
 });
 module.exports = router;
