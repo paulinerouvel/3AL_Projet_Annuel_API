@@ -38,11 +38,10 @@ class EntrepotController {
 
         try{
             const results = await Database.connection.query('SELECT * FROM entrepot WHERE entrepot.id = ?', [id]);
-            const rows = results[0];
-            if (rows.length > 0) {
-                return new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
-                    rows[0].desc, rows[0].photo, rows[0].placeTotal, rows[0].placeLibre);
-            }
+
+
+            return results[0].map((rows) => new Entrepot(rows.id, rows.libelle, rows.adresse, rows.ville, rows.codePostal,
+                rows.desc, rows.photo, rows.placeTotal, rows.placeLibre));   
 
         }
         catch(err){
@@ -56,11 +55,9 @@ class EntrepotController {
 
         try{
             const results = await Database.connection.query('SELECT * FROM entrepot WHERE entrepot.ville = ?', [city]);
-            const rows = results[0];
-            if (rows.length > 0) {
-                return new Entrepot(rows[0].id, rows[0].libelle, rows[0].adresse, rows[0].ville, rows[0].codePostal,
-                    rows[0].desc, rows[0].photo, rows[0].placeTotal, rows[0].placeLibre);
-            }
+            return results[0].map((rows) => new Entrepot(rows.id, rows.libelle, rows.adresse, rows.ville, rows.codePostal,
+                rows.desc, rows.photo, rows.placeTotal, rows.placeLibre));   
+           
         }
         catch(err){
             console.log(err);
@@ -93,14 +90,14 @@ class EntrepotController {
     async updateWarehouse(warehouse) {
         try {
             const res = await Database.connection.execute('UPDATE `entrepot` SET libelle = ?, adresse = ?, ville = ?,' +
-                'codePostal = ?, desc = ?, photo = ?, placeTotal = ?, placeLibre = ?' +
-                'WHERE id = ?',
+                'codePostal = ?, entrepot.desc = ?, photo = ?, placeTotal = ?, placeLibre = ?' +
+                ' WHERE id = ?',
                 [warehouse.libelle, warehouse.adresse, warehouse.ville, warehouse.codePostal,
-                warehouse.desc, warehouse.photo, warehouse.placeTotal, wareHouse.placeLibre, wareHouse.id]);
+                warehouse.desc, warehouse.photo, warehouse.placeTotal, warehouse.placeLibre, warehouse.id]);
 
             return res;
         }
-        catch {
+        catch(err) {
             console.log(err);
             return 500;
         }

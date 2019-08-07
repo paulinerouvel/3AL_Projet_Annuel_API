@@ -1,6 +1,5 @@
 const Database = require('../models/database');
 const Commande = require('../models/commande_model');
-const Produit = require('../models/produit_model');
 
 class CommandeController {
 

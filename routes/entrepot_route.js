@@ -43,9 +43,6 @@ router.post('/', verifyToken, async (req, res) => {
     else {
         return res.status(400).end();
     }
-
-
-
 });
 
 
@@ -67,7 +64,7 @@ router.get('/', async (req, res) => {
     }
 
     //get entrepot by ville
-    else if (req.query.city !== undefined) {
+    else if (req.query.city) {
         const warehouse = await EntrepotController.getWarehouseByCity(req.query.city);
         if (warehouse != 500) {
             return res.json(warehouse);
@@ -127,11 +124,11 @@ router.put('/', verifyToken, async (req, res) => {
 /***********************************************************************************/
 /**                                 DELETE REQUESTS                               **/
 /***********************************************************************************/
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/', verifyToken, async (req, res) => {
 
 
-    if (req.params.id !== undefined) {
-        let result = await EntrepotController.deleteWarehouse(req.params.id);
+    if (req.query.id) {
+        let result = await EntrepotController.deleteWarehouse(req.query.id);
         if (result != 500) {
             return res.status(200).end();
         }

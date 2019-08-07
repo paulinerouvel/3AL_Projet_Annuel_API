@@ -122,7 +122,7 @@ router.get('/products', verifyToken, async (req, res) => {
 /**                                DELETE  REQUESTS                               **/
 /***********************************************************************************/
 router.delete('/', verifyToken, async (req, res) => {
-    //delete list by id
+
     if (req.query.id) {
         const list = await ListController.deleteList(req.query.id);
         if (list != 500) {
