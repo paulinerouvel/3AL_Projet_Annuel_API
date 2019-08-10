@@ -13,12 +13,12 @@ class DonController {
 
         try{
 
-        
             return await Database.connection.execute('INSERT INTO `don` (date, montant, Donneur_id, Receveur_id ) VALUES (?, ?, ?, ?);', [don.date, don.montant, don.Donneur_id, don.Receveur_id]);
     
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "addDon");
             return 500;
         }
     }
@@ -37,6 +37,7 @@ class DonController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getAllDonByDonneurID");
             return 500;
         }
     }
@@ -49,6 +50,7 @@ class DonController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getAllDonByReceveurID");
             return 500;
         }
     }
@@ -61,6 +63,7 @@ class DonController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getDonOfTheDay");
             return 500;
         }
     }
@@ -74,6 +77,7 @@ class DonController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getAllDons");
             return 500;
         }
 
@@ -94,7 +98,8 @@ class DonController {
             return res;
         }
         catch (err) {
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "deleteDon");
             return 500;
         }
     }

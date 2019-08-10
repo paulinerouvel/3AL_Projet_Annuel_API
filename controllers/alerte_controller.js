@@ -15,6 +15,8 @@ class AlerteController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "alerte_controller.js", "addAlerte");
+            return 500;
         }
 
     }
@@ -32,6 +34,7 @@ class AlerteController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "alerte_controller.js", "getAllAlertByUserID");
             return 500;
         }
     }
@@ -46,6 +49,7 @@ class AlerteController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "alerte_controller.js", "getAlertOfTheDay");
             return 500;
         }
     }
@@ -59,6 +63,7 @@ class AlerteController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "alerte_controller.js", "getAllAlerts");
             return 500;
         }
 
@@ -78,6 +83,7 @@ class AlerteController {
         }
         catch (err) {
             console.log( err);
+            manage_logs.generateLogs(err, "alerte_controller.js", "deleteAlert");
             return 500;
         }
     }

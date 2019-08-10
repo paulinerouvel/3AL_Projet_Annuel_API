@@ -25,6 +25,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "addProduct");
             return 500;
         }
     }
@@ -35,7 +36,8 @@ class ProduitController {
             return await Database.connection.execute('INSERT INTO categorie_produit (libelle) VALUES (?)', [libelle]);
         }
         catch(err){
-            console.log(500);
+            console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "addProductCategory");
             return 500;
         }
         
@@ -59,6 +61,7 @@ class ProduitController {
 
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductByID");
             return 500;
         }
         
@@ -73,6 +76,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductsEnRayon");
             return 500;
         }
 
@@ -92,6 +96,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductsEnRayonByDest");
             return 500;
         }
 
@@ -107,6 +112,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductsByWarehouse");
             return 500;
         }
 
@@ -121,6 +127,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductsOfAListByWarehouse");
             return 500;
         }
 
@@ -136,6 +143,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductOfAnOrder");
             return 500;
         }
 
@@ -152,6 +160,7 @@ class ProduitController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductCategoryByID");
             return 500;
         }
 
@@ -164,6 +173,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductCategories");
             return 500;
         }
 
@@ -176,6 +186,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProductsByUserCategory");
             return 500;
         }
     }
@@ -194,6 +205,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductByCategorieAndDest");
             return 500;
         }
     }
@@ -213,6 +225,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductByNameAndDest");
             return 500;
         }
     }
@@ -231,6 +244,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductByName");
             return 500;
         }
     }
@@ -249,6 +263,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getProductByPrixAndDest");
             return 500;
         }
     }
@@ -267,7 +282,8 @@ class ProduitController {
             return res;
         }
         catch(err) {
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "updateProduct");
             return 500;
         }
     }
@@ -279,8 +295,9 @@ class ProduitController {
                 [categoryProduct.libelle, categoryProduct.id]);
             return res;
         }
-        catch {
-            console.log(err)
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "updateProductCategory");
             return 500;
         }
     }
@@ -296,6 +313,7 @@ class ProduitController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "deleteProduct");
             return 500;
         }
     }

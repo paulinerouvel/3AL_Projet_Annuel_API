@@ -18,6 +18,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "addOrder");
             return 500;
         }
 
@@ -35,6 +36,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "addProductInOrder");
             return 500;
 
         }
@@ -61,6 +63,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getOrderByID");
             return 500;
         }
 
@@ -76,6 +79,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getOrderByIdUser");
             return 500;
         }
 
@@ -90,6 +94,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getLastOrderByIdUser");
             return 500;
         }
 
@@ -113,6 +118,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getAllOrders");
             return 500;
         }
 
@@ -129,6 +135,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getAllProductsInOrder");
             return 500;
         }
 
@@ -153,6 +160,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "getSumOfProductsOrderByUserAndDate");
             return 500;
         }
 
@@ -171,6 +179,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "deleteOrder");
             return 500;
         }
     }
@@ -183,6 +192,7 @@ class CommandeController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "commande_controller.js", "deleteProductInOrder");
             return 500;
         }
     }

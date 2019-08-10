@@ -22,6 +22,7 @@ class MailController {
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
+                manage_logs.generateLogs(error, "mail_controller.js", "sendMail");
                 return false;
                 
     

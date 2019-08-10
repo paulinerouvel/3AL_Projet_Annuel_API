@@ -15,6 +15,7 @@ class PayementController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "payement_controller.js", "addPayement");
             return 500;
         }
     }
@@ -33,6 +34,7 @@ class PayementController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "payement_controller.js", "getAllPayement");
             return 500;
         }
     }

@@ -19,6 +19,7 @@ class EntrepotController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "addWarehouse");
             return 500;
         }
 
@@ -46,6 +47,7 @@ class EntrepotController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "getWarehouseByID");
             return 500;
         }
 
@@ -61,6 +63,7 @@ class EntrepotController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "getWarehouseByCity");
             return 500;
         }
 
@@ -76,6 +79,7 @@ class EntrepotController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "getAllWarehouse");
             return 500;
         }
 
@@ -99,6 +103,7 @@ class EntrepotController {
         }
         catch(err) {
             console.log(err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "updateWarehouse");
             return 500;
         }
     }
@@ -117,6 +122,7 @@ class EntrepotController {
         }
         catch (err) {
             console.log( err);
+            manage_logs.generateLogs(err, "entrepot_controller.js", "deleteWarehouse");
             return 500;
         }
     }

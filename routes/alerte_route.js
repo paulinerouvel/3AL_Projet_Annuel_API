@@ -60,7 +60,7 @@ router.get('/', verifyToken, async (req, res) => {
         }
     }
 
-    else if (req.body.date != undefined) {
+    else if (req.body.date ) {
         const alert = await AlerteController.getAlertOfTheDay(req.query.date);
         if (alert == 500) {
             return res.status(500).end();

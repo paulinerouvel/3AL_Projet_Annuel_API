@@ -41,6 +41,7 @@ router.post('/register', async (req, res) => {
     }
     catch (err) {
         console.log(err);
+        manage_logs.generateLogs(err, "utilisateur_route.js", "post /register");
         res.status(409).end(); // status conflict
     }
 
@@ -81,6 +82,10 @@ router.post('/login', async (req, res) => {
 
             let userCategory = await UtilisateurController.getUserCategory(userFound.id);
 
+            if(userCategory == 500){
+                return res.status(500).end();
+            }
+
             bcrypt.compare(mot_de_passe, userFound.mdp, function (errBycrypt, resBycrypt) {
                 if (resBycrypt) {
                     return res.status(200).json({
@@ -91,11 +96,14 @@ router.post('/login', async (req, res) => {
                     });
                 }
                 else {
-                    return res.status(400).json({
-                        'error': errBycrypt
+                    return res.status(401).json({
+                        'Result': "Wrong password"
                     });
                 }
             });
+        }
+        else{
+            return res.status(401).json({"Result": "No user found"});
         }
     }
     else {
@@ -276,6 +284,7 @@ router.put('/', verifyToken, async (req, res) => {
             }
             catch (err) {
                 console.log(err);
+                manage_logs.generateLogs(err, "utilisateur_route.js", "put");
                 res.status(409).end(); // status conflict
             }
         }

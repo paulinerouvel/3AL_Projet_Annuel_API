@@ -1,5 +1,6 @@
 const Database = require('../models/database');
 const Utilisateur = require('../models/utilisateur_model');
+const manage_logs = require("../utils/manage_logs");
 class UtilisateurController {
 
 
@@ -40,6 +41,7 @@ class UtilisateurController {
         }
         catch (err) {
             console.log( err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "addUser");
             return 500;
         }
     }
@@ -50,7 +52,8 @@ class UtilisateurController {
             return res;
         }
         catch(err) {
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "addUser_has_category");
             return 500;
         }
     }
@@ -76,6 +79,8 @@ class UtilisateurController {
 
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getUserByID");
+
             return 500;
         }
     }
@@ -93,6 +98,7 @@ class UtilisateurController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getUserByEmail");
             return 500;
         }
 
@@ -109,6 +115,7 @@ class UtilisateurController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getAllUsers");
             return 500;
         }
 
@@ -120,13 +127,13 @@ class UtilisateurController {
             const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
             const rows = res[0];
             if (rows.length > 0) {
-                console.log("test :", rows[0].Categorie_utilisateur_id);
                 return rows[0].Categorie_utilisateur_id;
             }
             return [];
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getUserCategory");
             return 500;
         }
 
@@ -147,6 +154,7 @@ class UtilisateurController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getUsersByCategory");
             return 500;
         }
 
@@ -166,6 +174,7 @@ class UtilisateurController {
         }
         catch(err){
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getValidUsersByCategory");
             return 500;
         }
 
@@ -186,7 +195,8 @@ class UtilisateurController {
             }
         }
         catch(err) {
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getAllCategoriesExceptAdmin");
             return 500;
         }
     }
@@ -205,7 +215,8 @@ class UtilisateurController {
             return res;
         }
         catch(err) {
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "updateUser");
             return 500;
         }
     }
@@ -226,6 +237,7 @@ class UtilisateurController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "deleteUser");
             return 500;
         }
     }

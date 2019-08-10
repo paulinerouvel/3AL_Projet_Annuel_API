@@ -19,6 +19,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "addList");
             return 500;
         }
     }
@@ -36,6 +37,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "getAllProductsByUserCategory");
             return 500;
         }
         
@@ -49,6 +51,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "getAllListsByUser");
             return 500;
         }
     }
@@ -57,12 +60,13 @@ class ListController {
     async getAllProductsByList(listProduct_ID) {
         try {
             const res = await Database.connection.query('SELECT * FROM `produit` WHERE `Liste_Produit_id` = ?', [listProduct_ID]);
-            console.log(res[0]);
+
             return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
                 rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "getAllProductsByList");
             return 500;
         }
 
@@ -78,6 +82,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "getAllLists");
             return 500;
         }
     }
@@ -94,7 +99,8 @@ class ListController {
             return res;
         }
         catch (err){
-            console.log(err)
+            console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "updateList");
             return 500;
         }
     }
@@ -110,6 +116,7 @@ class ListController {
         }
         catch (err) {
             console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "deleteList");
             return 500;
         }
     }
