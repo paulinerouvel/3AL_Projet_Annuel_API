@@ -11,7 +11,7 @@ module.exports = {
             JWT_SIGN_SECRET,
             {
                 expiresIn: '24h',
-                iat: Date.now()
+                issuer: Date.now()
                 
             });
     },
