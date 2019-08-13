@@ -28,6 +28,12 @@ router.post('/', verifyToken, async (req, res) => {
     const placeLibre = req.body.placeLibre;
 
     if (libelle && adresse && ville && codePostal ) {
+
+
+        if(photo == undefined){
+            photo="img_warehouse.png";
+        }
+
         const warehouse = new Entrepot(-1, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 
         let result = await EntrepotController.addWarehouse(warehouse);
@@ -102,6 +108,10 @@ router.put('/', verifyToken, async (req, res) => {
     const placeLibre = req.body.placeLibre;
 
     if (id && libelle && adresse && ville && codePostal ) {
+
+        if(photo == undefined){
+            photo="img_warehouse.png";
+        }
 
         const warehouse = new Entrepot(id, libelle, adresse, ville, codePostal, desc, photo, placeTotal, placeLibre);
 

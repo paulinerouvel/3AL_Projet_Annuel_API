@@ -55,6 +55,10 @@ router.post('/', verifyToken, async (req, res) => {
 
     if (libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
 
+        if(photo == undefined){
+            photo="img_product.jpg";
+        }
+
 
         let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
         let produitsRes = await ProduitController.addProduct(product);
@@ -140,6 +144,10 @@ router.put('/', verifyToken, async (req, res) => {
 
 
     if (id && libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
+
+        if(photo == undefined){
+            photo="img_product.jpg";
+        }
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);

@@ -48,6 +48,10 @@ router.post('/register', async (req, res) => {
 
     if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide) {
 
+        if(photo == undefined){
+            photo="img_profil.png";
+        }
+
         const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
             codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
 
