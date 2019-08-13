@@ -5,13 +5,14 @@ module.exports = {
     generateToken(userData, userCategory) {
         return jwt.sign({
             id: userData.id,
-            
             type: userCategory
             //pas plus d'info que ca car facilement decodable
         },
             JWT_SIGN_SECRET,
             {
-                expiresIn: '24h'
+                expiresIn: '24h',
+                iat: Date.now()
+                
             });
     },
 
