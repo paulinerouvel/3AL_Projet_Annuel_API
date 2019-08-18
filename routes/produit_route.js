@@ -40,7 +40,7 @@ function no_accent(my_string) {
 router.post('/', verifyToken, async (req, res) => {
     let libelle = req.body.libelle;
     let desc = req.body.desc;
-    const photo = req.body.photo;
+    let photo = req.body.photo;
     const prix = req.body.prix;
     const prixInitial = req.body.prixInitial;
     const quantite = req.body.quantite;

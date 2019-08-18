@@ -23,7 +23,7 @@ router.post('/', verifyToken, async (req, res) => {
     const ville = req.body.ville;
     const codePostal = req.body.codePostal;
     const desc = req.body.desc;
-    const photo = req.body.photo;
+    let photo = req.body.photo;
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
@@ -103,7 +103,7 @@ router.put('/', verifyToken, async (req, res) => {
     const ville = req.body.ville;
     const codePostal = req.body.codePostal;
     const desc = req.body.desc;
-    const photo = req.body.photo;
+    let photo = req.body.photo;
     const placeTotal = req.body.placeTotal;
     const placeLibre = req.body.placeLibre;
 
