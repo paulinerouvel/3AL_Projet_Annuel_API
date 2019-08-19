@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
     }
 
 
-    if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide) {
+    if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
         if(photo == undefined){
             photo="img_profil.png";
@@ -276,7 +276,7 @@ router.put('/', verifyToken, async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    if (id && mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide) {
+    if (id && mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
 
         let curUser = await UtilisateurController.getUserByID(id);

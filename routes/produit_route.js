@@ -53,7 +53,7 @@ router.post('/', verifyToken, async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    if (libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
+    if (libelle && desc && photo && prix && prixInitial && quantite && enRayon != undefined && categorieProduit_id) {
 
         if(photo == undefined){
             photo="img_product.jpg";
@@ -143,7 +143,7 @@ router.put('/', verifyToken, async (req, res) => {
 
 
 
-    if (id && libelle && desc && photo && prix && prixInitial && quantite && enRayon && categorieProduit_id) {
+    if (id && libelle && desc && photo && prix && prixInitial && quantite && enRayon != undefined && categorieProduit_id) {
 
         if(photo == undefined){
             photo="img_product.jpg";
