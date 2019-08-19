@@ -13,7 +13,7 @@ class MailController {
             }
         });
         var mailOptions = {
-            from: sender,
+            from: 'wastemart.company@gmail.com',
             to: destination,
             subject: subject,
             text: message,
