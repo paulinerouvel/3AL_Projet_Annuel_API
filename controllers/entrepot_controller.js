@@ -1,5 +1,6 @@
 const Database = require('../models/database');
 const Entrepot = require('../models/entrepot_model');
+const manage_logs = require("../utils/manage_logs");
 class EntrepotController {
 
 

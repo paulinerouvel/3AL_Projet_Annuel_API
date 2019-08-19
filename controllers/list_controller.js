@@ -1,6 +1,6 @@
 const Database = require('../models/database');
 const Produit = require('../models/produit_model');
-
+const manage_logs = require("../utils/manage_logs");
 
 class ListController {
 

@@ -1,6 +1,7 @@
 
 
 const nodemailer = require('nodemailer');
+const manage_logs = require("../utils/manage_logs");
 class MailController {
 
     async sendMail(sender, destination, subject, message) {

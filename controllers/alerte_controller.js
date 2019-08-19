@@ -1,6 +1,6 @@
 const Database = require('../models/database');
 const Alerte = require('../models/alerte_model');
-
+const manage_logs = require("../utils/manage_logs");
 
 class AlerteController {
 
