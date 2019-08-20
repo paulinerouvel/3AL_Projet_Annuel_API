@@ -52,18 +52,29 @@ router.post('/register', async (req, res) => {
             photo="img_profil.png";
         }
 
-        const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
-            codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
+        const userExist = await UtilisateurController.getUserByEmail(mail);
 
-
-        let result = await UtilisateurController.addUser(user);
-
-        if (result != 500) {
-            res.status(201).end();
+        if(userExist != 500 && userExist == []){
+            const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
+                codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
+    
+    
+            let result = await UtilisateurController.addUser(user);
+    
+            if (result != 500) {
+                res.status(201).end();
+            }
+            else {
+                return res.status(500).end();
+            }
         }
-        else {
-            return res.status(500).end();
+        else{
+            return res.status(401).json({
+                'Result': "Email already exist"
+            });
         }
+
+        
     }
     else {
         return res.status(400).end();
