@@ -83,6 +83,20 @@ router.get('/', verifyToken, async (req, res) => {
 
 });
 
+router.get('/last', verifyToken, async (req, res) => {
+
+    if (req.query.idD) {
+        const don = await DonController.getLastDonByIdUser(req.query.idD);
+        if (don != 500) {
+            return res.json(don);
+        }
+        else {
+            return res.status(500).end();
+        }
+
+    }
+    return res.status(400).end();
+});
 
 
 /***********************************************************************************/
@@ -98,6 +112,6 @@ router.delete('/', verifyToken, async (req, res) => {
         }
         return res.status(500).end();
     }
-    res.status(400).end();
+    return res.status(400).end();
 });
 module.exports = router;

@@ -83,6 +83,19 @@ class DonController {
 
     }
 
+    async getLastDonByIdUser(idDonneur){
+        try {
+            const results = await Database.connection.query('select * FROM don d WHERE d.date = (select max(date) FROM don WHERE Donneur_id = ?)', [idDonneur]);
+
+            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant,  rows.Donneur_id, rows.Receveur_id));
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getLastDonByIdUser");
+            return 500;
+        }
+    }
+
 
 
 
