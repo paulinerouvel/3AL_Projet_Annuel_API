@@ -5,6 +5,8 @@ const verifyToken = require('../utils/jwt.utils').verifyToken;
 const bodyParser = require('body-parser');
 const ListController = require('../controllers').listController;
 const List = require('../models/liste_produit_model');
+const MailController = require('../controllers').mailController;
+const UserController = require('../controllers').utilisateurController;
 
 
 
@@ -63,6 +65,34 @@ router.put('/', verifyToken, async (req, res) => {
         let listRes = await ListController.updateList(list);
 
         if (listRes != 500) {
+
+            let listcur = await ListController.getListByID(id);
+
+            console.log(listcur);
+
+            if (listcur.estArchive != estArchive) {
+
+                let user = await UserController.getUserByID(Utilisateur_id);
+
+                let message = "<!DOCTYPE html>" +
+                    "<html>" +
+                    "<t/><h3>Bonjour,</h3><br/>" +
+                    "<h4>La liste de produit que vous aviez soumise à <a href='#'>WasteMart</a> le "+listcur.date+" à été validée. <br/>" +
+                    "Ces produits se trouvent désormais sur la boutique de WasteMart et sont disponible à l'achat aux particuliers et associations." +
+
+                    "<br/><br/>" +
+                    "Nous vous remercions et espérons vous revoir rapidement !" +
+                    "<br/><br/>" +
+                    "L'équipe WasteMart. " +
+                    "</h4>" +
+
+
+                    "</html>";
+
+                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre liste de produit", message);
+            }
+
+
             return res.status(200).end(); // status OK
         }
         else {

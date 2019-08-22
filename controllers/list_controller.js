@@ -1,5 +1,6 @@
 const Database = require('../models/database');
 const Produit = require('../models/produit_model');
+const List = require('../models/liste_produit_model');
 const manage_logs = require("../utils/manage_logs");
 
 class ListController {
@@ -28,6 +29,23 @@ class ListController {
     /***********************************************************************************/
     /**                                   GET FUNCTIONS                               **/
     /***********************************************************************************/
+
+    async getListByID(id) {
+        try{
+            const results = await Database.connection.query('SELECT * FROM liste_produit WHERE liste_produit.id = ?', [id]);
+            const rows = results[0];
+            if (rows.length > 0) {
+                return new List(rows[0].id, rows[0].libelle, rows[0].date, rows[0].Utilisateur_id, rows[0].estArchive);
+            }
+        }
+
+        catch(err){
+            console.log(err);
+            manage_logs.generateLogs(err, "list_controller.js", "getListByID");
+            return 500;
+        }
+        
+    }
 
     // On récupère la liste des produits par catégorie d'utilisateur
     async getAllProductsByUserCategory(userCategoryID) {

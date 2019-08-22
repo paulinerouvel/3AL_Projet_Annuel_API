@@ -3,3 +3,9 @@
 <2019-8-20 12:19:34>    API - payement_controller.js at addPayement   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
 <2019-8-20 12:20:00>    API - payement_controller.js at addPayement   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
 <2019-8-20 12:21:00>    API - payement_controller.js at addPayement   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+<2019-8-22 19:53:28>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-22 19:53:29>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-22 19:53:29>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-22 19:54:43>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-22 19:54:43>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-22 19:54:43>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state

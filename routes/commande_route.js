@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const CommandeController = require('../controllers').commandeController;
 const Commande_Has_Produit = require('../models/commande_has_produit_model');
 const verifyToken = require('../utils/jwt.utils').verifyToken;
+const MailController = require('../controllers').mailController;
+const UserController = require('../controllers').utilisateurController;
 
 const router = express.Router();
 router.use(bodyParser.json());
@@ -46,9 +48,57 @@ router.post('/', verifyToken, async (req, res) => {
         let result = await CommandeController.addProductInOrder(chp);
 
         if (result == 500) {
+
             return res.status(500).end();
         }
         else {
+
+            let cmd = await CommandeController.getOrderByID(idCommande);
+            let user = await UserController.getUserByID(cmd.utilisateur_id);
+            
+
+            if(user.libelle == null){
+                let now = new Date(Date.now());
+                let date = now.toLocaleString().split(' ');
+                let message = "<!DOCTYPE html>"+
+                "<html>"+
+                  "<t/><h3>Bonjour "+ user.prenom +" "+ user.nom +", </h3><br/>"+
+                  "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>"+
+                  "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande."+
+                    
+                    "<br/><br/>"+
+                    "Nous vous remercions de votre achat, et espérons vous revoir rapidement !"+
+                    "<br/><br/>"+
+                    "L'équipe WasteMart. "+
+                  "</h4>"+
+                  
+                  
+                "</html>";
+    
+                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + date[0], message);
+            }
+            else{
+                let now = new Date(Date.now());
+                let date = now.toLocaleString().split(' ');
+                let message = "<!DOCTYPE html>"+
+                "<html>"+
+                  "<t/><h3>Bonjour, </h3><br/>"+
+                  "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>"+
+                  "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande."+
+                    
+                    "<br/><br/>"+
+                    "Nous vous remercions de votre commande, et espérons vous revoir rapidement !"+
+                    "<br/><br/>"+
+                    "L'équipe WasteMart. "+
+                  "</h4>"+
+                  
+                  
+                "</html>";
+    
+                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + date[0], message);
+            }
+
+
             return res.status(201).end();
         }
 
