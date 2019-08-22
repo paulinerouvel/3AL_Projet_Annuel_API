@@ -59,7 +59,7 @@ class CommandeController {
             const rows = results[0];
             if (rows.length > 0) {
                 
-                return new Commande(rows[0].id, rows[0].date, rows[0].adresse_livraison, rows[0].cp_livraison, rows[0].ville_livraison,  rows[0].Utilisateur_id);
+                return new Commande(rows[0].id, rows[0].date, rows[0].Utilisateur_id,  rows[0].adresse_livraison, rows[0].cp_livraison, rows[0].ville_livraison);
             }
             return [];
         }
@@ -77,7 +77,7 @@ class CommandeController {
         try {
             const results = await Database.connection.query('SELECT * FROM commande WHERE commande.Utilisateur_id = ?', [id]);
 
-            return results[0].map((rows) => new Commande(rows.id, rows.date, rows.adresse_livraison, rows.cp_livraison, rows.ville_livraison,  rows.Utilisateur_id));
+            return results[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id, rows.adresse_livraison, rows.cp_livraison, rows.ville_livraison));
         }
         catch (err) {
             console.log(err);
@@ -92,7 +92,7 @@ class CommandeController {
         try {
             const results = await Database.connection.query('select * FROM commande c WHERE c.date = (select max(date) FROM commande WHERE Utilisateur_id = ?)', [id]);
 
-            return results[0].map((rows) => new Commande(rows.id, rows.date, rows.adresse_livraison,rows.cp_livraison,  rows.ville_livraison , rows.Utilisateur_id));
+            return results[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id, rows.adresse_livraison, rows.cp_livraison, rows.ville_livraison));
         }
         catch (err) {
             console.log(err);
@@ -111,7 +111,7 @@ class CommandeController {
             const res = await Database.connection.query('SELECT * FROM `commande`');
             if (res.length > 0) {
 
-                return res[0].map((rows) => new Commande(rows.id, rows.date, rows.adresse_livraison, rows.cp_livraison, rows.ville_livraison, rows.Utilisateur_id));
+                return res[0].map((rows) => new Commande(rows.id, rows.date, rows.Utilisateur_id, rows.adresse_livraison, rows.cp_livraison, rows.ville_livraison));
             }
             else {
                 return [];
