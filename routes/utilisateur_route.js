@@ -55,7 +55,9 @@ router.post('/register', async (req, res) => {
 
         const userExist = await UtilisateurController.getUserByEmail(mail);
 
-        if(userExist != 500 && userExist == []){
+
+
+        if(userExist != 500 && userExist.length == 0){
             const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
                 codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
     
