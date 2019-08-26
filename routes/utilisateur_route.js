@@ -47,27 +47,27 @@ router.post('/register', async (req, res) => {
     }
 
 
-    if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
+    if (mail && tel && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
 
 
-        if(photo == null ||  photo == undefined || photo == ""){
+        if (photo == null || photo == undefined || photo == "") {
 
 
-            photo="img_profil.png";
+            photo = "img_profil.png";
         }
 
         const userExist = await UtilisateurController.getUserByEmail(mail);
 
 
 
-        if(userExist != 500 && userExist.length == 0){
+        if (userExist != 500 && userExist.length == 0) {
             const user = new Utilisateur(-1, libelle, nom, prenom, mail, tel, adresse, ville,
                 codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
-    
-    
+
+
             let result = await UtilisateurController.addUser(user);
-    
+
             if (result != 500) {
                 res.status(201).end();
             }
@@ -75,13 +75,19 @@ router.post('/register', async (req, res) => {
                 return res.status(500).end();
             }
         }
-        else{
+        else {
+
+            
+            if(userExist == 500){
+                return res.status(500).end();
+            }
+            
             return res.status(401).json({
                 'Result': "Email already exist"
             });
         }
 
-        
+
     }
     else {
         return res.status(400).end();
@@ -104,7 +110,7 @@ router.post('/login', async (req, res) => {
 
             let userCategory = await UtilisateurController.getUserCategory(userFound.id);
 
-            if(userCategory == 500){
+            if (userCategory == 500) {
                 return res.status(500).end();
             }
 
@@ -124,8 +130,8 @@ router.post('/login', async (req, res) => {
                 }
             });
         }
-        else{
-            return res.status(401).json({"Result": "No user found"});
+        else {
+            return res.status(401).json({ "Result": "No user found" });
         }
     }
     else {
@@ -205,14 +211,14 @@ router.get('/category', async (req, res) => {
         }
         return res.status(500).end();
     }
-    else if(catId){
+    else if (catId) {
         let categoryId = await UtilisateurController.getCategoryById(catId);
         if (categoryId != 500) {
             return res.json(categoryId);
         }
         return res.status(500).end();
-    }    
-    
+    }
+
     return res.status(400).end();
 
 
@@ -303,84 +309,98 @@ router.put('/', verifyToken, async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    if (id && mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
+    if (id && mail && tel && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
 
-        if(photo == null ||  photo == undefined || photo == ""){
+        if (photo == null || photo == undefined || photo == "") {
 
 
-            photo="img_profil.png";
+            photo = "img_profil.png";
         }
 
-        let curUser = await UtilisateurController.getUserByID(id);
+        let userExist = await UtilisateurController.getUserByEmail(mail);
+        if (userExist != 500 && (userExist.length == 0 || (userExist.length == 1 && userExist.id == id))) {
 
-        if (curUser.mdp != mdp) {
-            let cryptedPass = await bcrypt.hashSync(mdp, 5);
-            try {
-                mdp = cryptedPass;
 
-                if(curUser.estValide != estValide){
 
-                    let message = "";
+            let curUser = await UtilisateurController.getUserByID(id);
 
-                    if(estValide == true){
-                        message = "<!DOCTYPE html>"+
-                        "<html>"+
-                            "<t/><h3>Bonjour, </h3><br/>"+
-                            "<h4>Après vérification de votre compte par les agents WasteMart, celui-ci à été validé ! <br/>"+
-                            "Vous pouvez désormais vous rendre sur <a href='#'>WasteMart</a> et vous connecter avec vos identifiants."+
-                            
-                            "<br/><br/>"+
-                            "Nous espérons vous voir rapidement sur notre site !"+
-                            "<br/><br/>"+
-                            "L'équipe WasteMart. "+
-                            "</h4>"+
-                            
-                            
-                        "</html>";
+            if (curUser.mdp != mdp) {
+                let cryptedPass = await bcrypt.hashSync(mdp, 5);
+                try {
+                    mdp = cryptedPass;
+
+                    if (curUser.estValide != estValide) {
+
+                        let message = "";
+
+                        if (estValide == true) {
+                            message = "<!DOCTYPE html>" +
+                                "<html>" +
+                                "<t/><h3>Bonjour, </h3><br/>" +
+                                "<h4>Après vérification de votre compte par les agents WasteMart, celui-ci à été validé ! <br/>" +
+                                "Vous pouvez désormais vous rendre sur <a href='#'>WasteMart</a> et vous connecter avec vos identifiants." +
+
+                                "<br/><br/>" +
+                                "Nous espérons vous voir rapidement sur notre site !" +
+                                "<br/><br/>" +
+                                "L'équipe WasteMart. " +
+                                "</h4>" +
+
+
+                                "</html>";
+                        }
+                        else {
+                            message = "<!DOCTYPE html>" +
+                                "<html>" +
+                                "<t/><h3>Bonjour, </h3><br/>" +
+                                "<h4> Votre compte WasteMart à été bloqué par les administateur de l'application.<br/>" +
+                                "Si vous souhaitez plus d'information au sujet du bannissement de votre compte, veuillez contacter " +
+                                "l'adresse mail qui suit : <a>wastemart.company@gmail.com </a>"
+                            "<br/><br/>" +
+                                "Cordialement, " +
+                                "<br/><br/>" +
+                                "L'équipe WasteMart. " +
+                                "</h4>" +
+
+
+                                "</html>";
+                        }
+
+
+
+                        await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message);
+
                     }
-                    else{
-                        message = "<!DOCTYPE html>"+
-                        "<html>"+
-                            "<t/><h3>Bonjour, </h3><br/>"+
-                            "<h4> Votre compte WasteMart à été bloqué par les administateur de l'application.<br/>"+
-                            "Si vous souhaitez plus d'information au sujet du bannissement de votre compte, veuillez contacter "+
-                            "l'adresse mail qui suit : <a>wastemart.company@gmail.com </a>"
-                            "<br/><br/>"+
-                            "Cordialement, "+
-                            "<br/><br/>"+
-                            "L'équipe WasteMart. "+
-                            "</h4>"+
-                            
-                            
-                        "</html>";
-                    }
-        
-
-
-                    await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message);
-
+                }
+                catch (err) {
+                    console.log(err);
+                    manage_logs.generateLogs(err, "utilisateur_route.js", "put");
+                    res.status(409).end(); // status conflict
                 }
             }
-            catch (err) {
-                console.log(err);
-                manage_logs.generateLogs(err, "utilisateur_route.js", "put");
-                res.status(409).end(); // status conflict
+
+
+
+            const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
+                codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
+
+            let result = await UtilisateurController.updateUser(user);
+
+            if (result != 500) {
+                return res.status(200).end();
             }
-        }
+            else {
+                return res.status(500).end();
+            }
 
-
-
-        const user = new Utilisateur(id, libelle, nom, prenom, mail, tel, adresse, ville,
-            codePostal, pseudo, mdp, photo, desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire);
-
-        let result = await UtilisateurController.updateUser(user);
-
-        if (result != 500) {
-            return res.status(200).end();
         }
         else {
-            return res.status(500).end();
+
+            if(userExist == 500){
+                return res.status(500).end();
+            }
+            return res.status(401).json({ "Result": "Email already exist" });
         }
 
 
