@@ -55,7 +55,7 @@ router.post('/', verifyToken, async (req, res) => {
 
     if (libelle && desc && photo && prix && prixInitial && quantite && enRayon != undefined && categorieProduit_id) {
 
-        if(photo == undefined){
+        if(photo == null ||  photo == undefined || photo == ""){
             photo="img_product.jpg";
         }
 
@@ -143,7 +143,7 @@ router.put('/', verifyToken, async (req, res) => {
 
     if (id && libelle && desc && photo && prix && prixInitial && quantite != undefined && enRayon != undefined && categorieProduit_id) {
 
-        if(photo == undefined){
+        if(photo == null ||  photo == undefined || photo == ""){
             photo="img_product.jpg";
         }
 

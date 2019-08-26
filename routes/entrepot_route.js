@@ -30,7 +30,7 @@ router.post('/', verifyToken, async (req, res) => {
     if (libelle && adresse && ville && codePostal ) {
 
 
-        if(photo == undefined){
+        if(photo == null ||  photo == undefined || photo == ""){
             photo="img_warehouse.png";
         }
 
@@ -109,7 +109,7 @@ router.put('/', verifyToken, async (req, res) => {
 
     if (id && libelle && adresse && ville && codePostal ) {
 
-        if(photo == undefined){
+        if(photo == null ||  photo == undefined || photo == ""){
             photo="img_warehouse.png";
         }
 

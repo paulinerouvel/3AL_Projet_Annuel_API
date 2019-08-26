@@ -245,8 +245,28 @@ class UtilisateurController {
     /**                                DELETE FUNCTIONS                               **/
     /***********************************************************************************/
 
+
+    async deleteUserFromCategorieUser(id) {
+        try {
+
+            
+
+            const res = await Database.connection.execute('DELETE FROM utilisateur_has_categorie WHERE 	Utilisateur_id = ?', [id]);
+
+
+            return res;
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "deleteUserFromCategorieUser");
+            return 500;
+        }
+    }
+
     async deleteUser(id) {
         try {
+
+
 
             const res = await Database.connection.execute('DELETE FROM utilisateur WHERE utilisateur.id = ?', [id]);
 

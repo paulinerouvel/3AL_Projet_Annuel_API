@@ -49,7 +49,11 @@ router.post('/register', async (req, res) => {
 
     if (mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
-        if(photo == undefined){
+
+
+        if(photo == null ||  photo == undefined || photo == ""){
+
+
             photo="img_profil.png";
         }
 
@@ -302,6 +306,12 @@ router.put('/', verifyToken, async (req, res) => {
     if (id && mail && tel  && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
 
 
+        if(photo == null ||  photo == undefined || photo == ""){
+
+
+            photo="img_profil.png";
+        }
+
         let curUser = await UtilisateurController.getUserByID(id);
 
         if (curUser.mdp != mdp) {
@@ -387,9 +397,20 @@ router.put('/', verifyToken, async (req, res) => {
 router.delete('/:id', verifyToken, async (req, res) => {
 
     if (req.params.id) {
-        let a = await UtilisateurController.deleteUser(req.params.id);
+
+
+
+
+        let a = await UtilisateurController.deleteUserFromCategorieUser(req.params.id);
         if (a != 500) {
-            return res.status(200).end();
+
+
+            let b = await UtilisateurController.deleteUser(req.params.id);
+            if (b != 500) {
+                return res.status(200).end();
+            }
+            return res.status(500).end();
+
         }
         return res.status(500).end();
     }

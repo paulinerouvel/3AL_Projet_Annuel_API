@@ -59,3 +59,4 @@
 <2019-8-25 12:00:05>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
 <2019-8-25 12:00:05>    API - commande_controller.js at getAllProductsInOrder   TypeError: Cannot read property 'query' of undefined
 <2019-8-25 12:00:05>    API - payement_controller.js at getPayementByIdCmd   TypeError: Cannot read property 'query' of undefined
+<2019-8-26 18:08:12>    API - utilisateur_controller.js at deleteUser   Error: Cannot delete or update a parent row: a foreign key constraint fails (`wastemart`.`utilisateur_has_categorie`, CONSTRAINT `utilisateur_has_categorie_ibfk_2` FOREIGN KEY (`Utilisateur_id`) REFERENCES `utilisateur` (`id`))
