@@ -246,12 +246,23 @@ router.get('/enRayon', async (req, res) => {
 
 router.get('/category', async (req, res) => {
 
+    const id = req.query.id;
 
-    const produit = await ProduitController.getAllProductCategories();
-    if (produit != 500) {
-        return res.json(produit);
+    if(id){
+        const produit = await ProduitController.getProductCategoryByID(id);
+        if (produit != 500) {
+            return res.json(produit);
+        }
+        return res.status(500).end();
     }
-    return res.status(500).end();
+    else{
+        const produit = await ProduitController.getAllProductCategories();
+        if (produit != 500) {
+            return res.json(produit);
+        }
+        return res.status(500).end();
+    }
+
 
 });
 
