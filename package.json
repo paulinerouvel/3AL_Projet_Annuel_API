@@ -21,6 +21,7 @@
     "mysql2": "^1.6.5",
     "nodemailer": "^6.2.1",
     "nodemon": "^1.18.10",
+    "pdfkit": "^0.10.0",
     "request": "^2.88.0",
     "xmlhttprequest": "^1.8.0"
   },

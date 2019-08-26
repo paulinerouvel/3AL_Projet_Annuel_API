@@ -39,7 +39,8 @@ router.post('/', verifyToken, async (req, res) => {
             let receveur = await UserController.getUserByID(receveur_id);
             
             let now = new Date(Date.now());
-            let date = now.toLocaleString().split(' ');
+            let dateT = now.toLocaleString('fr-FR').split(' ');
+            let date = dateT.split('-');
 
             let messageDonneur = "<!DOCTYPE html>"+
             "<html>"+
@@ -71,7 +72,7 @@ router.post('/', verifyToken, async (req, res) => {
                 
             "</html>";
 
-            await MailController.sendMail("wastemart.company@gmail.com", donneur.mail, "Votre don du " + date[0], messageDonneur);
+            await MailController.sendMail("wastemart.company@gmail.com", donneur.mail, "Votre don du " + date[2] + "/" + date[1] + "/" + date[0], messageDonneur);
             await MailController.sendMail("wastemart.company@gmail.com", receveur.mail, "Nouveau don reçu !", messageReceveur);
 
 

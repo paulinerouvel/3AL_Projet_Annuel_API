@@ -180,6 +180,21 @@ class ProduitController {
 
     }
 
+    async getAllProduct() {
+        try {
+            const res = await Database.connection.query('SELECT * FROM `produit`');
+            return res[0].map((rows) => new Produit(rows.id, rows.libelle, rows.desc, rows.photo, rows.prix, rows.prixInitial, rows.quantite, rows.DLC, rows.codeBarre,
+                rows.enRayon, rows.dateMiseEnRayon, rows.CategorieProduit_id, rows.Liste_Produit_id, rows.Entrepot_id, rows.destinataire));
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "produit_controller.js", "getAllProduct");
+            return 500;
+        }
+
+    }
+
+
     async getAllProductsByUserCategory(userCategoryID) {
         try {
             const res = await Database.connection.query('SELECT * FROM liste_produit JOIN `utilisateur_has_categorie` ON liste_produit.Utilisateur_id = utilisateur_has_categorie.Utilisateur_id WHERE utilisateur_has_categorie.Categorie_utilisateur_id = 1');

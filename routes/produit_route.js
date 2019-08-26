@@ -141,9 +141,7 @@ router.put('/', verifyToken, async (req, res) => {
     let destinataire = req.body.destinataire;
 
 
-
-
-    if (id && libelle && desc && photo && prix && prixInitial && quantite && enRayon != undefined && categorieProduit_id) {
+    if (id && libelle && desc && photo && prix && prixInitial && quantite != undefined && enRayon != undefined && categorieProduit_id) {
 
         if(photo == undefined){
             photo="img_product.jpg";
@@ -180,8 +178,15 @@ router.get('/', async (req, res) => {
         }
         return res.status(500).end();
     }
+    else{
+        const produit = await ProduitController.getAllProduct();
+        if (produit != 500) {
+            return res.json(produit);
+        }
+        return res.status(500).end();
+    }
 
-    return res.status(400).end();
+
 });
 
 router.get('/warehouse', async (req, res) => {

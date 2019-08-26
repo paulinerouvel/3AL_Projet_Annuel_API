@@ -38,6 +38,39 @@ class PayementController {
             return 500;
         }
     }
+
+    async getPayementByIdCmd(idCmd) {
+        
+        try {
+            const results = await Database.connection.query('SELECT * FROM payement WHERE id_commande = ? ', [idCmd]);
+
+            return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, rows.id_commande));
+
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "payement_controller.js", "getPayementByIdCmd");
+            return 500;
+        }
+    }
+
+
+    async getPayementByIdDon(idDon) {
+        
+        try {
+            const results = await Database.connection.query('SELECT * FROM payement WHERE id_don = ', [idDon]);
+
+            return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, rows.id_commande));
+
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "payement_controller.js", "getPayementByIdDon");
+            return 500;
+        }
+    }
+
+
 }
 
 module.exports = new PayementController();

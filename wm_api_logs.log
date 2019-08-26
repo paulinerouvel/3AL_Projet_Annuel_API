@@ -9,3 +9,53 @@
 <2019-8-22 19:54:43>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
 <2019-8-22 19:54:43>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
 <2019-8-22 19:54:43>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-23 20:23:11>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '5-74' for key 'PRIMARY'
+<2019-8-23 20:25:29>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '5-75' for key 'PRIMARY'
+<2019-8-23 20:25:47>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '5-76' for key 'PRIMARY'
+<2019-8-23 20:30:23>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '5-77' for key 'PRIMARY'
+<2019-8-23 20:52:52>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '6-84' for key 'PRIMARY'
+<2019-8-23 22:03:05>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '6-85' for key 'PRIMARY'
+<2019-8-23 22:04:06>    API - commande_controller.js at addProductInOrder   Error: Duplicate entry '6-86' for key 'PRIMARY'
+<2019-8-23 22:16:18>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-23 22:16:18>    API - entrepot_controller.js at getAllWarehouse   Error: read ECONNRESET
+<2019-8-23 22:16:18>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-23 22:16:19>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-23 22:22:51>    API - commande_controller.js at addProductInOrder   TypeError: Cannot read property 'execute' of undefined
+<2019-8-23 22:53:18>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-23 22:53:18>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-23 22:53:18>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-23 22:53:18>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-23 22:54:11>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-23 22:54:11>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-23 22:54:11>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-23 22:54:20>    API - utilisateur_controller.js at getValidUsersByCategory   Error: Can't add new command when connection is in closed state
+<2019-8-24 09:54:44>    API - commande_controller.js at getOrderByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 09:57:08>    API - commande_controller.js at getOrderByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 10:00:39>    API - commande_controller.js at getOrderByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 11:52:19>    API - commande_controller.js at getOrderByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 11:52:19>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 11:52:19>    API - commande_controller.js at getAllProductsInOrder   TypeError: Cannot read property 'query' of undefined
+<2019-8-24 12:02:01>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-24 12:02:01>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-24 12:02:01>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-24 12:02:01>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-24 12:02:01>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: read ECONNRESET
+<2019-8-24 12:02:01>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:03:03>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:03:03>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:03:03>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:05:07>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:11:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-24 12:13:24>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:15:48>    API - payement_controller.js at getPayementByIdCmd   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-24 12:16:11>    API - payement_controller.js at getPayementByIdCmd   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-24 12:22:11>    API - payement_controller.js at getPayementByIdCmd   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-24 12:26:39>    API - payement_controller.js at getPayementByIdCmd   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-24 12:46:43>    API - commande_controller.js at getOrderByID   Error: read ECONNRESET
+<2019-8-24 12:46:43>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:46:43>    API - commande_controller.js at getAllProductsInOrder   Error: Can't add new command when connection is in closed state
+<2019-8-24 12:46:43>    API - payement_controller.js at getPayementByIdCmd   Error: Can't add new command when connection is in closed state
+<2019-8-25 12:00:05>    API - commande_controller.js at getOrderByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-25 12:00:05>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-25 12:00:05>    API - commande_controller.js at getAllProductsInOrder   TypeError: Cannot read property 'query' of undefined
+<2019-8-25 12:00:05>    API - payement_controller.js at getPayementByIdCmd   TypeError: Cannot read property 'query' of undefined
