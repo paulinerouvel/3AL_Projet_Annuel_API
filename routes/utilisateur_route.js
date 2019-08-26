@@ -190,6 +190,7 @@ router.get('/', async (req, res) => {
 //get category of a user
 router.get('/category', async (req, res) => {
     const userId = req.query.userId;
+    const catId = req.query.catId;
 
     if (userId) {
         let categoryId = await UtilisateurController.getUserCategory(userId);
@@ -198,6 +199,14 @@ router.get('/category', async (req, res) => {
         }
         return res.status(500).end();
     }
+    else if(catId){
+        let categoryId = await UtilisateurController.getCategoryById(catId);
+        if (categoryId != 500) {
+            return res.json(categoryId);
+        }
+        return res.status(500).end();
+    }    
+    
     return res.status(400).end();
 
 

@@ -139,6 +139,24 @@ class UtilisateurController {
 
     }
 
+    async getCategoryById(catId) {
+        try{
+            const res = await Database.connection.query('SELECT * FROM categorie_utilisateur WHERE id = ?', [catId]);
+            const rows = res[0];
+        
+            if (rows.length > 0) {
+                return rows[0];
+            }
+            return [];
+        }
+        catch(err){
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getCategoryById");
+            return 500;
+        }
+
+    }
+
 
     //Get tout les users par type
     async getUsersByCategory(category) {
