@@ -275,7 +275,9 @@ router.get('/allValidByCategory', async (req, res) => {
 router.get('/categories', async (req, res) => {
 
 
-    const result = await UtilisateurController.getAllCategoriesExceptAdmin();
+    const result = await UtilisateurController.getAllCategories();
+
+    
 
     if (result != 500) {
         return res.json(result);

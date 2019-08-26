@@ -200,9 +200,9 @@ class UtilisateurController {
 
 
 
-    async getAllCategoriesExceptAdmin() {
+    async getAllCategories() {
         try {
-            const res = await Database.connection.query("SELECT libelle FROM categorie_utilisateur WHERE libelle <> \"Administrateur\"");
+            const res = await Database.connection.query("SELECT libelle FROM categorie_utilisateur");
             const rows = res [0];
 
             if(rows.length > 0) {
@@ -214,7 +214,7 @@ class UtilisateurController {
         }
         catch(err) {
             console.log(err);
-            manage_logs.generateLogs(err, "utilisateur_controller.js", "getAllCategoriesExceptAdmin");
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getAllCategories");
             return 500;
         }
     }
