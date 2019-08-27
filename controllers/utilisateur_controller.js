@@ -202,7 +202,7 @@ class UtilisateurController {
 
     async getAllCategories() {
         try {
-            const res = await Database.connection.query("SELECT libelle FROM categorie_utilisateur");
+            const res = await Database.connection.query("SELECT * FROM categorie_utilisateur");
             const rows = res [0];
 
             if(rows.length > 0) {

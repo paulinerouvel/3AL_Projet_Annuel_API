@@ -60,3 +60,7 @@
 <2019-8-25 12:00:05>    API - commande_controller.js at getAllProductsInOrder   TypeError: Cannot read property 'query' of undefined
 <2019-8-25 12:00:05>    API - payement_controller.js at getPayementByIdCmd   TypeError: Cannot read property 'query' of undefined
 <2019-8-26 18:08:12>    API - utilisateur_controller.js at deleteUser   Error: Cannot delete or update a parent row: a foreign key constraint fails (`wastemart`.`utilisateur_has_categorie`, CONSTRAINT `utilisateur_has_categorie_ibfk_2` FOREIGN KEY (`Utilisateur_id`) REFERENCES `utilisateur` (`id`))
+<2019-8-27 16:58:22>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-27 16:58:22>    API - entrepot_controller.js at getAllWarehouse   Error: read ECONNRESET
+<2019-8-27 16:58:23>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-27 17:59:38>    API - produit_controller.js at addProduct   Error: Column 'prixInitial' cannot be null

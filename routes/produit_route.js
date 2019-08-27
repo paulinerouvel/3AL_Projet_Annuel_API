@@ -42,7 +42,7 @@ router.post('/', verifyToken, async (req, res) => {
     let desc = req.body.desc;
     let photo = req.body.photo;
     const prix = req.body.prix;
-    const prixInitial = req.body.prixInitial;
+    let prixInitial = req.body.prixInitial;
     const quantite = req.body.quantite;
     const dlc = req.body.dlc;
     const codeBarre = req.body.codeBarre;
@@ -53,7 +53,11 @@ router.post('/', verifyToken, async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    if (libelle && desc && photo && prix && prixInitial && quantite && enRayon != undefined && categorieProduit_id) {
+
+    if(!prixInitial){
+        prixInitial = "0";
+    }
+    if (libelle && desc && photo && prix && quantite && enRayon != undefined && categorieProduit_id) {
 
         if(photo == null ||  photo == undefined || photo == ""){
             photo="img_product.jpg";
@@ -139,6 +143,8 @@ router.put('/', verifyToken, async (req, res) => {
     let listProduct_id = req.body.listProduct_id;
     let entrepotwm_id = req.body.entrepotwm_id;
     let destinataire = req.body.destinataire;
+
+    
 
 
     if (id && libelle && desc && photo && prix && prixInitial && quantite != undefined && enRayon != undefined && categorieProduit_id) {
