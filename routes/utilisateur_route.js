@@ -277,6 +277,8 @@ router.get('/categories', async (req, res) => {
 
     const result = await UtilisateurController.getAllCategories();
 
+
+    
     
 
     if (result != 500) {

@@ -145,7 +145,9 @@ router.put('/', verifyToken, async (req, res) => {
     let destinataire = req.body.destinataire;
 
     
-
+    if(!prixInitial){
+        prixInitial = "0";
+    }
 
     if (id && libelle && desc && photo && prix && prixInitial && quantite != undefined && enRayon != undefined && categorieProduit_id) {
 
