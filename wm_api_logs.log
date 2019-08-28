@@ -64,3 +64,35 @@
 <2019-8-27 16:58:22>    API - entrepot_controller.js at getAllWarehouse   Error: read ECONNRESET
 <2019-8-27 16:58:23>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
 <2019-8-27 17:59:38>    API - produit_controller.js at addProduct   Error: Column 'prixInitial' cannot be null
+<2019-8-27 18:48:17>    API - commande_controller.js at getOrderByID   Error: read ECONNRESET
+<2019-8-27 18:48:17>    API - commande_controller.js at getOrderByID   Error: read ECONNRESET
+<2019-8-27 18:48:17>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-27 18:48:17>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-27 18:48:17>    API - commande_controller.js at getAllProductsInOrder   Error: Can't add new command when connection is in closed state
+<2019-8-27 18:48:17>    API - commande_controller.js at getAllProductsInOrder   Error: Can't add new command when connection is in closed state
+<2019-8-27 18:48:17>    API - payement_controller.js at getPayementByIdCmd   Error: Can't add new command when connection is in closed state
+<2019-8-27 18:48:17>    API - payement_controller.js at getPayementByIdCmd   Error: Can't add new command when connection is in closed state
+<2019-8-27 19:27:23>    API - commande_controller.js at getOrderByID   Error: read ECONNRESET
+<2019-8-27 19:27:23>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-27 19:27:23>    API - commande_controller.js at getAllProductsInOrder   Error: Can't add new command when connection is in closed state
+<2019-8-27 19:27:23>    API - payement_controller.js at getPayementByIdCmd   Error: Can't add new command when connection is in closed state
+<2019-8-27 21:37:02>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_81.pdf'
+<2019-8-27 21:37:44>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_80.pdf'
+<2019-8-27 21:39:27>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-27 21:58:36>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:34:19>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:34:45>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:37:40>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:42:21>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:43:55>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:45:24>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:47:27>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:49:20>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 10:51:18>    API - mail_controller.js at sendMail   Error: ENOENT: no such file or directory, open 'E:\ESGI\Projet Annuel\3AL_API\facture_cmd_79.pdf'
+<2019-8-28 11:49:20>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-28 11:49:20>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-28 11:49:20>    API - utilisateur_controller.js at getValidUsersByCategory   Error: read ECONNRESET
+<2019-8-28 11:49:20>    API - utilisateur_controller.js at getValidUsersByCategory   Error: read ECONNRESET
+<2019-8-28 11:49:20>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-28 11:49:21>    API - utilisateur_controller.js at getValidUsersByCategory   Error: Can't add new command when connection is in closed state
+<2019-8-28 11:49:24>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state

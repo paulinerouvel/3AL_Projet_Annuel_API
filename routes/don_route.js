@@ -26,6 +26,8 @@ router.post('/', verifyToken, async (req, res) => {
     const donneur_id = req.body.donneur_id;
     const receveur_id = req.body.receveur_id;
 
+    const idDon = req.body.idDon;
+
 
     if (date && montant && donneur_id && receveur_id) {
 
@@ -33,53 +35,32 @@ router.post('/', verifyToken, async (req, res) => {
 
         let result = await DonController.addDon(don);
 
+         
+
+
         if (result != 500) {
-
-            let donneur = await UserController.getUserByID(donneur_id);
-            let receveur = await UserController.getUserByID(receveur_id);
-            
-            let now = new Date(Date.now());
-            let dateT = now.toLocaleString('fr-FR').split(' ');
-            let date = dateT.split('-');
-
-            let messageDonneur = "<!DOCTYPE html>"+
-            "<html>"+
-                "<t/><h3>Bonjour "+ donneur.prenom +" "+ donneur.nom +", </h3><br/>"+
-                "<h4>Vous avez effectué un don sur <a href='#'>WasteMart</a> à l'association <b>"+ receveur.libelle +"</b>. <br/>"+
-                "Vous trouverez ci-joint la facture de votre don."+
-                
-                "<br/><br/>"+
-                "Nous vous remercions de votre don, et espérons vous revoir rapidement !"+
-                "<br/><br/>"+
-                "L'équipe WasteMart. "+
-                "</h4>"+
-                
-                
-            "</html>";
-
-            let messageReceveur = "<!DOCTYPE html>"+
-            "<html>"+
-                "<t/><h3>Bonjour, </h3><br/>"+
-                "<h4>Vous avez reçu un don d'un utilisateur sur <a href='#'>WasteMart</a>! <br/>"+
-                "Rendez-vous sur WasteMart pour consultez le montant du don et remercier le généreux donnateur."+
-                
-                "<br/><br/>"+
-                "Nous espérons vous revoir rapidement !"+
-                "<br/><br/>"+
-                "L'équipe WasteMart. "+
-                "</h4>"+
-                
-                
-            "</html>";
-
-            await MailController.sendMail("wastemart.company@gmail.com", donneur.mail, "Votre don du " + date[2] + "/" + date[1] + "/" + date[0], messageDonneur);
-            await MailController.sendMail("wastemart.company@gmail.com", receveur.mail, "Nouveau don reçu !", messageReceveur);
 
 
             return res.status(201).end(); // status created
         }
         else {
             return res.status(500).end();
+        }
+
+    }
+
+    if (idDon) {
+
+ 
+        let result = await DonController.sendMailAndFacture(idDon);
+
+        if (result == 500) {
+
+            return res.status(500).end();
+        }
+        else {
+
+            return res.status(201).end();
         }
 
     }

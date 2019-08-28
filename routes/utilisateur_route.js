@@ -373,7 +373,7 @@ router.put('/', verifyToken, async (req, res) => {
 
 
 
-                        await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message);
+                        await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message, null);
 
                     }
                 }

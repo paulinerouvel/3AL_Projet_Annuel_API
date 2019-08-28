@@ -62,7 +62,7 @@ router.post('/', verifyToken, async (req, res) => {
 
     if (idCmd) {
 
-
+ 
         let result = await CommandeController.sendMailAndFacture(idCmd);
 
         if (result == 500) {

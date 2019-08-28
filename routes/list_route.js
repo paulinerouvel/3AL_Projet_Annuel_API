@@ -89,7 +89,7 @@ router.put('/', verifyToken, async (req, res) => {
 
                     "</html>";
 
-                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre liste de produit", message);
+                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre liste de produit", message, null);
             }
 
 

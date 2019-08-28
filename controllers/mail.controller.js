@@ -2,9 +2,10 @@
 
 const nodemailer = require('nodemailer');
 const manage_logs = require("../utils/manage_logs");
+const fs = require('fs');
 class MailController {
 
-    async sendMail(sender, destination, subject, message) {
+    async sendMail(sender, destination, subject, message, file) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -17,7 +18,12 @@ class MailController {
             to: destination,
             subject: subject,
             text: message,
-            html: '<b>' + message + '</b>'
+            html: '<b>' + message + '</b>',
+            attachments: [{
+                filename: file,
+                path: file,
+                contentType: 'application/pdf'
+              }],
         };
     
         transporter.sendMail(mailOptions, function (error, info) {
@@ -32,7 +38,7 @@ class MailController {
         });
     
         transporter.close();
-        return true;
+
 
     }
 

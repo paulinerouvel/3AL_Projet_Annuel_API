@@ -9,6 +9,7 @@ const UserController = require('./utilisateur_controller');
 const pdfkit = require('pdfkit');
 const fs = require('fs');
 const request = require('request');
+const path = require('path');
 
 
 class CommandeController {
@@ -54,9 +55,23 @@ class CommandeController {
     }
 
 
+
+
     async sendMailAndFacture(idCommande) {
 
-        //Send mail
+        let dir = 'factures';
+
+        fs.readdir(dir, (err, files) => {
+            if (err) throw err;
+
+            for (const file of files) {
+                fs.unlink(path.join(dir, file), err => {
+                    if (err) throw err;
+                });
+            }
+        });
+
+        //Send facture
         let cmd = await this.getOrderByID(idCommande);
 
 
@@ -98,126 +113,130 @@ class CommandeController {
 
             //create facture
 
+            let doc = new pdfkit();
+            doc.fontSize(15).text('The WasteMart Company');
+            doc.moveDown();
+            doc.fontSize(15).text('33 rue de la haie dieu');
+            doc.moveDown();
+            doc.fontSize(15).text('Paris 75012');
+            doc.moveDown();
+            doc.fontSize(12).text('wastemart.company@gmail.com');
+            doc.moveDown();
 
-            const createPDF = async () => {
-
-                let doc = new pdfkit();
-                doc.fontSize(15).text('The WasteMart Company');
-                doc.moveDown();
-                doc.fontSize(15).text('33 rue de la haie dieu');
-                doc.moveDown();
-                doc.fontSize(15).text('Paris 75012');
-                doc.moveDown();
-                doc.fontSize(12).text('wastemart.company@gmail.com');
-                doc.moveDown();
-
-                doc.fontSize(15).text('Adresse de facturation', 380, 70, { underline: "true" });
-                doc.moveDown();
-                doc.fontSize(12).text(user.nom + " " + user.prenom, 380, 90);
-                doc.moveDown();
-                doc.fontSize(12).text(payement[0].adresse_facturation, 380, 110);
-                doc.moveDown();
-                doc.fontSize(12).text(payement[0].cp_facturation + " " + payement[0].ville_facturation, 380, 130);
-                doc.moveDown();
-                doc.fontSize(12).text(user.mail, 380, 150);
-                doc.moveDown();
-                doc.fontSize(12).text(user.tel, 380, 170);
-                doc.moveDown();
+            doc.fontSize(15).text('Adresse de facturation', 380, 70, { underline: "true" });
+            doc.moveDown();
+            doc.fontSize(12).text(user.nom + " " + user.prenom, 380, 90);
+            doc.moveDown();
+            doc.fontSize(12).text(payement[0].adresse_facturation, 380, 110);
+            doc.moveDown();
+            doc.fontSize(12).text(payement[0].cp_facturation + " " + payement[0].ville_facturation, 380, 130);
+            doc.moveDown();
+            doc.fontSize(12).text(user.mail, 380, 150);
+            doc.moveDown();
+            doc.fontSize(12).text(user.tel, 380, 170);
+            doc.moveDown();
 
 
 
 
 
-                doc.fontSize(25).text('Facture du ' + day + "/" + month + "/" + date[0] + ' n°' + idCommande, 100, 280, {
-                    align: "center",
-                    underline: "true"
-                });
-
-                doc.lineWidth(1);
-                doc.lineCap('butt')
-                    .moveTo(0, 350)
-                    .lineTo(611, 350)
-                    .stroke();
-
-                doc.moveDown();
-                doc.moveDown();
-
-
-                for (const produit of produits) {
-                    doc.fontSize(15).text('-' + produit.libelle + " x " + produit.quantite);
-                    doc.fontSize(15).text(produit.prix + ' €', { align: "right" });
-                    doc.moveDown();
-                }
-
-
-
-                doc.fontSize(15).text('TOTAL');
-                doc.fontSize(15).text(total + ' €', { align: "right" });
-                doc.moveDown();
-                doc.moveDown();
-                doc.moveDown();
-
-
-
-                doc.fontSize(15).text('Adresse de livraison', { underline: "true" });
-                doc.moveDown();
-                doc.fontSize(15).text(user.adresse);
-                doc.moveDown();
-                doc.fontSize(15).text(user.codePostal + " " + user.ville);
-                doc.moveDown();
-
-
-                var wstream = fs.createWriteStream('facture_cmd_' + idCommande + '.pdf');
-
-                doc.pipe(wstream);
-                
-
-                doc.end();
-
-
-                
-            }
-
-            await createPDF();
-
-
-            var req = request.post("http://51.75.143.205:8080/factures", function (err, resp, body) {
-                if (err) {
-                    console.log('Error!', err);
-                } else {
-                    console.log('URL: ' + body);
-                }
+            doc.fontSize(25).text('Facture du ' + day + "/" + month + "/" + date[0] + ' n°' + idCommande, 100, 280, {
+                align: "center",
+                underline: "true"
             });
 
-            var form = req.form();
+            doc.lineWidth(1);
+            doc.lineCap('butt')
+                .moveTo(0, 350)
+                .lineTo(611, 350)
+                .stroke();
 
-            form.append('file', fs.createReadStream('facture_cmd_' + idCommande + '.pdf'));
-
-
-            req;
-
-
-
-
-
-            //send mail
-
-            let message = "<!DOCTYPE html>" +
-                "<html>" +
-                "<t/><h3>Bonjour " + user.prenom + " " + user.nom + ", </h3><br/>" +
-                "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
-                "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
-
-                "<br/><br/>" +
-                "Nous vous remercions de votre achat, et espérons vous revoir rapidement !" +
-                "<br/><br/>" +
-                "L'équipe WasteMart. " +
-                "</h4>" +
+            doc.moveDown();
+            doc.moveDown();
 
 
-                "</html>";
+            for (const produit of produits) {
+                doc.fontSize(15).text('-' + produit.libelle + " x " + produit.quantite);
+                doc.fontSize(15).text(produit.prix + ' €', { align: "right" });
+                doc.moveDown();
+            }
 
-            MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + day + "/" + month + "/" + date[0], message);
+
+
+            doc.fontSize(15).text('TOTAL');
+            doc.fontSize(15).text(total + ' €', { align: "right" });
+            doc.moveDown();
+            doc.moveDown();
+            doc.moveDown();
+
+
+
+            doc.fontSize(15).text('Adresse de livraison', { underline: "true" });
+            doc.moveDown();
+            doc.fontSize(15).text(user.adresse);
+            doc.moveDown();
+            doc.fontSize(15).text(user.codePostal + " " + user.ville);
+            doc.moveDown();
+
+
+            var wstream = fs.createWriteStream('factures/facture_cmd_' + idCommande + '.pdf');
+
+
+
+
+            doc.pipe(wstream);
+
+
+            doc.end();
+            wstream.on('finish', function () {
+
+                var req = request.post("http://51.75.143.205:8080/factures", function (err, resp, body) {
+                    if (err) {
+                        console.log('Error!', err);
+                    } else {
+                        console.log('URL: ' + body);
+                    }
+                });
+
+                var form = req.form();
+
+                let fsRead = fs.createReadStream('factures/facture_cmd_' + idCommande + '.pdf')
+
+                form.append('file', fsRead);
+
+
+
+
+                req;
+
+
+                //send mail
+
+
+
+                let message = "<!DOCTYPE html>" +
+                    "<html>" +
+                    "<t/><h3>Bonjour " + user.prenom + " " + user.nom + ", </h3><br/>" +
+                    "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
+                    "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
+
+                    "<br/><br/>" +
+                    "Nous vous remercions de votre achat, et espérons vous revoir rapidement !" +
+                    "<br/><br/>" +
+                    "L'équipe WasteMart. " +
+                    "</h4>" +
+
+
+                    "</html>";
+
+                MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + day + "/" + month + "/" + date[0], message, 'factures/facture_cmd_' + idCommande + '.pdf');
+
+
+
+
+            });
+
+
         }
         else {
 
@@ -247,7 +266,7 @@ class CommandeController {
 
                 "</html>";
 
-            MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + day + "/" + month + "/" + date[0], message);
+            MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + day + "/" + month + "/" + date[0], message, null);
         }
     }
 

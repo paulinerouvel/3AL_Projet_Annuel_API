@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     const message = req.body.message;
 
     if (sender && destination && subject && message) {
-        let result = await MailController.sendMail(sender, destination, subject, message);
+        let result = await MailController.sendMail(sender, destination, subject, message, null);
 
         if (result) {
             return res.status(200).end();

@@ -57,11 +57,13 @@ router.post('/', verifyToken, async (req, res) => {
     if(!prixInitial){
         prixInitial = "0";
     }
+
+    if(photo == null ||  photo == undefined || photo == ""){
+        photo="img_product.jpg";
+    }
     if (libelle && desc && photo && prix && quantite && enRayon != undefined && categorieProduit_id) {
 
-        if(photo == null ||  photo == undefined || photo == ""){
-            photo="img_product.jpg";
-        }
+
 
 
         let product = new Produit(-1, libelle, desc, photo, prix, prixInitial, quantite, dlc, codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire)
@@ -85,7 +87,7 @@ router.post('/', verifyToken, async (req, res) => {
                     let user = await UserController.getUserByID(alert.utilisateur_id);
 
                     await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
-                        "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart");
+                        "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart", null);
 
                 }
 
@@ -149,11 +151,13 @@ router.put('/', verifyToken, async (req, res) => {
         prixInitial = "0";
     }
 
+    if(photo == null ||  photo == undefined || photo == ""){
+        photo="img_product.jpg";
+    }
+
     if (id && libelle && desc && photo && prix && prixInitial && quantite != undefined && enRayon != undefined && categorieProduit_id) {
 
-        if(photo == null ||  photo == undefined || photo == ""){
-            photo="img_product.jpg";
-        }
+
 
         const product = new Produit(id, libelle, desc, photo, prix, prixInitial, quantite, dlc,
             codeBarre, enRayon, dateMiseEnRayon, categorieProduit_id, listProduct_id, entrepotwm_id, destinataire);
