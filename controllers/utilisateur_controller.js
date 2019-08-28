@@ -129,7 +129,7 @@ class UtilisateurController {
             const res = await Database.connection.query('SELECT Categorie_utilisateur_id FROM utilisateur_has_categorie WHERE utilisateur_id = ?', [userID]);
             const rows = res[0];
             if (rows.length > 0) {
-                return rows[0].Categorie_utilisateur_id;
+                return rows[0];
             }
             return [];
         }
@@ -167,7 +167,7 @@ class UtilisateurController {
             const rows = res[0];
     
             if (rows.length > 0) {
-                return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
+                return res[0].map((rows) => new Utilisateur(rows.utilisateur.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
                     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
                     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
                 );
