@@ -399,6 +399,17 @@ class CommandeController {
     async deleteOrder(id) {
         try {
 
+            try {
+
+                await Database.connection.execute('DELETE FROM payement WHERE id_commande = ?', [id]);
+
+            }
+            catch (err) {
+                console.log(err);
+                manage_logs.generateLogs(err, "commande_controller.js", "deleteOrder");
+                return 500;
+            }
+
             const res = await Database.connection.execute('DELETE FROM commande WHERE commande.id = ?', [id]);
             await this.deleteProductInOrder(id);
             return res;

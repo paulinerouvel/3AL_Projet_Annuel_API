@@ -115,3 +115,8 @@
 <2019-8-28 14:19:02>    API - mail_controller.js at sendMail   Error: No recipients defined
 <2019-8-28 14:20:09>    API - don_controller.js at getDonByID   TypeError: Cannot read property 'query' of undefined
 <2019-8-28 14:20:09>    API - payement_controller.js at getPayementByIdDon   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 20:55:42>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined
+<2019-8-28 20:56:20>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined
+<2019-8-28 20:59:12>    API - utilisateur_controller.js at getValidUsersByCategory   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE' at line 1
+<2019-8-28 21:46:36>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined
+<2019-8-28 21:48:14>    API - commande_controller.js at deleteOrder   Error: Cannot delete or update a parent row: a foreign key constraint fails (`wastemart`.`payement`, CONSTRAINT `payement_ibfk_2` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id`))

@@ -185,12 +185,14 @@ class UtilisateurController {
 
     async getValidUsersByCategory(category) {
         try{
-            const res = await Database.connection.query('SELECT * FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
+            const res = await Database.connection.query('SELECT utilisateur.id FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=1', [category]);
             const rows = res[0];
+
+            console.log(rows)
     
 
             if (rows.length > 0) {
-                return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
+                return res[0].map((rows) => new Utilisateur(rows.utilisateur.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
                     rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
                     rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
                 );
