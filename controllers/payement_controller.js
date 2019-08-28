@@ -58,7 +58,7 @@ class PayementController {
     async getPayementByIdDon(idDon) {
         
         try {
-            const results = await Database.connection.query('SELECT * FROM payement WHERE id_don = ', [idDon]);
+            const results = await Database.connection.query('SELECT * FROM payement WHERE id_don = ? ', [idDon]);
 
             return results[0].map((rows) => new Payement(rows.id, rows.montant, rows.titulaire, rows.adresse_facturation, rows.cp_facturation, rows.ville_facturation, rows.id_don, rows.id_commande));
 

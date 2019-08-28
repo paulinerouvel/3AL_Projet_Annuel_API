@@ -52,6 +52,8 @@ class DonController {
         //sendFacture
         let don = await this.getDonByID(idDon);
 
+        don = don[0];
+
 
 
         let now = new Date(Date.now());
@@ -59,13 +61,12 @@ class DonController {
         let date = dateT[0].split('-');
 
 
-        let user = await UserController.getUserByID(don.utilisateur_id);
-
-
         let payement = await PayementController.getPayementByIdDon(idDon);
 
-        let donneur = await UserController.getUserByID(don.donneur_id);
-        let receveur = await UserController.getUserByID(don.receveur_id);
+        let donneur = await UserController.getUserByID(don.Donneur_id);
+        let receveur = await UserController.getUserByID(don.Receveur_id);
+
+
 
 
 
@@ -98,22 +99,22 @@ class DonController {
 
         doc.fontSize(15).text('Adresse de facturation', 380, 70, { underline: "true" });
         doc.moveDown();
-        doc.fontSize(12).text(user.nom + " " + user.prenom, 380, 90);
+        doc.fontSize(12).text(donneur.nom + " " + donneur.prenom, 380, 90);
         doc.moveDown();
         doc.fontSize(12).text(payement[0].adresse_facturation, 380, 110);
         doc.moveDown();
         doc.fontSize(12).text(payement[0].cp_facturation + " " + payement[0].ville_facturation, 380, 130);
         doc.moveDown();
-        doc.fontSize(12).text(user.mail, 380, 150);
+        doc.fontSize(12).text(donneur.mail, 380, 150);
         doc.moveDown();
-        doc.fontSize(12).text(user.tel, 380, 170);
+        doc.fontSize(12).text(donneur.tel, 380, 170);
         doc.moveDown();
 
 
 
 
 
-        doc.fontSize(25).text('Facture du ' + day + "/" + month + "/" + date[0] + ' n°' + idCommande, 100, 280, {
+        doc.fontSize(25).text('Facture du ' + day + "/" + month + "/" + date[0] + ' n°' + idDon, 100, 280, {
             align: "center",
             underline: "true"
         });
@@ -132,7 +133,7 @@ class DonController {
         doc.fontSize(15).text('Receveur', {underline: 'true', align: "right" });
 
         doc.fontSize(15).text(donneur.nom + " " + donneur.prenom);
-        doc.fontSize(15).text(receveur.libelle);
+        doc.fontSize(15).text(receveur.libelle, { align: "right"});
         doc.moveDown();
 
 
@@ -156,7 +157,7 @@ class DonController {
 
 
         doc.end();
-        wstream.on('finish', function () {
+        wstream.on('finish', async function () {
 
             var req = request.post("http://51.75.143.205:8080/factures", function (err, resp, body) {
                 if (err) {
@@ -214,13 +215,15 @@ class DonController {
                 
             "</html>";
 
-            MailController.sendMail("wastemart.company@gmail.com", donneur.mail, "Votre don du " + day + "/" + month + "/" + date[0], messageDonneur, 'factures/facture_don_' + idDon + '.pdf');
-            MailController.sendMail("wastemart.company@gmail.com", receveur.mail, "Nouveau don reçu !", messageReceveur, null);
+
+
+            await MailController.sendMail("wastemart.company@gmail.com", donneur.mail, "Votre don du " + day + "/" + month + "/" + date[0], messageDonneur, 'factures/facture_don_' + idDon + '.pdf');
+            await MailController.sendMail("wastemart.company@gmail.com", receveur.mail, "Nouveau don reçu !", messageReceveur, null);
 
 
 
         });
-
+ 
 
 
 
@@ -241,6 +244,21 @@ class DonController {
         catch (err) {
             console.log(err);
             manage_logs.generateLogs(err, "don_controller.js", "getAllDonByDonneurID");
+            return 500;
+        }
+    }
+
+    async getDonByID(id) {
+
+        try {
+            const results = await Database.connection.query('SELECT * FROM don WHERE don.id = ?', [id]);
+
+            return results[0].map((rows) => new Don(rows.id, rows.date, rows.montant, rows.Donneur_id, rows.Receveur_id));
+
+        }
+        catch (err) {
+            console.log(err);
+            manage_logs.generateLogs(err, "don_controller.js", "getDonByID");
             return 500;
         }
     }

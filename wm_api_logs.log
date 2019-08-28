@@ -96,3 +96,22 @@
 <2019-8-28 11:49:20>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
 <2019-8-28 11:49:21>    API - utilisateur_controller.js at getValidUsersByCategory   Error: Can't add new command when connection is in closed state
 <2019-8-28 11:49:24>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state
+<2019-8-28 12:07:37>    API - payement_controller.js at getPayementByIdDon   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-28 12:08:32>    API - payement_controller.js at getPayementByIdDon   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-28 12:09:37>    API - payement_controller.js at getPayementByIdDon   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-28 12:10:32>    API - payement_controller.js at getPayementByIdDon   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+<2019-8-28 12:11:59>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 12:11:59>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 13:29:29>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 13:29:29>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:10:35>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:13:20>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:14:48>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:16:51>    API - don_controller.js at getDonByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 14:16:51>    API - payement_controller.js at getPayementByIdDon   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 14:16:51>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 14:16:51>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 14:16:53>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:19:02>    API - mail_controller.js at sendMail   Error: No recipients defined
+<2019-8-28 14:20:09>    API - don_controller.js at getDonByID   TypeError: Cannot read property 'query' of undefined
+<2019-8-28 14:20:09>    API - payement_controller.js at getPayementByIdDon   TypeError: Cannot read property 'query' of undefined

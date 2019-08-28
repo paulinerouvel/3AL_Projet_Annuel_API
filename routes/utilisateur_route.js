@@ -323,7 +323,9 @@ router.put('/', verifyToken, async (req, res) => {
         }
 
         let userExist = await UtilisateurController.getUserByEmail(mail);
-        if (userExist != 500 && (userExist.length == 0 || (userExist.length == 1 && userExist.id == id))) {
+
+
+        if (userExist != 500 && (userExist.length == undefined || (userExist.length == 1 && userExist.id == id))) {
 
 
 
@@ -404,6 +406,7 @@ router.put('/', verifyToken, async (req, res) => {
             if(userExist == 500){
                 return res.status(500).end();
             }
+
             return res.status(401).json({ "Result": "Email already exist" });
         }
 
