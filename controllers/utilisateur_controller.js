@@ -108,6 +108,8 @@ class UtilisateurController {
     async getAllUsers() {
         try {
             const res = await Database.connection.query('SELECT * FROM `utilisateur`');
+
+
             return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
                 rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
                 rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
@@ -165,7 +167,10 @@ class UtilisateurController {
             const rows = res[0];
     
             if (rows.length > 0) {
-                return res[0];
+                return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
+                    rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
+                    rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+                );
 
             }
             return [];
@@ -185,7 +190,10 @@ class UtilisateurController {
     
 
             if (rows.length > 0) {
-                return res[0];
+                return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
+                    rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
+                    rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+                );
 
             }
             return [];
