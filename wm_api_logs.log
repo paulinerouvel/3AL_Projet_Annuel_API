@@ -120,3 +120,5 @@
 <2019-8-28 20:59:12>    API - utilisateur_controller.js at getValidUsersByCategory   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE' at line 1
 <2019-8-28 21:46:36>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined
 <2019-8-28 21:48:14>    API - commande_controller.js at deleteOrder   Error: Cannot delete or update a parent row: a foreign key constraint fails (`wastemart`.`payement`, CONSTRAINT `payement_ibfk_2` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id`))
+<2019-8-28 21:56:17>    API - utilisateur_controller.js at getValidUsersByCategory   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire FROM `' at line 1
+<2019-8-28 21:56:50>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined

@@ -328,6 +328,17 @@ class DonController {
     async deleteDon(id) {
         try {
 
+            try {
+
+                await Database.connection.execute('DELETE FROM payement WHERE id_don = ?', [id]);
+
+            }
+            catch (err) {
+                console.log(err);
+                manage_logs.generateLogs(err, "don_controller.js", "deleteDon");
+                return 500;
+            }
+
             const res = await Database.connection.execute('DELETE FROM don WHERE don.id', [id]);
             return res;
         }
