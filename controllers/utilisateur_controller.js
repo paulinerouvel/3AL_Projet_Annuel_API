@@ -210,6 +210,31 @@ class UtilisateurController {
 
     }
 
+    async getInvalidUsersByCategory(category) {
+        try{
+            const res = await Database.connection.query('SELECT utilisateur.id, utilisateur.Libelle, nom, prenom, mail, tel,'+
+            'adresse, ville, codePostal, pseudo, mdp, photo,'+
+            '`desc`, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire FROM `utilisateur`, `categorie_utilisateur`, `utilisateur_has_categorie` WHERE categorie_utilisateur.libelle = ? AND utilisateur_has_categorie.Categorie_utilisateur_id = categorie_utilisateur.id AND utilisateur_has_categorie.Utilisateur_id = utilisateur.id AND utilisateur.estValide=0', [category]);
+            const rows = res[0];
+
+
+            if (rows.length > 0) {
+                return res[0].map((rows) => new Utilisateur(rows.id, rows.Libelle, rows.nom, rows.prenom, rows.mail, rows.tel,
+                    rows.adresse, rows.ville, rows.codePostal, rows.pseudo, rows.mdp, rows.photo,
+                    rows.desc, rows.tailleOrganisme, rows.estValide, rows.siret, rows.dateDeNaissance, rows.nbPointsSourire)
+                );
+
+            }
+            return [];
+        }
+        catch(err){
+            console.log(err);
+            manage_logs.generateLogs(err, "utilisateur_controller.js", "getValidUsersByCategory");
+            return 500;
+        }
+
+    }
+
 
 
     async getAllCategories() {

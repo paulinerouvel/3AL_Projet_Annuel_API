@@ -269,6 +269,24 @@ router.get('/allValidByCategory', async (req, res) => {
 
 });
 
+router.get('/allInvalidByCategory', async (req, res) => {
+
+    const type = req.query.type;
+
+    if (type) {
+        const result = await UtilisateurController.getInvalidUsersByCategory(type);
+
+        if (result != 500) {
+            return res.json(result);
+        }
+        return res.status(500).end();
+    }
+
+    return res.status(400).end();
+
+
+});
+
 
 
 
