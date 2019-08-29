@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
     }
 
 
-    if (mail && tel && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
+    if (mail && tel && adresse && ville && codePostal != undefined && pseudo && mdp && estValide != undefined) {
 
 
 
@@ -313,7 +313,8 @@ router.put('/', verifyToken, async (req, res) => {
     let dateDeNaissance = req.body.dateDeNaissance;
     let nbPointsSourire = req.body.nbPointsSourire;
 
-    if (id && mail && tel && adresse && ville && codePostal && pseudo && mdp && estValide != undefined) {
+
+    if (id && mail && tel && adresse && ville && codePostal != undefined && pseudo && mdp && estValide != undefined) {
 
 
         if (photo == null || photo == undefined || photo == "") {
