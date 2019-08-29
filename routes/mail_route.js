@@ -18,10 +18,13 @@ router.post('/', async (req, res) => {
     if (sender && destination && subject && message) {
         let result = await MailController.sendMail(sender, destination, subject, message, null);
 
-        if (result) {
+        console.log(result)
+
+        if (result == 200) {
             return res.status(200).end();
         }
         else {
+
             return res.status(500).end();
         }
 

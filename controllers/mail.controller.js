@@ -13,33 +13,53 @@ class MailController {
                 pass: 'WasteMartCompany2019'
             }
         });
-        var mailOptions = {
-            from: sender,
-            to: destination,
-            subject: subject,
-            text: message,
-            html: '<b>' + message + '</b>',
-            attachments: [{
-                filename: file,
-                path: file,
-                contentType: 'application/pdf'
-              }],
-        };
-    
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-                manage_logs.generateLogs(error, "mail_controller.js", "sendMail");
-                return false;
-                
-    
-            }
-            console.log('Message sent: ' + info.response);
-        });
-    
-        transporter.close();
+
+        var mailOptions;
+
+        if(file != null){
+            mailOptions = {
+                from: sender,
+                to: destination,
+                subject: subject,
+                text: message,
+                html: '<b>' + message + '</b>',
+                attachments: [{
+                    filename: file,
+                    path: file,
+                    contentType: 'application/pdf'
+                }],
+            };
+        }
+
+        else{
+
+            mailOptions = {
+                from: sender,
+                to: destination,
+                subject: subject,
+                text: message,
+                html: '<b>' + message + '</b>'
+            };
+
+        }
 
 
+
+
+        try{
+            await transporter.sendMail(mailOptions); 
+            transporter.close();
+
+            console.log('Message sent');
+            return 200;
+        }
+        catch(err){
+           console.log(err);
+           manage_logs.generateLogs(err, "mail_controller.js", "sendMail");
+           return 500;
+        }
+
+    
     }
 
 }
