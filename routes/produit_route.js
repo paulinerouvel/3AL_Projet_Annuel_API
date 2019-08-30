@@ -51,7 +51,7 @@ router.post('/', verifyToken, async (req, res) => {
     const categorieProduit_id = req.body.categorieProduit_id;
     const listProduct_id = req.body.listProduct_id;
     const entrepotwm_id = req.body.entrepotwm_id;
-    const destinataire = req.body.destinataire;
+    let destinataire = req.body.destinataire;
 
 
 
