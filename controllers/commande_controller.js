@@ -78,7 +78,7 @@ class CommandeController {
         console.log("commande", cmd);
 
         let now = new Date(Date.now());
-        let dateT = now.toLocaleString('fr-FR').split(' ');
+        let dateT = now.split('T');
         let date = dateT[0].split('-');
 
         console.log(now);
