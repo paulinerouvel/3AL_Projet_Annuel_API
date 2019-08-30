@@ -53,7 +53,6 @@ router.post('/', verifyToken, async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
-    console.log(destinataire)
 
 
     if(!prixInitial){
@@ -93,11 +92,21 @@ router.post('/', verifyToken, async (req, res) => {
                 let indexLibelle = libelle.search(alert.libelle);
                 let indexDesc = desc.search(alert.libelle);
 
-                if (indexLibelle != -1 || indexDesc != -1) {
+                alert.libelle = alert.libelle.substring(0, alert.libelle.length-1);
+
+
+                let indexLibelle2 = libelle.search(alert.libelle);
+                let indexDesc2 = desc.search(alert.libelle);
+
+
+
+
+                if (indexLibelle != -1 || indexDesc != -1 || indexLibelle2 != -1 || indexDesc2 != -1) {
 
 
                     let user = await UserController.getUserByID(alert.utilisateur_id);
                     let category = await UserController.getUserCategory(user.id);
+
 
 
                     if(category['Categorie_utilisateur_id'] == destinataire){
