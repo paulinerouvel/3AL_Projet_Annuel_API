@@ -139,3 +139,14 @@
 <2019-8-30 15:07:51>    API - utilisateur_controller.js at getUserByID   TypeError: Cannot read property 'query' of undefined
 <2019-8-30 15:07:51>    API - commande_controller.js at getAllProductsInOrder   TypeError: Cannot read property 'query' of undefined
 <2019-8-30 15:07:51>    API - payement_controller.js at getPayementByIdCmd   TypeError: Cannot read property 'query' of undefined
+<2019-8-30 18:21:50>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-30 18:21:50>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-30 18:21:54>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:21:57>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:21:58>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:02>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:03>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:03>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:03>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:53>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:22:57>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state

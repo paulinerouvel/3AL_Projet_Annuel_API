@@ -58,6 +58,8 @@ router.post('/', verifyToken, async (req, res) => {
         prixInitial = "0";
     }
 
+    if(destinataire == undefined){destinataire = 1;}
+
     if(photo == null ||  photo == undefined || photo == ""){
         photo="img_product.jpg";
     }
@@ -85,10 +87,14 @@ router.post('/', verifyToken, async (req, res) => {
 
                 if (indexLibelle != -1 || indexDesc != -1) {
                     let user = await UserController.getUserByID(alert.utilisateur_id);
+                    let category = await UserController.getUserCategory(user.id);
 
-                    await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
-                        "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart", null);
 
+                    if(category['Categorie_utilisateur_id'] == destinataire){
+
+                        await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
+                            "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart", null);
+                    }
                 }
 
             }
