@@ -123,3 +123,6 @@
 <2019-8-28 21:56:17>    API - utilisateur_controller.js at getValidUsersByCategory   Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'desc, tailleOrganisme, estValide, siret, dateDeNaissance, nbPointsSourire FROM `' at line 1
 <2019-8-28 21:56:50>    API - utilisateur_controller.js at getValidUsersByCategory   TypeError: Cannot read property 'id' of undefined
 <2019-8-28 22:07:38>    API - utilisateur_controller.js at getUsersByCategory   TypeError: Cannot read property 'id' of undefined
+<2019-8-30 14:28:36>    API - utilisateur_controller.js at getUserByID   Error: read ECONNRESET
+<2019-8-30 14:28:36>    API - entrepot_controller.js at getAllWarehouse   Error: read ECONNRESET
+<2019-8-30 14:28:36>    API - utilisateur_controller.js at getUserByID   Error: Can't add new command when connection is in closed state

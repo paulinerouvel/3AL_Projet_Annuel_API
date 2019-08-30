@@ -75,10 +75,15 @@ class CommandeController {
         let cmd = await this.getOrderByID(idCommande);
 
 
+        console.log("commande", cmd);
 
         let now = new Date(Date.now());
         let dateT = now.toLocaleString('fr-FR').split(' ');
         let date = dateT[0].split('-');
+
+        console.log(now);
+        console.log(dateT);
+        console.log(date);
 
 
         let user = await UserController.getUserByID(cmd.utilisateur_id);
