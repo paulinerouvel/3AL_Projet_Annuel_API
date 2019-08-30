@@ -53,6 +53,8 @@ router.post('/', verifyToken, async (req, res) => {
     const entrepotwm_id = req.body.entrepotwm_id;
     const destinataire = req.body.destinataire;
 
+    console.log(destinataire)
+
 
     if(!prixInitial){
         prixInitial = "0";
@@ -72,11 +74,17 @@ router.post('/', verifyToken, async (req, res) => {
         let produitsRes = await ProduitController.addProduct(product);
 
 
+
         if (produitsRes != 500) {
+
+
             let allAlerts = await AlertController.getAllAlerts();
 
 
+
             for (const alert of allAlerts) {
+
+
 
                 libelle = no_accent(libelle);
                 desc = no_accent(desc);
@@ -86,6 +94,8 @@ router.post('/', verifyToken, async (req, res) => {
                 let indexDesc = desc.search(alert.libelle);
 
                 if (indexLibelle != -1 || indexDesc != -1) {
+
+
                     let user = await UserController.getUserByID(alert.utilisateur_id);
                     let category = await UserController.getUserCategory(user.id);
 

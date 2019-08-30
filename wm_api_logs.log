@@ -150,3 +150,7 @@
 <2019-8-30 18:22:03>    API - utilisateur_controller.js at getUserByEmail   Error: Can't add new command when connection is in closed state
 <2019-8-30 18:22:53>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
 <2019-8-30 18:22:57>    API - produit_controller.js at getAllProductsEnRayonByDest   Error: Can't add new command when connection is in closed state
+<2019-8-30 18:47:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-30 18:47:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-30 18:47:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
+<2019-8-30 19:08:41>    API - produit_controller.js at addProduct   Error: Cannot add or update a child row: a foreign key constraint fails (`wastemart`.`produit`, CONSTRAINT `produit_ibfk_2` FOREIGN KEY (`Liste_Produit_id`) REFERENCES `liste_produit` (`id`))
