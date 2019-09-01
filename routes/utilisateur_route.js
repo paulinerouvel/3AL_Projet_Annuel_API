@@ -348,9 +348,6 @@ router.put('/', verifyToken, async (req, res) => {
 
         if (userExist != 500 && (userExist.length == undefined || (userExist.length == 1 && userExist.id == id))) {
 
-            console.log("ouou")
-
-
 
             let curUser = await UtilisateurController.getUserByID(id);
 
@@ -382,7 +379,7 @@ router.put('/', verifyToken, async (req, res) => {
                 
                 if (curUser.estValide != estValide) {
 
-                    console.log("la")
+
 
                     let message = "";
 
@@ -391,7 +388,7 @@ router.put('/', verifyToken, async (req, res) => {
                             "<html>" +
                             "<t/><h3>Bonjour, </h3><br/>" +
                             "<h4>Après vérification de votre compte par les agents WasteMart, celui-ci à été validé ! <br/>" +
-                            "Vous pouvez désormais vous rendre sur <a href='#'>WasteMart</a> et vous connecter avec vos identifiants." +
+                            "Vous pouvez désormais vous rendre sur <a href='http://51.75.143.205:8081'>WasteMart</a> et vous connecter avec vos identifiants." +
 
                             "<br/><br/>" +
                             "Nous espérons vous voir rapidement sur notre site !" +

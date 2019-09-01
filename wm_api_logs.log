@@ -154,3 +154,6 @@
 <2019-8-30 18:47:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
 <2019-8-30 18:47:23>    API - utilisateur_controller.js at getUserByEmail   Error: read ECONNRESET
 <2019-8-30 19:08:41>    API - produit_controller.js at addProduct   Error: Cannot add or update a child row: a foreign key constraint fails (`wastemart`.`produit`, CONSTRAINT `produit_ibfk_2` FOREIGN KEY (`Liste_Produit_id`) REFERENCES `liste_produit` (`id`))
+<2019-9-1 16:46:50>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+<2019-9-1 16:50:27>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+<2019-9-1 16:51:26>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null

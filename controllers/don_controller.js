@@ -188,7 +188,7 @@ class DonController {
             let messageDonneur = "<!DOCTYPE html>"+
             "<html>"+
                 "<t/><h3>Bonjour "+ donneur.prenom +" "+ donneur.nom +", </h3><br/>"+
-                "<h4>Vous avez effectué un don sur <a href='#'>WasteMart</a> à l'association <b>"+ receveur.libelle +"</b>. <br/>"+
+                "<h4>Vous avez effectué un don sur <a href='http://51.75.143.205:8081'>WasteMart</a> à l'association <b>"+ receveur.libelle +"</b>. <br/>"+
                 "Vous trouverez ci-joint la facture de votre don."+
                 
                 "<br/><br/>"+
@@ -203,7 +203,7 @@ class DonController {
             let messageReceveur = "<!DOCTYPE html>"+
             "<html>"+
                 "<t/><h3>Bonjour, </h3><br/>"+
-                "<h4>Vous avez reçu un don d'un utilisateur sur <a href='#'>WasteMart</a>! <br/>"+
+                "<h4>Vous avez reçu un don d'un utilisateur sur <a href='http://51.75.143.205:8081'>WasteMart</a>! <br/>"+
                 "Rendez-vous sur WasteMart pour consultez le montant du don et remercier le généreux donnateur."+
                 
                 "<br/><br/>"+

@@ -217,7 +217,7 @@ class CommandeController {
                 let message = "<!DOCTYPE html>" +
                     "<html>" +
                     "<t/><h3>Bonjour " + user.prenom + " " + user.nom + ", </h3><br/>" +
-                    "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
+                    "<h4>Vous avez commandé des produits sur <a href='http://51.75.143.205:8081'>WasteMart</a>. <br/>" +
                     "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
 
                     "<br/><br/>" +
@@ -254,7 +254,7 @@ class CommandeController {
             let message = "<!DOCTYPE html>" +
                 "<html>" +
                 "<t/><h3>Bonjour, </h3><br/>" +
-                "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
+                "<h4>Vous avez commandé des produits sur <a href='http://51.75.143.205:8081'>WasteMart</a>. <br/>" +
                 "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
 
                 "<br/><br/>" +
