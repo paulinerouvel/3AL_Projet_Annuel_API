@@ -57,7 +57,7 @@ class DonController {
 
 
         let now = new Date(Date.now());
-        let dateT = now.toLocaleString('fr-FR').split(' ');
+        let dateT = now.toString().split('T');
         let date = dateT[0].split('-');
 
 
