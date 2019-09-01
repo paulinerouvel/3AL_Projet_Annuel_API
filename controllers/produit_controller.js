@@ -54,6 +54,7 @@ class ProduitController {
         try{
             const results = await Database.connection.query('SELECT * FROM produit WHERE produit.id = ?', [id]);
             const rows = results[0];
+            console.log(rows)
             if (rows.length > 0) {
                 return new Produit(rows[0].id, rows[0].libelle, rows[0].desc, rows[0].photo, rows[0].prix, rows[0].prixInitial, rows[0].quantite, rows[0].DLC, rows[0].codeBarre,
                     rows[0].enRayon, rows[0].dateMiseEnRayon, rows[0].CategorieProduit_id, rows[0].Liste_Produit_id, rows[0].Entrepot_id, rows[0].destinataire);
