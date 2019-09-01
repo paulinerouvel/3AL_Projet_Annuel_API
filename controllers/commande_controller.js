@@ -173,9 +173,9 @@ class CommandeController {
 
             doc.fontSize(15).text('Adresse de livraison', { underline: "true" });
             doc.moveDown();
-            doc.fontSize(15).text(user.adresse);
+            doc.fontSize(15).text(cmd.adresse_livraison);
             doc.moveDown();
-            doc.fontSize(15).text(user.codePostal + " " + user.ville);
+            doc.fontSize(15).text(cmd.cp_livraison + " " + cmd.ville_livraison);
             doc.moveDown();
 
 
