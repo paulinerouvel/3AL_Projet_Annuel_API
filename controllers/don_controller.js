@@ -57,11 +57,10 @@ class DonController {
 
 
         let now = new Date(Date.now());
-        let dateT = now.toString().split('T');
+        let dateT = now.toISOString().split('T');
         let date = dateT[0].split('-');
-
-
         let payement = await PayementController.getPayementByIdDon(idDon);
+
 
         let donneur = await UserController.getUserByID(don.Donneur_id);
         let receveur = await UserController.getUserByID(don.Receveur_id);

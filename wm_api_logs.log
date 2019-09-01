@@ -157,3 +157,7 @@
 <2019-9-1 16:46:50>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
 <2019-9-1 16:50:27>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
 <2019-9-1 16:51:26>    API - utilisateur_controller.js at updateUser   TypeError: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+<2019-9-1 23:30:11>    API - don_controller.js at getDonByID   TypeError: Cannot read property 'query' of undefined
+<2019-9-1 23:30:11>    API - payement_controller.js at getPayementByIdDon   TypeError: Cannot read property 'query' of undefined
+<2019-9-1 23:30:40>    API - don_controller.js at getDonByID   TypeError: Cannot read property 'query' of undefined
+<2019-9-1 23:30:40>    API - payement_controller.js at getPayementByIdDon   TypeError: Cannot read property 'query' of undefined
