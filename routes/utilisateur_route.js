@@ -312,6 +312,8 @@ router.get('/categories', async (req, res) => {
 /**                                   PUT  REQUESTS                               **/
 /***********************************************************************************/
 router.put('/', verifyToken, async (req, res) => {
+
+    console.log("la")
     const id = req.body.id;
     let libelle = req.body.libelle;
     let nom = req.body.nom;
@@ -347,56 +349,16 @@ router.put('/', verifyToken, async (req, res) => {
         if (userExist != 500 && (userExist.length == undefined || (userExist.length == 1 && userExist.id == id))) {
 
 
-
             let curUser = await UtilisateurController.getUserByID(id);
+
+
 
             if (curUser.mdp != mdp) {
                 let cryptedPass = await bcrypt.hashSync(mdp, 5);
                 try {
                     mdp = cryptedPass;
 
-                    if (curUser.estValide != estValide) {
 
-                        let message = "";
-
-                        if (estValide == true) {
-                            message = "<!DOCTYPE html>" +
-                                "<html>" +
-                                "<t/><h3>Bonjour, </h3><br/>" +
-                                "<h4>Après vérification de votre compte par les agents WasteMart, celui-ci à été validé ! <br/>" +
-                                "Vous pouvez désormais vous rendre sur <a href='#'>WasteMart</a> et vous connecter avec vos identifiants." +
-
-                                "<br/><br/>" +
-                                "Nous espérons vous voir rapidement sur notre site !" +
-                                "<br/><br/>" +
-                                "L'équipe WasteMart. " +
-                                "</h4>" +
-
-
-                                "</html>";
-                        }
-                        else {
-                            message = "<!DOCTYPE html>" +
-                                "<html>" +
-                                "<t/><h3>Bonjour, </h3><br/>" +
-                                "<h4> Votre compte WasteMart à été bloqué par les administateur de l'application.<br/>" +
-                                "Si vous souhaitez plus d'information au sujet du bannissement de votre compte, veuillez contacter " +
-                                "l'adresse mail qui suit : <a>wastemart.company@gmail.com </a>"
-                            "<br/><br/>" +
-                                "Cordialement, " +
-                                "<br/><br/>" +
-                                "L'équipe WasteMart. " +
-                                "</h4>" +
-
-
-                                "</html>";
-                        }
-
-
-
-                        await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message, null);
-
-                    }
                 }
                 catch (err) {
                     console.log(err);
@@ -413,6 +375,52 @@ router.put('/', verifyToken, async (req, res) => {
             let result = await UtilisateurController.updateUser(user);
 
             if (result != 500) {
+
+                
+                if (curUser.estValide != estValide) {
+
+
+
+                    let message = "";
+
+                    if (estValide == true) {
+                        message = "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<t/><h3>Bonjour, </h3><br/>" +
+                            "<h4>Après vérification de votre compte par les agents WasteMart, celui-ci à été validé ! <br/>" +
+                            "Vous pouvez désormais vous rendre sur <a href='http://51.75.143.205:8081'>WasteMart</a> et vous connecter avec vos identifiants." +
+
+                            "<br/><br/>" +
+                            "Nous espérons vous voir rapidement sur notre site !" +
+                            "<br/><br/>" +
+                            "L'équipe WasteMart. " +
+                            "</h4>" +
+
+
+                            "</html>";
+                    }
+                    else {
+                        message = "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<t/><h3>Bonjour, </h3><br/>" +
+                            "<h4> Votre compte WasteMart à été bloqué par les administateur de l'application.<br/>" +
+                            "Si vous souhaitez plus d'information au sujet du bannissement de votre compte, veuillez contacter " +
+                            "l'adresse mail qui suit : <a>wastemart.company@gmail.com </a>"
+                        "<br/><br/>" +
+                            "Cordialement, " +
+                            "<br/><br/>" +
+                            "L'équipe WasteMart. " +
+                            "</h4>" +
+
+
+                            "</html>";
+                    }
+
+
+
+                    await MailController.sendMail("wastemart.company@gmail.com", curUser.mail, "Votre compte à changé de statut !", message, null);
+
+                }
                 return res.status(200).end();
             }
             else {

@@ -75,10 +75,10 @@ class CommandeController {
         let cmd = await this.getOrderByID(idCommande);
 
 
-
         let now = new Date(Date.now());
-        let dateT = now.toLocaleString('fr-FR').split(' ');
+        let dateT = now.toISOString().split('T');
         let date = dateT[0].split('-');
+
 
 
         let user = await UserController.getUserByID(cmd.utilisateur_id);
@@ -173,9 +173,9 @@ class CommandeController {
 
             doc.fontSize(15).text('Adresse de livraison', { underline: "true" });
             doc.moveDown();
-            doc.fontSize(15).text(user.adresse);
+            doc.fontSize(15).text(cmd.adresse_livraison);
             doc.moveDown();
-            doc.fontSize(15).text(user.codePostal + " " + user.ville);
+            doc.fontSize(15).text(cmd.cp_livraison + " " + cmd.ville_livraison);
             doc.moveDown();
 
 
@@ -217,7 +217,7 @@ class CommandeController {
                 let message = "<!DOCTYPE html>" +
                     "<html>" +
                     "<t/><h3>Bonjour " + user.prenom + " " + user.nom + ", </h3><br/>" +
-                    "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
+                    "<h4>Vous avez commandé des produits sur <a href='http://51.75.143.205:8081'>WasteMart</a>. <br/>" +
                     "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
 
                     "<br/><br/>" +
@@ -254,7 +254,7 @@ class CommandeController {
             let message = "<!DOCTYPE html>" +
                 "<html>" +
                 "<t/><h3>Bonjour, </h3><br/>" +
-                "<h4>Vous avez commandé des produits sur <a href='#'>WasteMart</a>. <br/>" +
+                "<h4>Vous avez commandé des produits sur <a href='http://51.75.143.205:8081'>WasteMart</a>. <br/>" +
                 "Vous trouverez ci-joint la facture de votre achat contenant les modalités de livraison de votre commande." +
 
                 "<br/><br/>" +
@@ -268,6 +268,8 @@ class CommandeController {
 
             MailController.sendMail("wastemart.company@gmail.com", user.mail, "Votre commande du " + day + "/" + month + "/" + date[0], message, null);
         }
+
+        
     }
 
 

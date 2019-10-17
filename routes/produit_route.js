@@ -51,12 +51,15 @@ router.post('/', verifyToken, async (req, res) => {
     const categorieProduit_id = req.body.categorieProduit_id;
     const listProduct_id = req.body.listProduct_id;
     const entrepotwm_id = req.body.entrepotwm_id;
-    const destinataire = req.body.destinataire;
+    let destinataire = req.body.destinataire;
+
 
 
     if(!prixInitial){
         prixInitial = "0";
     }
+
+    if(destinataire == undefined){destinataire = 1;}
 
     if(photo == null ||  photo == undefined || photo == ""){
         photo="img_product.jpg";
@@ -70,11 +73,17 @@ router.post('/', verifyToken, async (req, res) => {
         let produitsRes = await ProduitController.addProduct(product);
 
 
+
         if (produitsRes != 500) {
+
+
             let allAlerts = await AlertController.getAllAlerts();
 
 
+
             for (const alert of allAlerts) {
+
+
 
                 libelle = no_accent(libelle);
                 desc = no_accent(desc);
@@ -83,12 +92,28 @@ router.post('/', verifyToken, async (req, res) => {
                 let indexLibelle = libelle.search(alert.libelle);
                 let indexDesc = desc.search(alert.libelle);
 
-                if (indexLibelle != -1 || indexDesc != -1) {
+                alert.libelle = alert.libelle.substring(0, alert.libelle.length-1);
+
+
+                let indexLibelle2 = libelle.search(alert.libelle);
+                let indexDesc2 = desc.search(alert.libelle);
+
+
+
+
+                if (indexLibelle != -1 || indexDesc != -1 || indexLibelle2 != -1 || indexDesc2 != -1) {
+
+
                     let user = await UserController.getUserByID(alert.utilisateur_id);
+                    let category = await UserController.getUserCategory(user.id);
 
-                    await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
-                        "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart", null);
 
+
+                    if(category['Categorie_utilisateur_id'] == destinataire){
+
+                        await MailController.sendMail("wastemart@gmail.com", user.mail, "Votre alerte " + alert.libelle,
+                            "Bonjour,<br/> Le produit " + libelle + " correspond à votre alerte " + alert.libelle + " ! <br/> Foncez sur WasteMart pour le mettre dans votre panier ! <br/> Cordialement, <br/> L'équipe WasteMart", null);
+                    }
                 }
 
             }

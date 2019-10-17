@@ -57,11 +57,10 @@ class DonController {
 
 
         let now = new Date(Date.now());
-        let dateT = now.toLocaleString('fr-FR').split(' ');
+        let dateT = now.toISOString().split('T');
         let date = dateT[0].split('-');
-
-
         let payement = await PayementController.getPayementByIdDon(idDon);
+
 
         let donneur = await UserController.getUserByID(don.Donneur_id);
         let receveur = await UserController.getUserByID(don.Receveur_id);
@@ -188,7 +187,7 @@ class DonController {
             let messageDonneur = "<!DOCTYPE html>"+
             "<html>"+
                 "<t/><h3>Bonjour "+ donneur.prenom +" "+ donneur.nom +", </h3><br/>"+
-                "<h4>Vous avez effectué un don sur <a href='#'>WasteMart</a> à l'association <b>"+ receveur.libelle +"</b>. <br/>"+
+                "<h4>Vous avez effectué un don sur <a href='http://51.75.143.205:8081'>WasteMart</a> à l'association <b>"+ receveur.libelle +"</b>. <br/>"+
                 "Vous trouverez ci-joint la facture de votre don."+
                 
                 "<br/><br/>"+
@@ -203,7 +202,7 @@ class DonController {
             let messageReceveur = "<!DOCTYPE html>"+
             "<html>"+
                 "<t/><h3>Bonjour, </h3><br/>"+
-                "<h4>Vous avez reçu un don d'un utilisateur sur <a href='#'>WasteMart</a>! <br/>"+
+                "<h4>Vous avez reçu un don d'un utilisateur sur <a href='http://51.75.143.205:8081'>WasteMart</a>! <br/>"+
                 "Rendez-vous sur WasteMart pour consultez le montant du don et remercier le généreux donnateur."+
                 
                 "<br/><br/>"+
